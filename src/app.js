@@ -13,11 +13,16 @@ import {
 import * as themoviedb from './services/movies-service';
 import * as colors from './common/colors';
 
+import Welcome from './features/welcome';
 import Login from './features/login';
+import Register from './features/register';
+import Remember from './features/remember';
 import TabView from './features/tab-view';
 import MovieDetail from './features/movie-detail';
 import TopList from './features/top-list';
 import Search from './features/search';
+
+import CustomTransitions from './common/custom-transitions';
 
 export default class App extends Component {
 
@@ -33,11 +38,13 @@ export default class App extends Component {
 
     themoviedb.init();
 
+    let allowBackAndroid = 0; // TODO: alamacenar en el servicio. Una vez logado cambiar a 1
+
     if (Platform.OS === 'android') {
       BackAndroid.addEventListener('hardwareBackPress', () => {
         let fakeSwitchExit = themoviedb.getAllowExitApp();
 
-        if (this.state.currentIndex > 1 || fakeSwitchExit) {
+        if (this.state.currentIndex > 0 || fakeSwitchExit) {
           themoviedb.getNavigator().pop();
         } else {
           Alert.alert(
@@ -73,28 +80,31 @@ export default class App extends Component {
 
     switch (route.index) {
       case 0:
-        return <Login />;
+        return <Welcome />
+      case 0.1:
+        return <Login />
+      case 0.2:
+        return <Register />
+      case 0.3:
+        return <Remember />
+      // case 0.4:
+      //   return <Onboarding />
       case 1:
-        return (
-          <TabView />
-        );
+        return <TabView />
       case 2:
-        return (
-          <MovieDetail />
-        );
+        return <MovieDetail />
       case 3:
-        return(
-          <Search />
-        );
+        return <Search />
       case 4:
-        return(
-          <TopList />
-        );
+        return <TopList />
     }
 
   }
 
   render() {
+
+    let initScene = 0; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
+
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
@@ -102,10 +112,17 @@ export default class App extends Component {
 
         <Navigator
           ref="navigator"
-          initialRoute={{ index: 1 }}
+          initialRoute={{ index: initScene }}
           renderScene={this.navigatorRenderScene.bind(this)}
-          configureScene={(route) => Navigator.SceneConfigs.FloatFromBottomAndroid }
-        />
+          configureScene={(route) => {
+
+            if (route.index === initScene) {
+              return CustomTransitions.NONE;
+            } else {
+              return Navigator.SceneConfigs.FloatFromBottomAndroid;
+            }
+
+          }}/>
 
       </View>
     );

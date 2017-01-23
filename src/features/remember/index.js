@@ -16,13 +16,12 @@ import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default class Login extends Component {
+export default class Remember extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      modalVisible: false,
       email: 'rldona@gmail.com',
       emailRemember: 'rldona@gmail.com',
       password: '123456'
@@ -46,7 +45,8 @@ export default class Login extends Component {
   }
 
   _remember() {
-    themoviedb.getNavigator().push({ index: 0.3, title: 'remember'});
+    // TODO: Firebase
+    themoviedb.getNavigator().push({ index: 0.1, title: 'login'});
   }
 
   render() {
@@ -58,34 +58,18 @@ export default class Login extends Component {
           <Icon name="arrow-back" size={30} color="#FFF" />
         </Text>
 
-        <Text style={styles.label}>Inicia sesión en Filmist</Text>
+        <Text style={styles.labelRemember}>Introduce tu email para que te enviemos un formulario de cambio de contraseña</Text>
 
         <TextInput
           style={styles.input}
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#666"
+          onChangeText={(emailRemember) => this.setState({emailRemember})}
+          value={this.state.emailRemember}
           placeholder="Email"
-          autoFocus={false}
+          autoFocus={true}
         />
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#999"
-          placeholder="Contraseña"
-          secureTextEntry={true}
-        />
-
-        <TouchableOpacity onPress={this._login.bind(this)} style={styles.button} activeOpacity={0.9}>
-          <Text style={styles.buttonTextClear}>INICIA SESIÓN</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={this._remember.bind(this)} style={styles.buttonClear} activeOpacity={0.9}>
-          <Text style={styles.buttonText}>RECORDAR CONTRASEÑA</Text>
+        <TouchableOpacity onPress={this._remember.bind(this)} style={styles.button} activeOpacity={0.5}>
+          <Text style={styles.buttonTextClear}>CAMBIAR LA CONTRASEÑA</Text>
         </TouchableOpacity>
 
       </View>
@@ -139,7 +123,7 @@ const styles = StyleSheet.create({
   input: {
     // height: 40,
     minWidth: 300,
-    // marginBottom: 25,
+    marginBottom: 25,
     fontSize: 15,
     paddingVertical: 10,
     color: colors.getList().white
@@ -155,8 +139,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.getList().app,
     backgroundColor: colors.getList().app,
-    marginBottom: 15,
-    minWidth: 300
+    marginBottom: 20,
+    minWidth: 300,
   },
 
   buttonClear: {
@@ -172,15 +156,16 @@ const styles = StyleSheet.create({
     minWidth: 300
   },
 
+
   buttonText: {
-    color: colors.getList().app,
+    color: '#444',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14
   },
 
   buttonTextClear: {
-    color: '#FFF',
+    color: colors.getList().white,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14
