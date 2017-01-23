@@ -38,13 +38,14 @@ export default class App extends Component {
 
     themoviedb.init();
 
-    let allowBackAndroid = 0; // TODO: alamacenar en el servicio. Una vez logado cambiar a 1
+    // let allowBackAndroid = 1; // TODO: alamacenar en el servicio. Una vez logado cambiar a 1
 
     if (Platform.OS === 'android') {
       BackAndroid.addEventListener('hardwareBackPress', () => {
-        let fakeSwitchExit = themoviedb.getAllowExitApp();
 
-        if (this.state.currentIndex > 0 || fakeSwitchExit) {
+        //let allowExitApp = themoviedb.getAllowExitApp();
+
+        if (this.state.currentIndex > 1) {
           themoviedb.getNavigator().pop();
         } else {
           Alert.alert(
@@ -88,6 +89,7 @@ export default class App extends Component {
       case 0.3:
         return <Remember />
       // case 0.4:
+      //   // se muestra solo la primera vez !!
       //   return <Onboarding />
       case 1:
         return <TabView />
@@ -98,11 +100,9 @@ export default class App extends Component {
       case 4:
         return <TopList />
     }
-
   }
 
   render() {
-
     let initScene = 0; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
 
     return (
@@ -116,7 +116,7 @@ export default class App extends Component {
           renderScene={this.navigatorRenderScene.bind(this)}
           configureScene={(route) => {
 
-            if (route.index === initScene) {
+            if (route.index === 0) {
               return CustomTransitions.NONE;
             } else {
               return Navigator.SceneConfigs.FloatFromBottomAndroid;
