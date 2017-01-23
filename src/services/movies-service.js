@@ -1,6 +1,7 @@
 const END_POINT = 'http://api.themoviedb.org/3/';
 const API_KEY   = 'd29e0f4d164566ae95cfb5022b6ef0c0';
 
+let allowExitApp;
 let navigator;
 let currentLang = 'es';
 let currentMovie;
@@ -14,12 +15,32 @@ let currentTab = {
   title: 'Inicio'
 };
 
+let historialList = [];
+
 export const init = () => {
+  allowExitApp = false;
   distance = 2;
   currentMovie = null;
   currentTitle= '-';
   currentType= 'movie';
   currentCollection= 'upcoming';
+}
+
+export const setHistorialList = (movie) => {
+  historialList.unshift(movie);
+}
+export const getHistorialList = () => {
+  return historialList;
+}
+export const clearHitorialList = () => {
+  historialList = [];
+}
+
+export const setAllowExitApp = (state) => {
+  allowExitApp = state;
+}
+export const getAllowExitApp = () => {
+  return allowExitApp;
 }
 
 export const setDistance = (dis) => {

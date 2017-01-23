@@ -35,9 +35,9 @@ export default class MoviesListHorizontal extends Component {
   }
 
   componentWillMount() {
-    // InteractionManager.runAfterInteractions(() => {
+    InteractionManager.runAfterInteractions(() => {
       this.loadMovies();
-    // });
+    });
   }
 
   loadMovies() {
@@ -48,14 +48,14 @@ export default class MoviesListHorizontal extends Component {
         page   = 2;
         this.setState({ 'dataMovies': ds.cloneWithRows(data) });
       });
+    } else {
+      themoviedb.getPopular(this.props.type, this.props.collection).then((data) => {
+        movies = [];
+        movies = data;
+        page   = 2;
+        this.setState({ 'dataMovies': ds.cloneWithRows(data) });
+      });
     }
-
-    themoviedb.getPopular(this.props.type, this.props.collection).then((data) => {
-      movies = [];
-      movies = data;
-      page   = 2;
-      this.setState({ 'dataMovies': ds.cloneWithRows(data) });
-    });
   }
 
   _onSelectMovie(movie) {
@@ -77,7 +77,7 @@ export default class MoviesListHorizontal extends Component {
         <View style={{paddingVertical: 10}}>
           <Image
             resizeMode={'cover'}
-            style={{width: 120, height: 180, borderRadius: 3, marginHorizontal: 10, backfaceVisibility: 'hidden'}}
+            style={{width: 120, height: 170, borderRadius: 3, marginHorizontal: 10, backfaceVisibility: 'hidden'}}
             source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
         </View>
       </TouchableOpacity>
@@ -105,7 +105,7 @@ export default class MoviesListHorizontal extends Component {
               themoviedb.setCurrentCollection(this.props.collection);
               themoviedb.getNavigator().push({index: 4, route: 'top-list'});
             }}>
-            <Text style={styles.viewAll}>VER TODAS</Text>
+            <Text style={styles.viewAll}>VER MÁS</Text>
           </TouchableOpacity>
         </View>
         <ListView

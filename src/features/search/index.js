@@ -12,8 +12,8 @@ import {
   Keyboard
 } from 'react-native';
 
-
 import * as themoviedb from '../../services/movies-service';
+import * as colors from '../../common/colors';
 
 import Header from '../../common/header';
 import MoviesListVertical from '../../common/movie-list-vertical';
@@ -101,22 +101,21 @@ export default class Search extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#222'}}>
+      <View style={{flex: 1, backgroundColor: colors.getList().primary}}>
 
         <Header
           isTransparent={false}
           title=""
-          actions={{ left: { icon: 'arrow-back' }, right: { icon: 'more-vert' } }}
+          actions={{ left: { icon: 'arrow-back' }, right: { icon: 'filter-list' } }}
           onActionSelected={this._onActionSelected.bind(this)} />
 
           <TextInput
-            elevation={0}
             style={styles.searchBtn}
             onChangeText={(query) => this._onSearchChange(query)}
             onSubmitEditing={(search) => this._searchMovie()}
             value={this.state.query}
             placeholder="Busca películas o series"
-            autoFocus={true}
+            autoFocus={false}
             underlineColorAndroid='#FFF'
             selectionColor='#000'
             clearButtonMode={'while-editing'}
@@ -128,7 +127,7 @@ export default class Search extends Component {
             autoCorrect={false}
             returnKeyType="search" />
 
-            <View style={{position: 'absolute', top: 40, right: 70, paddingHorizontal: 5, textAlign: 'center'}}>
+            <View style={{position: 'absolute', top: 40, right: 70, paddingHorizontal: 5}}>
               {this.renderClearInputIcon()}
             </View>
 
@@ -175,6 +174,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 32,
     left: 55,
+    // elevation: 5,
     // marginHorizontal: 20,
     width: width-110,
     backgroundColor: '#FFF',

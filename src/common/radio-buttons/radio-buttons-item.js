@@ -8,42 +8,46 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as colors from '../colors';
+
 import CheckBox from 'react-native-check-box';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const checkIcon = (<Icon name="radio-button-checked" size={25} color="#FFF" />)
-const uncheckIcon = (<Icon name="radio-button-unchecked" size={25} color="#FFF" />)
-
-export default class SwitchSelectorItem extends Component {
+export default class RadioButtonsItem extends Component {
 
   constructor(props) {
     super(props);
   }
 
-  render() {
-    return (
+  renderIconName(state) {
+    return state ? 'checkbox-marked' : 'checkbox-blank-outline';
+  }
 
+  render() {
+
+    const {id, title, state} = this.props;
+
+    return (
       <View style={styles.column}>
+
+        <TouchableOpacity
+            onPress={this.props.onSelectOption.bind(this, id)}
+            activeOpacity={0.9}
+            style={styles.icon}>
 
           <View style={styles.row}>
 
             <Text style={styles.optionText}>
-              {this.props.title}
+              {title}
             </Text>
 
-            <TouchableOpacity
-              onPress={this.props.onSelectOption.bind(this, this.props.id)}
-              activeOpacity={0.9}
-              style={styles.icon}>
-
-              <Text style={{color: '#FFF'}}>{ this.props.state ? 'true' : 'false' }</Text>
-
-            </TouchableOpacity>
+            <Icon name={this.renderIconName(state)} color={colors.getList().app} size={23} />
 
           </View>
 
-      </View>
+        </TouchableOpacity>
 
+      </View>
     )
   }
 
@@ -65,12 +69,13 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     color: '#FFF',
-    fontSize: 15,
+    fontSize: 16,
     backgroundColor: '#181818',
     marginBottom: 10
   },
   optionText: {
-    color: '#CCC',
+    color: '#EEE',
+    fontSize: 14,
   },
 });
 

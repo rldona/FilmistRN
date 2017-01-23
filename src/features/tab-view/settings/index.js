@@ -12,17 +12,10 @@ import {
   Dimensions
 } from 'react-native';
 
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-
-// const checkIcon = (<Icon name="radio-button-checked" size={25} color="#FFF" />)
-// const uncheckIcon = (<Icon name="radio-button-unchecked" size={25} color="#FFF" />)
-
-// import CheckBox from 'react-native-check-box';
-
 import * as colors from '../../../common/colors';
 import * as themoviedb from '../../../services/movies-service';
 
-import SwitchSelector from '../../../common/switch-selector';
+import RadioButtons from '../../../common/radio-buttons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -32,7 +25,12 @@ export default class Settings extends Component {
     super(props);
 
     this.state = {
-      falseSwitchIsOn: false
+      falseSwitchIsOn: false,
+      radioButtons: [
+        {id: 0, language: 'es', title: 'Español', state: themoviedb.getLang() === 'es' ? true : false},
+        {id: 1, language: 'en', title: 'Inglés', state: themoviedb.getLang() === 'en' ? true : false},
+        {id: 2, language: 'fr', title: 'Francés', state: themoviedb.getLang() === 'fr' ? true : false}
+      ]
     };
   }
 
@@ -57,11 +55,11 @@ export default class Settings extends Component {
 
         <View style={{padding: 0}}>
 
-          <View style={{padding: 20}}>
+          <View style={{padding: 15, paddingVertical: 20}}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Image
                 resizeMode={'cover'}
-                style={{width: 90, height: 90, borderRadius: 50, overlayColor: 'transparent', backfaceVisibility: 'hidden'}}
+                style={{width: 90, height: 90, borderRadius: 3, backfaceVisibility: 'hidden'}}
                 source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />
               <View style={{marginLeft: 20}}>
                 <Text style={styles.userName}>Raúl López Doña</Text>
@@ -72,41 +70,53 @@ export default class Settings extends Component {
 
           <View>
             <Text style={styles.optionTitle}>Cambia el idioma del contenido de la app</Text>
-            <View style={{padding: 20}}>
-              <SwitchSelector />
+            <View style={{padding: 15}}>
+              <RadioButtons options={this.state.radioButtons} />
             </View>
           </View>
 
           <View>
             <Text style={styles.optionTitle}>Evitar cerrar la app con el botón físico atrás</Text>
-            <View style={{padding: 20}}>
+            <View style={{paddingLeft: 15, paddingRight: 10, paddingVertical: 20}}>
               <View style={styles.row}>
                 <Text style={styles.optionText}>{this.state.falseSwitchIsOn ? 'Habilitado' : 'Deshabilitado'}</Text>
                 <Switch
                   onTintColor="#FFF"
                   thumbTintColor="#FFF"
                   tintColor="#FFF"
-                  onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+                  onValueChange={(value) => {
+                    this.setState({falseSwitchIsOn: value});
+                    themoviedb.setAllowExitApp(value);
+                  }}
                   value={this.state.falseSwitchIsOn} />
               </View>
             </View>
           </View>
 
           <View>
-            <Text style={styles.optionTitle}>Cerrar sesión</Text>
+            <Text style={styles.optionTitle}>Eliminar últimas búsquedas</Text>
             <View style={{padding: 30}}>
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <TouchableOpacity
+                  style={{width: width-40, padding: 15, borderRadius: 3, borderWidth: 1, backgroundColor: colors.getList().app}}
+                  activeOpacity={0.9}
+                  onPress={() => themoviedb.clearHitorialList()}>
+                <Text style={{color: colors.getList().white, fontWeight: '600', textAlign: 'center', fontSize: 14}}>{'Eliminar historial'.toUpperCase()}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
 
+          <View>
+            <Text style={styles.optionTitle}>Salir de Filmist</Text>
+            <View style={{padding: 30}}>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableOpacity
                   style={{width: width-40, padding: 15, borderRadius: 3, borderWidth: 1, borderColor: colors.getList().app}}
                   activeOpacity={0.9}
-                  onPress={this._loggout}
-                >
-
-                  <Text style={{color: '#FFF', textAlign: 'center'}}>Salir</Text>
-
+                  onPress={this._loggout}>
+                  <Text style={{color: colors.getList().app, fontWeight: '600', textAlign: 'center', fontSize: 14}}>{'Cerrar sesión'.toUpperCase()}</Text>
                 </TouchableOpacity>
-
               </View>
             </View>
           </View>
@@ -138,7 +148,7 @@ const styles = StyleSheet.create({
     // marginBottom: 15
   },
   optionTitle: {
-    padding: 20,
+    padding: 15,
     color: '#FFF',
     fontSize: 15,
     backgroundColor: colors.getList().secondary,

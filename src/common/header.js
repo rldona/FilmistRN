@@ -62,6 +62,10 @@ export default class Header extends Component {
 
             <Text style={styles.title}>{this.props.title}</Text>
 
+            <TouchableOpacity activeOpacity={0.9} style={styles.icon}>
+
+            </TouchableOpacity>
+
           </View>
         </View>
       )
@@ -114,7 +118,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFF',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     textAlign: 'left',
   },

@@ -14,7 +14,7 @@ import {
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Loading from '../../common/loading';
 
 const { width, height } = Dimensions.get('window');
@@ -49,18 +49,16 @@ export default class Login extends Component {
     themoviedb.getNavigator().push({ index: 1, title: 'home'});
   }
 
+  signInGoogle = () => {
+
+  }
+
   render() {
     return (
 
-      <View style={styles.container}>
+      <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <View style={{marginBottom: this.state.keyboardTransition}}>
-
-          {/*<Spinner visible={this.state.spinnerVisible} size="large" color="#444" overlayColor="rgba(255,255,255,0.7)"/>*/}
-
-          {/*<Text onPress={this._goBack.bind(this)} style={styles.textBack}>
-            <Image style={styles.arrowBack} source={require('image!ic_arrow_back_black_24dp')}></Image>
-          </Text>*/}
+        <View style={{marginBottom: this.state.keyboardTransition, backgroundColor: colors.getList().primary}}>
 
           <Text style={styles.label}>Inicia sesión en Filmist</Text>
 
@@ -89,9 +87,16 @@ export default class Login extends Component {
             secureTextEntry={true}
           />
 
-          <TouchableOpacity onPress={this._login.bind(this)} style={styles.button} activeOpacity={0.5}>
+          <TouchableOpacity onPress={this._login.bind(this)} style={styles.button} activeOpacity={0.9}>
             <Text style={styles.buttonText}>INICIA SESIÓN</Text>
           </TouchableOpacity>
+
+          {/*<TouchableOpacity style={styles.buttonGoogle} activeOpacity={0.9}>
+            <Text style={{color: colors.getList().white, textAlign: 'center', fontWeight: '600'}}>
+              ACCEDE CON GOOGLE
+              <Icon name="google" color={colors.getList().white} size={20} />
+            </Text>
+          </TouchableOpacity>*/}
 
           <TouchableOpacity style={styles.buttonClear} activeOpacity={0.5}>
             <Text style={styles.buttonTextClear}>RECORDAR CONTRASEÑA</Text>
@@ -115,7 +120,6 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
 
   container: {
-    flex: 1,
     justifyContent: 'center',
     backgroundColor: colors.getList().primary,
     paddingTop: 10,
@@ -184,6 +188,19 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.getList().app,
     backgroundColor: colors.getList().primary,
+    marginBottom: 20,
+    minWidth: 300,
+  },
+
+  buttonGoogle: {
+    paddingTop: 17,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 17,
+    borderRadius: 3,
+    borderWidth: 2,
+    borderColor: colors.getList().google,
+    backgroundColor: colors.getList().google,
     marginBottom: 20,
     minWidth: 300,
   },

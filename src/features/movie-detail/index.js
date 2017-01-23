@@ -72,16 +72,16 @@ export default class MovieDetail extends Component {
       this.setState({overviewNumberLines: 100});
     } else {
       this.setState({overviewNumberLines: 2});
-      _scrollView.scrollTo({y: 0, x: 0, animated: true});
+      // _scrollView.scrollTo({y: 0, x: 0, animated: true});
     }
 
   }
 
   _renderMoreLines = () => {
     if (this.state.overviewNumberLines <= 2) {
-      return 'add-circle';
+      return 'expand-more';
     } else {
-      return 'remove-circle';
+      return 'expand-less';
     }
   }
 
@@ -100,7 +100,7 @@ export default class MovieDetail extends Component {
           </View>
 
           <View style={{position: 'absolute', top: 130, left: 15, width: 110, height: 150}}>
-            <View style={{width: 110, height: 150, backgroundColor: '#111', borderRadius: 10, borderWidth: 1, overlayColor: 'transparent', borderColor: '#111', backfaceVisibility: 'hidden'}}></View>
+            <View style={{width: 110, height: 150, backgroundColor: '#111', borderRadius: 3, borderWidth: 1, borderColor: '#111', backfaceVisibility: 'hidden'}}></View>
           </View>
 
           <View style={{padding: 0, marginTop: 60}}>
@@ -123,10 +123,10 @@ export default class MovieDetail extends Component {
               </View>
             </View>
             <View style={{height: height, backgroundColor: '#000', paddingHorizontal: 15, paddingVertical: 20}}>
-              <Text style={{width: width-130, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
-              <Text style={{width: width-40, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
-              <Text style={{width: width-40, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
-              <Text style={{width: width-40, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
+              <Text style={{width: width-150, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
+              <Text style={{width: width-150, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
+              <Text style={{width: width-150, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
+              <Text style={{width: width-150, height: 20, backgroundColor: '#111', marginBottom: 10}}></Text>
             </View>
           </View>
 
@@ -136,10 +136,12 @@ export default class MovieDetail extends Component {
       )
     }
 
+    themoviedb.setHistorialList(this.state.movie);
+
     return (
 
       <ScrollView
-        ref={(scrollView) => { _scrollView = scrollView; }}
+        // ref={(scrollView) => { _scrollView = scrollView; }}
         style={{ backgroundColor: colors.getList().primary, height: height }}>
 
         <View>
@@ -160,7 +162,7 @@ export default class MovieDetail extends Component {
         <View style={{position: 'absolute', top: 120, left: 15, width: 110, height: 150}}>
           <Image
             resizeMode={'cover'}
-            style={{width: 110, height: 160, borderRadius: 10, borderWidth: 1, overlayColor: 'transparent', borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
+            style={{width: 110, height: 160, borderRadius: 3, borderWidth: 2, borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
             source={{uri: 'http://image.tmdb.org/t/p/w150' + this.state.movie.poster_path}} />
         </View>
 
@@ -179,18 +181,24 @@ export default class MovieDetail extends Component {
             <Text
               numberOfLines={this.state.overviewNumberLines}
               style={{fontSize: 14, lineHeight: 26, fontWeight: '300', color: '#FFF', marginBottom: 0, textAlign: 'auto' }}>
-              {this.state.movie.overview}
+              {this.state.movie.overview.length > 0 ? this.state.movie.overview : 'Sinopsis no disponible'}
             </Text>
 
             <View style={{paddingVertical: 10}}></View>
 
-            <TouchableOpacity
-              onPress={this._onExtendOverview}
-              activeOpacity={0.9}>
-              <Text style={{textAlign: 'center'}}>
-                <Icon color={colors.getList().app} name={this._renderMoreLines()} style={{fontSize: 30}} />
-              </Text>
-            </TouchableOpacity>
+            {
+
+              this.state.movie.overview.length > 0 ?
+
+                <TouchableOpacity
+                  onPress={this._onExtendOverview}
+                  activeOpacity={0.9}>
+                  <Text style={{textAlign: 'center'}}>
+                    <Icon color={colors.getList().app} name={this._renderMoreLines()} style={{fontSize: 30}} />
+                  </Text>
+                </TouchableOpacity> : null
+
+            }
 
           </View>
 
@@ -201,7 +209,7 @@ export default class MovieDetail extends Component {
             <Text style={styles.extendInfoTitle}>Título original</Text><Text style={styles.extendInfoText}>{this.state.movie.original_title}</Text>
           </View>
           <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Duración</Text><Text style={styles.extendInfoText}>{this.state.movie.runtime}</Text>
+            <Text style={styles.extendInfoTitle}>Duración</Text><Text style={styles.extendInfoText}>{this.state.movie.runtime} minutos</Text>
           </View>
           <View style={styles.extendInfoRow}>
             <Text style={styles.extendInfoTitle}>Año de estreno</Text><Text style={styles.extendInfoText}>{this.state.movie.release_date.split('-')[0]}</Text>
@@ -235,6 +243,8 @@ export default class MovieDetail extends Component {
           position="horizontal"
           {...this.props} />
 
+        <View style={{paddingVertical: 20}}></View>
+
       </ScrollView>
 
     )
@@ -262,7 +272,7 @@ const styles = StyleSheet.create({
     width: 200,
     position: 'absolute',
     top: -48,
-    left: 140
+    left: 140,
   },
   infoItem: {
     fontSize: 15,
@@ -287,7 +297,7 @@ const styles = StyleSheet.create({
     borderRadius: 3
   },
   extendInfo: {
-    backgroundColor: '#000',
+    backgroundColor: colors.getList().black,
     padding: 15,
     marginBottom: 10
   },

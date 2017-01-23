@@ -50,7 +50,7 @@ export default class TopList extends Component {
         <Header
           isTransparent={false}
           title={this.state.title}
-          actions={{ left: { icon: 'arrow-back' }, right: { icon: 'more-vert' } }}
+          actions={{ left: { icon: 'arrow-back' } }}
           onActionSelected={this._onActionSelected.bind(this)} />
 
         <MoviesListVertical
@@ -63,7 +63,6 @@ export default class TopList extends Component {
           animation="bounceInUp"
           delay={1000}
           useNativeDriver={true}
-          elevation={10}
           style={styles.button}>
           <TouchableOpacity
             activeOpacity={0.9}
@@ -84,12 +83,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: height,
-    backgroundColor: '#171717'
+    backgroundColor: colors.getList().primary,
   },
   button: {
     position: 'absolute',
     bottom: 30,
     right: 30,
+    elevation: 10,
     backgroundColor: colors.getList().app, // #E91E63 4CAF50
     // width: 60,
     padding: 10,

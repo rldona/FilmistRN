@@ -35,7 +35,9 @@ export default class App extends Component {
 
     if (Platform.OS === 'android') {
       BackAndroid.addEventListener('hardwareBackPress', () => {
-        if (this.state.currentIndex > 1) {
+        let fakeSwitchExit = themoviedb.getAllowExitApp();
+
+        if (this.state.currentIndex > 1 || fakeSwitchExit) {
           themoviedb.getNavigator().pop();
         } else {
           Alert.alert(
@@ -47,6 +49,7 @@ export default class App extends Component {
             ]
           );
         }
+
         return true;
       });
     }
@@ -70,41 +73,36 @@ export default class App extends Component {
 
     switch (route.index) {
       case 0:
-        return <Login />
-        break;
+        return <Login />;
       case 1:
         return (
           <TabView />
         );
-        break;
       case 2:
         return (
           <MovieDetail />
         );
-        break;
       case 3:
         return(
           <Search />
         );
-        break;
       case 4:
         return(
           <TopList />
         );
-        break;
     }
 
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <StatusBar hidden={false} backgroundColor={colors.getList().statusBar} translucent={true} />
 
         <Navigator
           ref="navigator"
-          initialRoute={{ index: 0 }}
+          initialRoute={{ index: 1 }}
           renderScene={this.navigatorRenderScene.bind(this)}
           configureScene={(route) => Navigator.SceneConfigs.FloatFromBottomAndroid }
         />

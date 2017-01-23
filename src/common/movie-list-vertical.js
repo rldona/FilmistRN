@@ -88,18 +88,18 @@ export default class MoviesList extends Component {
 
   renderMovieList(movie) {
     return(
-      <View>
+      <View style={{borderRadius: 3}}>
         <TouchableOpacity
-          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderColor: colors.getList().primary}}
+          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
           onPress={this._onSelectMovie.bind(this, movie)}
           activeOpacity={0.9}>
-          <View style={{flexDirection: 'row', backgroundColor: colors.getList().secondary}}>
+          <View style={{flexDirection: 'row', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
             <Image
               resizeMode={'cover'}
-              style={{width: 100, height: 150, marginRight: 10, backfaceVisibility: 'hidden'}}
+              style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
               source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
             <View>
-              <Text style={{color: '#FFF', fontSize: 16, fontWeigth: 300, lineHeight: 25, width: width - 150}}>{movie.title}</Text>
+              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150}}>{movie.title}</Text>
               <Text style={{color: '#999', fontSize: 14, lineHeight: 25}}>{movie.release_date.split('-')[0]}</Text>
               <Text style={{color: '#FFF', fontSize: 16, marginTop: 20}}>{movie.vote_average}</Text>
               <Text style={{color: '#FFF', fontSize: 16, marginTop: 5}}>{movie.vote_count}</Text>
@@ -127,12 +127,13 @@ export default class MoviesList extends Component {
       });
     }
 
-    themoviedb.getPopular(this.props.type, this.props.collection, page).then((data) => {
-      Array.prototype.push.apply(movies, data);
-      this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
-      page++;
-    });
-
+    if (this.props.collection !== 'similar' && this.props.collection !== 'search') {
+      themoviedb.getPopular(this.props.type, this.props.collection, page).then((data) => {
+        Array.prototype.push.apply(movies, data);
+        this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
+        page++;
+      });
+    }
   }
 
   renderScrollMovieList() {
@@ -150,6 +151,7 @@ export default class MoviesList extends Component {
           style={{backgroundColor: colors.getList().primary }}
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
+          enableEmptySections={true}
           onEndReached={this.infiniteScroll}
           showsVerticalScrollIndicator={false}
           horizontal={false} />
@@ -169,7 +171,6 @@ export default class MoviesList extends Component {
 var styles = StyleSheet.create({
   title: {
     color: '#DDD',
-    fontWeight: '300',
     paddingTop: 5,
     paddingLeft: 15,
     fontSize: 16,
@@ -178,7 +179,6 @@ var styles = StyleSheet.create({
   titleVertical: {
     color: '#FFF',
     // backgroundColor: colors.getList().primary,
-    fontWeight: '300',
     paddingTop: 5,
     paddingLeft: 15,
     fontSize: 16,
