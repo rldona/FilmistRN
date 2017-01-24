@@ -28,7 +28,7 @@ export default class Profile extends Component {
             <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
               <Image
                 resizeMode={'cover'}
-                style={{width: 90, height: 90, borderRadius: 3, backfaceVisibility: 'hidden', marginBottom: 20}}
+                style={{width: 90, height: 90, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
                 source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />
               {/*<View style={{backgroundColor: colors.getList().secondary, padding: 20, borderRadius: 3}}>
                 <Icon name="face" color="#CCC" size={50} />
