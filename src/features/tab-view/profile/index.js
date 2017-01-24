@@ -22,25 +22,36 @@ export default class Profile extends Component {
     return (
       <ScrollView>
 
-        <View style={{padding: 0}}>
-
-          <View style={{paddingHorizontal: 15, paddingVertical: 30}}>
-            <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-              <Image
-                resizeMode={'cover'}
-                style={{width: 90, height: 90, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
-                source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />
-              {/*<View style={{backgroundColor: colors.getList().secondary, padding: 20, borderRadius: 3}}>
-                <Icon name="face" color="#CCC" size={50} />
-              </View>*/}
-              <View>
-                <Text style={styles.userName}>Raúl López Doña</Text>
-                <Text style={styles.userEmail}>rldona@gmail.com</Text>
-              </View>
+        <View style={{paddingHorizontal: 15, paddingVertical: 30}}>
+          <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <Image
+              resizeMode={'cover'}
+              style={{width: 100, height: 100, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
+              source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />
+            {/*<View style={{backgroundColor: colors.getList().secondary, padding: 20, borderRadius: 3}}>
+              <Icon name="face" color="#CCC" size={50} />
+            </View>*/}
+            <View>
+              <Text style={styles.userName}>Raúl López Doña</Text>
+              <Text style={styles.userEmail}>rldona@gmail.com</Text>
             </View>
           </View>
+        </View>
 
+        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, paddingVertical: 20}}>
+          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>3</Text>
+            <Text style={{color: '#FFF', textAlign: 'center'}}>Guadadas</Text>
           </View>
+          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>120</Text>
+            <Text style={{color: '#FFF', textAlign: 'center'}}>Vistas</Text>
+          </View>
+          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>56</Text>
+            <Text style={{color: '#FFF', textAlign: 'center'}}>Favoritas</Text>
+          </View>
+        </View>
 
       </ScrollView>
 

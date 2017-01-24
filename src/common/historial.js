@@ -6,7 +6,8 @@ import {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
 import * as themoviedb from '../services/movies-service';
@@ -14,6 +15,7 @@ import * as colors from './colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const { width, height } = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class Historial extends Component {
@@ -52,12 +54,14 @@ export default class Historial extends Component {
           resizeMode={'cover'}
           style={{minWidth: 300, borderRadius: 3, marginHorizontal: 0, backfaceVisibility: 'hidden'}}
           source={{uri: 'https://image.tmdb.org/t/p/w300/' + movie.backdrop_path}}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 20, paddingHorizontal: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
-              <Text numberOfLines={1} style={{maxWidth: 250, color: colors.getList().white, fontSize: 16}}>{movie.title}</Text>
-              <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
-            </View>
-          </Image>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 20, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
+            <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
+          </View>
+        </Image>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
+          <Text style={{color: '#FFF', textAlign: 'center', fontSize: 17}}>{movie.title}</Text>
+          <Icon name="keyboard-arrow-right" size={27} color='#FFF' />
+        </View>
       </TouchableOpacity>
     );
   }
@@ -115,17 +119,17 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     fontWeight: '600',
     marginRight: 0,
-    color: '#666',
+    color: '#444',
     paddingHorizontal: 15,
     paddingVertical: 20,
     borderStyle: 'dashed',
     borderWidth: 2,
-    borderColor: '#666'
+    borderColor: '#444'
   },
   title: {
     fontWeight: '600',
     paddingTop: 5,
-    paddingLeft: 0,
+    paddingLeft: 5,
     fontSize: 16,
     textAlign: 'left',
     marginBottom: 15,

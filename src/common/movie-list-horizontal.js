@@ -136,7 +136,7 @@ var styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: '600',
     paddingTop: 5,
-    paddingLeft: 10,
+    paddingLeft: 15,
     fontSize: 16,
     marginBottom: 15,
   },
