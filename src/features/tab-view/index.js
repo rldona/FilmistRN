@@ -40,9 +40,10 @@ export default class App extends Component {
       index: initTab,
       animating: true,
       routes: [
-        { key: '1', title: 'Home', icon: 'menu' },
+        { key: '1', title: 'Filmist', icon: 'menu' },
         { key: '2', title: 'Favoritos', icon: 'star' },
-        { key: '3', title: 'Settings', icon: 'settings' },
+        { key: '3', title: 'Perfil', icon: 'person' },
+        { key: '4', title: 'Settings', icon: 'settings' },
       ]
     };
   }
@@ -54,12 +55,15 @@ export default class App extends Component {
 
     switch (index) {
       case 0:
-        title = 'Filmist';
+        title = 'FILMIST';
         break;
       case 1:
         title = 'Favoritos';
         break;
       case 2:
+        title = 'Perfil';
+        break;
+      case 3:
         title = 'Configuración';
         break;
     }
@@ -83,7 +87,7 @@ export default class App extends Component {
   };
 
   _renderScene = ({ route }) => {
-    let distance = 2;
+    let distance = 3;
 
     if(Math.abs(this.state.index - this.state.routes.indexOf(route)) > distance) {
       return false;
@@ -95,6 +99,8 @@ export default class App extends Component {
       case '2':
         return <Favorites />
       case '3':
+        return <Profile />
+      case '4':
         return <Settings />
       default:
         return false;

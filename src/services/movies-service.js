@@ -27,13 +27,37 @@ export const init = () => {
 }
 
 export const setHistorialList = (movie) => {
-  historialList.unshift(movie);
+  if (!found(movie)) {
+    historialList.unshift(movie);
+  }
 }
+
 export const getHistorialList = () => {
-  return historialList;
+  let historialListLimited = [];
+  let limit = 5
+
+  if (historialList.length > 0) {
+    for (let i = 0; i < limit; i++) {
+      if (typeof historialList[i] !== 'undefined') {
+        historialListLimited.push(historialList[i]);
+      }
+    }
+  }
+
+  return historialListLimited;
 }
+
 export const clearHitorialList = () => {
   historialList = [];
+}
+
+function found(movie) {
+  for (let i = 0; i < historialList.length; i++) {
+    if (movie.id === historialList[i].id) {
+      return true
+    }
+  }
+  return false;
 }
 
 export const setAllowExitApp = (state) => {

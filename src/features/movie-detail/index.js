@@ -162,7 +162,7 @@ export default class MovieDetail extends Component {
         <View style={{position: 'absolute', top: 120, left: 15, width: 110, height: 150}}>
           <Image
             resizeMode={'cover'}
-            style={{width: 110, height: 160, borderRadius: 3, borderWidth: 2, borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
+            style={{width: 110, height: 160, borderRadius: 3, borderWidth: 1, borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
             source={{uri: 'http://image.tmdb.org/t/p/w150' + this.state.movie.poster_path}} />
         </View>
 

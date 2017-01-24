@@ -4,6 +4,7 @@ import {
   View,
   ListView,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
@@ -14,13 +15,6 @@ import * as colors from './colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-// const fakeHistoria = [
-//   { id: 0, title: 'Star War: Episodio 1'},
-//   { id: 1, title: 'Star Trek'},
-//   { id: 2, title: 'El Bola'},
-//   { id: 3, title: 'El club de la lucha'}
-// ];
 
 export default class Historial extends Component {
 
@@ -45,16 +39,25 @@ export default class Historial extends Component {
   }
 
   _onSelectMovie(movie) {
+    themoviedb.setCurrentMovie(movie);
     themoviedb.getNavigator().push({index: 2, title: 'detail-movie'})
   }
 
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        onPress={this._onSelectMovie.bind(this, movie)}
-        style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
-        <Text style={{color: colors.getList().white}}>{movie.title} ( {movie.vote_average} )</Text>
-        <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
+        activeOpacity={0.9}
+        onPress={this._onSelectMovie.bind(this, movie)}>
+        <Image
+          resizeMode={'cover'}
+          style={{minWidth: 300, height: 50, borderRadius: 3, marginHorizontal: 10, backfaceVisibility: 'hidden'}}
+          source={{uri: 'https://image.tmdb.org/t/p/w300/' + movie.backdrop_path}}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 15, paddingHorizontal: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
+              <Text numberOfLines={1} style={{maxWidth: 250, color: colors.getList().white, fontSize: 16}}>{movie.title}</Text>
+              <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
+            </View>
+          </Image>
       </TouchableOpacity>
     );
   }
@@ -63,8 +66,8 @@ export default class Historial extends Component {
     if (!this.state.dataMovies) {
       return (
         <View>
-          <Text style={{color: '#CCC', paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
-            Tienes que ver antes algún contenido
+          <Text style={{textAlign: 'center', marginLeft: 15, fontWeight: '600', marginRight: 15, color: '#333', paddingHorizontal: 15, paddingVertical: 15, borderStyle: 'dashed', borderWidth: 2, borderColor: colors.getList().secondary}}>
+            LISTA VACÍA
           </Text>
         </View>
       )
@@ -73,7 +76,6 @@ export default class Historial extends Component {
     return (
       <View style={{paddingHorizontal: 0}}>
         <ListView
-          style={{backgroundColor: colors.getList().secondary }}
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
           enableEmptySections={true}
@@ -87,16 +89,16 @@ export default class Historial extends Component {
     const { title } = this.props;
 
     return (
-      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 40, marginTop: 10}}>
+      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 40, marginTop: 20}}>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10}}>
+        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.title}>
             {title}
           </Text>
-          {/*<TouchableOpacity
+          <TouchableOpacity
             activeOpacity={0.9}>
-            <Text style={styles.viewAll}>VER MÁS</Text>
-          </TouchableOpacity>*/}
+            <Text style={styles.viewAll}>VER TODAS</Text>
+          </TouchableOpacity>
         </View>
 
         {this.renderHistorialList()}
@@ -113,13 +115,14 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 15,
     fontSize: 16,
+    textAlign: 'left',
     marginBottom: 15,
     color: colors.getList().white,
   },
   viewAll: {
     color: colors.getList().app,
     fontSize: 11,
-    marginTop: 3,
+    marginTop: 0,
     marginRight: 10,
     paddingTop: 5,
     paddingBottom: 5,

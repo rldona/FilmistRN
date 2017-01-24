@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  ToastAndroid,
   ScrollView,
   Image,
   Switch,
@@ -14,6 +15,9 @@ import {
 
 import * as colors from '../../../common/colors';
 import * as themoviedb from '../../../services/movies-service';
+
+import Checkbox from '../../../common/checkbox';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import RadioButtons from '../../../common/radio-buttons';
 
@@ -25,7 +29,7 @@ export default class Settings extends Component {
     super(props);
 
     this.state = {
-      falseSwitchIsOn: false,
+      allowExitApp: false,
       radioButtons: [
         {id: 0, language: 'es', title: 'Español', state: themoviedb.getLang() === 'es' ? true : false},
         {id: 1, language: 'en', title: 'Inglés', state: themoviedb.getLang() === 'en' ? true : false},
@@ -55,19 +59,6 @@ export default class Settings extends Component {
 
         <View style={{padding: 0}}>
 
-          <View style={{padding: 15, paddingVertical: 20}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                resizeMode={'cover'}
-                style={{width: 90, height: 90, borderRadius: 3, backfaceVisibility: 'hidden'}}
-                source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />
-              <View style={{marginLeft: 20}}>
-                <Text style={styles.userName}>Raúl López Doña</Text>
-                <Text style={styles.userEmail}>rldona@gmail.com</Text>
-              </View>
-            </View>
-          </View>
-
           <View>
             <Text style={styles.optionTitle}>Cambia el idioma del contenido de la app</Text>
             <View style={{padding: 15}}>
@@ -77,31 +68,25 @@ export default class Settings extends Component {
 
           <View>
             <Text style={styles.optionTitle}>Evitar cerrar la app con el botón físico atrás</Text>
-            <View style={{paddingLeft: 15, paddingRight: 10, paddingVertical: 20}}>
-              <View style={styles.row}>
-                <Text style={styles.optionText}>{this.state.falseSwitchIsOn ? 'Habilitado' : 'Deshabilitado'}</Text>
-                <Switch
-                  onTintColor="#FFF"
-                  thumbTintColor="#FFF"
-                  tintColor="#FFF"
-                  onValueChange={(value) => {
-                    this.setState({falseSwitchIsOn: value});
-                    themoviedb.setAllowExitApp(value);
-                  }}
-                  value={this.state.falseSwitchIsOn} />
-              </View>
+            <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+              <Checkbox
+                checked={this.state.allowExitApp}
+                onChange={(checked) => this.setState({allowExitApp: checked})} />
             </View>
           </View>
 
           <View>
             <Text style={styles.optionTitle}>Eliminar últimas búsquedas</Text>
-            <View style={{padding: 30}}>
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
-                  style={{width: width-40, padding: 15, borderRadius: 3, borderWidth: 1, backgroundColor: colors.getList().app}}
+                  style={{minWidth: 300}}
                   activeOpacity={0.9}
-                  onPress={() => themoviedb.clearHitorialList()}>
-                <Text style={{color: colors.getList().white, fontWeight: '600', textAlign: 'center', fontSize: 14}}>{'Eliminar historial'.toUpperCase()}</Text>
+                  onPress={() => {
+                    themoviedb.clearHitorialList();
+                    ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
+                  }}>
+                <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Eliminar historial</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -109,13 +94,13 @@ export default class Settings extends Component {
 
           <View>
             <Text style={styles.optionTitle}>Salir de Filmist</Text>
-            <View style={{padding: 30}}>
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
-                  style={{width: width-40, padding: 15, borderRadius: 3, borderWidth: 1, borderColor: colors.getList().app}}
+                  style={{minWidth: 300}}
                   activeOpacity={0.9}
                   onPress={this._loggout}>
-                  <Text style={{color: colors.getList().app, fontWeight: '600', textAlign: 'center', fontSize: 14}}>{'Cerrar sesión'.toUpperCase()}</Text>
+                  <Text style={{color: colors.getList().white, fontWeight: '400', textAlign: 'left', fontSize: 14}}>Cerrar sesión</Text>
                 </TouchableOpacity>
               </View>
             </View>

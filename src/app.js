@@ -24,6 +24,14 @@ import Search from './features/search';
 
 import CustomTransitions from './common/custom-transitions';
 
+// const config = {
+//   apiKey: "AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4",
+//   authDomain: "filmist-react-native.firebaseapp.com",
+//   databaseURL: "https://filmist-react-native.firebaseio.com",
+//   storageBucket: "filmist-react-native.appspot.com",
+//   messagingSenderId: "489986447626"
+// };
+
 export default class App extends Component {
 
   constructor(props) {
@@ -103,7 +111,7 @@ export default class App extends Component {
   }
 
   render() {
-    let initScene = 0; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
+    let initScene = 1; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
 
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>

@@ -10,7 +10,6 @@ import {
 
 import * as colors from '../colors';
 
-import CheckBox from 'react-native-check-box';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class RadioButtonsItem extends Component {
@@ -20,7 +19,11 @@ export default class RadioButtonsItem extends Component {
   }
 
   renderIconName(state) {
-    return state ? 'checkbox-marked' : 'checkbox-blank-outline';
+    if (state) {
+      return <Icon name='radiobox-marked' color={colors.getList().app} size={20} />
+    } else {
+      return <Icon name='radiobox-blank' color="#FFF" size={20} />
+    }
   }
 
   render() {
@@ -41,7 +44,7 @@ export default class RadioButtonsItem extends Component {
               {title}
             </Text>
 
-            <Icon name={this.renderIconName(state)} color={colors.getList().app} size={23} />
+            {this.renderIconName(state)}
 
           </View>
 
@@ -78,4 +81,3 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
-

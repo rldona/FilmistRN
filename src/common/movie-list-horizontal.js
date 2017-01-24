@@ -93,7 +93,7 @@ export default class MoviesListHorizontal extends Component {
 
     return (
       <View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
           <Text style={styles.title}>
             {this.props.title}
           </Text>
