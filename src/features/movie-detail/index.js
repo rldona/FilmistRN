@@ -28,24 +28,24 @@ export default class MovieDetail extends Component {
     super(props);
 
     this.state = {
-      movie: null,
-      loaded: false,
-      // movie: themoviedb.getCurrentMovie(),
-      // loaded: true,
+      // movie: null,
+      // loaded: false,
+      movie: themoviedb.getCurrentMovie(),
+      loaded: true,
       overviewNumberLines: 2
     }
   }
 
   componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
-        data.runtime = data.runtime === 0 ? 90 : data.runtime;
-        this.setState({
-          movie: data,
-          loaded: true
-        });
-      });
-    });
+    // InteractionManager.runAfterInteractions(() => {
+    //   themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
+    //     data.runtime = data.runtime === 0 ? 90 : data.runtime;
+    //     this.setState({
+    //       movie: data,
+    //       loaded: true
+    //     });
+    //   });
+    // });
   }
 
   _onActionSelected = (action) => {
