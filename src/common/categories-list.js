@@ -143,7 +143,7 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 3,
     backgroundColor: '#222326',
-    color: '#CCC',
+    color: '#FFF',
     fontSize: 13,
     minWidth: 120,
     textAlign: 'center'

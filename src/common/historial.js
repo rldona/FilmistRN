@@ -59,8 +59,8 @@ export default class Historial extends Component {
           </View>
         </Image>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
-          <Text style={{color: '#FFF', textAlign: 'center', fontSize: 17}}>{movie.title}</Text>
-          <Icon name="keyboard-arrow-right" size={27} color='#FFF' />
+          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 17}}>{movie.title}</Text>
+          <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
         </View>
       </TouchableOpacity>
     );
