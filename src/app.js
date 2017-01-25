@@ -124,7 +124,7 @@ export default class App extends Component {
           renderScene={this.navigatorRenderScene.bind(this)}
           configureScene={(route) => {
 
-            if (route.index === 0) {
+            if (route.index === 0 || route.index === 1) {
               return CustomTransitions.NONE;
             } else {
               // return Navigator.SceneConfigs.FloatFromBottomAndroid;
