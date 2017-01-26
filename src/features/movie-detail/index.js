@@ -77,7 +77,15 @@ export default class MovieDetail extends Component {
 
   }
 
-  _renderMoreLines = () => {
+  _renderMoreLinesText = () => {
+    if (this.state.overviewNumberLines <= 2) {
+      return 'LEER MÁS';
+    } else {
+      return 'LEER MENOS';
+    }
+  }
+
+  _renderMoreLinesIcon = () => {
     if (this.state.overviewNumberLines <= 2) {
       return 'expand-more';
     } else {
@@ -191,11 +199,13 @@ export default class MovieDetail extends Component {
               this.state.movie.overview.length > 0 ?
 
                 <TouchableOpacity
+                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
-                  <Text style={{textAlign: 'center'}}>
-                    <Icon color={colors.getList().app} name={this._renderMoreLines()} style={{fontSize: 30}} />
+                  <Text style={{textAlign: 'center', color: colors.getList().app, fontSize: 12}}>
+                    {this._renderMoreLinesText()}
                   </Text>
+                  <Icon color={colors.getList().app} name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
                 </TouchableOpacity> : null
 
             }
