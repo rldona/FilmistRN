@@ -8,13 +8,16 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
+  Keyboard,
   StyleSheet
 } from 'react-native';
 
+import * as loginService from '../../services/login-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Loading from '../../common/loading';
 
 export default class Login extends Component {
 
@@ -22,10 +25,10 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      modalVisible: false,
       email: 'rldona@gmail.com',
       emailRemember: 'rldona@gmail.com',
-      password: '123456'
+      password: '123456',
+      showLoading: false
     };
   }
 
@@ -34,19 +37,21 @@ export default class Login extends Component {
   }
 
   _login() {
-    if (this.state.email !== '' && this.state.password !== '') {
-      if (this.state.email === 'rldona@gmail.com' && this.state.password === '123456') {
-        themoviedb.getNavigator().push({ index: 1, title: 'home'});
-      } else {
-        alert('Email ó contraseña incorrectos');
-      }
-    } else {
-      alert('Introduce tu email y contraseña');
-    }
+    loginService.login(this.state.email, this.state.password);
+    this.setState({showLoading: true});
+    Keyboard.dismiss();
   }
 
   _remember() {
     themoviedb.getNavigator().push({ index: 0.3, title: 'remember'});
+  }
+
+  showButtonLoading() {
+    if (!this.state.showLoading) {
+      return <Text style={styles.buttonTextClear}>INICIA SESIÓN</Text>;
+    } else {
+      return <Loading color="#FFF" size={19} />;
+    }
   }
 
   render() {
@@ -67,8 +72,8 @@ export default class Login extends Component {
           underlineColorAndroid='#FFF'
           placeholderTextColor="#666"
           placeholder="Email"
-          autoFocus={false}
-        />
+          returnKeyType="next"
+          autoFocus={false} />
 
         <TextInput
           style={styles.input}
@@ -77,11 +82,12 @@ export default class Login extends Component {
           underlineColorAndroid='#FFF'
           placeholderTextColor="#999"
           placeholder="Contraseña"
-          secureTextEntry={true}
-        />
+          returnKeyType="done"
+          onSubmitEditing={this._login.bind(this)}
+          secureTextEntry={true} />
 
         <TouchableOpacity onPress={this._login.bind(this)} style={styles.button} activeOpacity={0.9}>
-          <Text style={styles.buttonTextClear}>INICIA SESIÓN</Text>
+          {this.showButtonLoading()}
         </TouchableOpacity>
 
         <TouchableOpacity onPress={this._remember.bind(this)} style={styles.buttonClear} activeOpacity={0.9}>

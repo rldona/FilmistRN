@@ -10,12 +10,20 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as loginService from '../../../services/login-service';
 import * as colors from '../../../common/colors';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Profile extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      name: loginService.getCurrentUser().displayName || '?',
+      email: loginService.getCurrentUser().email || '?'
+    }
   }
 
   render() {
@@ -24,16 +32,16 @@ export default class Profile extends Component {
 
         <View style={{paddingHorizontal: 15, paddingVertical: 30}}>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <Image
+            {/*<Image
               resizeMode={'cover'}
               style={{width: 100, height: 100, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
-              source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />
-            {/*<View style={{backgroundColor: colors.getList().secondary, padding: 20, borderRadius: 3}}>
+              source={{uri: 'https://lh3.googleusercontent.com/-OgIx5qWOqVc/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8tTw5-KNmVaIXZt9ZkEobMYvccN4g/s192-c-mo/photo.jpg'}} />*/}
+            <View style={{backgroundColor: colors.getList().secondary, padding: 20, marginBottom: 20, borderRadius: 50}}>
               <Icon name="face" color="#CCC" size={50} />
-            </View>*/}
+            </View>
             <View>
-              <Text style={styles.userName}>Raúl López Doña</Text>
-              <Text style={styles.userEmail}>rldona@gmail.com</Text>
+              <Text style={styles.userName}>{this.state.name}</Text>
+              <Text style={styles.userEmail}>{this.state.email}</Text>
             </View>
           </View>
         </View>

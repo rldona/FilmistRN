@@ -153,7 +153,9 @@ export default class MoviesList extends Component {
   renderScrollMovieList() {
     if (this.state.dataMovies.length === 0) {
       return (
-        <Loading />
+        <View style={{marginTop: 20}}>
+          <Loading />
+        </View>
       )
     }
 

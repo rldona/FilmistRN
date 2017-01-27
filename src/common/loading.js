@@ -27,7 +27,6 @@ export default class Loading extends Component {
     } else {
       return {
         position: 'relative',
-        marginTop: 20
       }
     }
   }
@@ -37,8 +36,8 @@ export default class Loading extends Component {
       <View style={this.dynamicStyle()}>
         <ActivityIndicator
           animating={true}
-          color={colors.getList().app}
-          size="large"
+          color={this.props.color || colors.getList().app}
+          size={this.props.size || 'large'}
         />
       </View>
     )

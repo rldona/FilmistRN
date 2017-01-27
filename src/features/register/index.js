@@ -6,13 +6,16 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Keyboard,
   StyleSheet
 } from 'react-native';
 
+import * as loginService from '../../services/login-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Loading from '../../common/loading';
 
 export default class Register extends Component {
 
@@ -20,19 +23,30 @@ export default class Register extends Component {
     super(props);
 
     this.state = {
-      name: 'Raúl López',
-      email: 'rldona@gmail.com',
-      password: '123456',
-      passwordRepeat: '123456'
+      name: '',
+      email: '',
+      password: '',
+      passwordRepeat: '',
+      showLoading: false
     }
   }
 
   _register() {
-    themoviedb.getNavigator().push({index: 1, title: 'home'});
+    this.setState({showLoading: true});
+    loginService.register(this.state.name, this.state.email, this.state.password);
+    Keyboard.dismiss();
   }
 
   _goBack() {
     themoviedb.getNavigator().pop();
+  }
+
+  showButtonLoading() {
+    if (!this.state.showLoading) {
+      return <Text style={styles.buttonTextClear}>REGÍSTRO</Text>;
+    } else {
+      return <Loading color="#FFF" size={19} />;
+    }
   }
 
   render() {
@@ -51,42 +65,43 @@ export default class Register extends Component {
           onChangeText={(name) => this.setState({name})}
           value={this.state.name}
           placeholder="Name"
+          returnKeyType="next"
           underlineColorAndroid='#FFF'
           placeholderTextColor="#666"
-          autoFocus={false}
-        />
+          autoFocus={false} />
 
         <TextInput
           style={styles.input}
           onChangeText={(email) => this.setState({email})}
           value={this.state.email}
+          returnKeyType="next"
           underlineColorAndroid='#FFF'
           placeholderTextColor="#666"
-          placeholder="Email"
-        />
+          placeholder="Email" />
 
         <TextInput
           style={styles.input}
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
           placeholder="Contraseña"
+          returnKeyType="next"
           underlineColorAndroid='#FFF'
           placeholderTextColor="#666"
-          secureTextEntry={true}
-        />
+          secureTextEntry={true} />
 
         <TextInput
           style={styles.input}
           onChangeText={(passwordRepeat) => this.setState({passwordRepeat})}
           value={this.state.passwordRepeat}
           placeholder="Confirmar contraseña"
+          returnKeyType="done"
           underlineColorAndroid='#FFF'
           placeholderTextColor="#666"
-          secureTextEntry={true}
-        />
+          onSubmitEditing={this._register.bind(this)}
+          secureTextEntry={true} />
 
         <TouchableOpacity onPress={this._register.bind(this)} style={styles.button} activeOpacity={0.9}>
-          <Text style={styles.buttonTextClear}>REGÍSTRO</Text>
+          {this.showButtonLoading()}
         </TouchableOpacity>
 
       </View>

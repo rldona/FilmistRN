@@ -6,25 +6,52 @@ import {
   Text,
   Image,
   StyleSheet,
+  AsyncStorage,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
+import * as loginService from '../../services/login-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Loading from '../../common/loading';
 
 const primaryColor = '#e2e2e2'; // backgroundColor={primaryColor}
+
+const { width, height } = Dimensions.get('window');
 
 export default class Welcome extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      showWelcome: false
+    };
   }
 
   componentWillMount() {
     primaryColor = '#e2e2e2';
+  }
+
+  componentDidMount() {
+    AsyncStorage.getAllKeys().then((data) => {
+      if (data.length > 0) {
+        AsyncStorage.getItem(data[0]).then((item) => {
+          if (item) {
+            loginService.setCurrentUser(JSON.parse(item));
+            themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
+          } else {
+            this.setState({showWelcome: true});
+          }
+        });
+      } else {
+        this.setState({showWelcome: true});
+      }
+    });
   }
 
   _goTo(route) {
@@ -36,41 +63,56 @@ export default class Welcome extends Component {
   }
 
   render() {
-    return(
 
-      <View style={styles.container} renderToHardwareTextureAndroid={true}>
+    if (this.state.showWelcome) {
 
-        <Image source={require('../../assets/img/logo.png')} style={styles.logo}/>
+      return(
 
-        <Text style={styles.welcome1}>
-          Bienvenido a Filmist
-        </Text>
+        <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <Text style={styles.welcome2}>
-          Busca, sincroniza y comparte tus películas y series favoritas
-        </Text>
+          <Image source={require('../../assets/img/logo.png')} style={styles.logo}/>
 
-        <TouchableOpacity
-          onPress={this._goTo.bind(this, 'register')}
-          style={styles.buttonDark}
-          activeOpacity={0.9}>
-          <Text style={styles.textLight}>
-            REGÍSTRATE
+          <Text style={styles.welcome1}>
+            Bienvenido a Filmist
           </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={this._goTo.bind(this, 'login')}
-          style={styles.button}
-          activeOpacity={0.9}>
-          <Text style={styles.text}>
-            INICIAR SESIÓN
+          <Text style={styles.welcome2}>
+            Busca, sincroniza y comparte tus películas y series favoritas
           </Text>
-        </TouchableOpacity>
 
-      </View>
+          <TouchableOpacity
+            onPress={this._goTo.bind(this, 'login')}
+            style={styles.buttonDark}
+            activeOpacity={0.9}>
+            <Text style={styles.textLight}>
+              INICIAR SESIÓN
+            </Text>
+          </TouchableOpacity>
 
-    )
+          <TouchableOpacity
+            onPress={this._goTo.bind(this, 'register')}
+            style={styles.button}
+            activeOpacity={0.9}>
+            <Text style={styles.text}>
+              REGÍSTRATE
+            </Text>
+          </TouchableOpacity>
+
+
+        </View>
+
+      )
+
+    } else {
+
+      return (
+        <View style={{backgroundColor: colors.getList().primary, height: height}}>
+          {/*<Loading position="center" />*/}
+        </View>
+      );
+
+    }
+
   }
 
 }

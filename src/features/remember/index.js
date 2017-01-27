@@ -6,14 +6,17 @@ import {
   Image,
   Modal,
   TextInput,
+  Keyboard,
   TouchableHighlight,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
 
+import * as loginService from '../../services/login-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
+import Loading from '../../common/loading';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Remember extends Component {
@@ -22,9 +25,8 @@ export default class Remember extends Component {
     super(props);
 
     this.state = {
-      email: 'rldona@gmail.com',
-      emailRemember: 'rldona@gmail.com',
-      password: '123456'
+      email: '',
+      showLoading: false
     };
   }
 
@@ -32,21 +34,18 @@ export default class Remember extends Component {
     themoviedb.getNavigator().pop();
   }
 
-  _login() {
-    if (this.state.email !== '' && this.state.password !== '') {
-      if (this.state.email === 'rldona@gmail.com' && this.state.password === '123456') {
-        themoviedb.getNavigator().push({ index: 1, title: 'home'});
-      } else {
-        alert('Email ó contraseña incorrectos');
-      }
-    } else {
-      alert('Introduce tu email y contraseña');
-    }
+  _remember() {
+    this.setState({showLoading: true});
+    loginService.retrievePassword(this.state.email);
+    Keyboard.dismiss();
   }
 
-  _remember() {
-    // TODO: Firebase
-    themoviedb.getNavigator().push({ index: 0.1, title: 'login'});
+  showButtonLoading() {
+    if (!this.state.showLoading) {
+      return <Text style={styles.buttonTextClear}>CAMBIAR LA CONTRASEÑA</Text>;
+    } else {
+      return <Loading color="#FFF" size={19} />;
+    }
   }
 
   render() {
@@ -62,14 +61,17 @@ export default class Remember extends Component {
 
         <TextInput
           style={styles.input}
-          onChangeText={(emailRemember) => this.setState({emailRemember})}
-          value={this.state.emailRemember}
-          placeholder="Email"
+          onChangeText={(email) => this.setState({email})}
+          value={this.state.email}
           autoFocus={true}
+          placeholder="Email"
+          onSubmitEditing={this._remember.bind(this)}
+          returnKeyType="done"
+          autoFocus={false}
         />
 
-        <TouchableOpacity onPress={this._remember.bind(this)} style={styles.button} activeOpacity={0.5}>
-          <Text style={styles.buttonTextClear}>CAMBIAR LA CONTRASEÑA</Text>
+        <TouchableOpacity onPress={this._remember.bind(this)} style={styles.button} activeOpacity={0.9}>
+          {this.showButtonLoading()}
         </TouchableOpacity>
 
       </View>

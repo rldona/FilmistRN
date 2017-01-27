@@ -9,12 +9,14 @@ import {
   ScrollView,
   Image,
   Switch,
+  AsyncStorage,
   StyleSheet,
   Dimensions
 } from 'react-native';
 
-import * as colors from '../../../common/colors';
+import * as loginService from '../../../services/login-service';
 import * as themoviedb from '../../../services/movies-service';
+import * as colors from '../../../common/colors';
 
 import Checkbox from '../../../common/checkbox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -50,7 +52,9 @@ export default class Settings extends Component {
   }
 
   _loggout() {
-    themoviedb.getNavigator().push({ index: 0, route: 'login'});
+    AsyncStorage.clear().then(() => {
+      loginService.logout();
+    });
   }
 
   render() {
@@ -77,33 +81,33 @@ export default class Settings extends Component {
 
           <View>
             <Text style={styles.optionTitle}>Eliminar últimas búsquedas</Text>
-            <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity
-                  style={{minWidth: 300}}
-                  activeOpacity={0.9}
-                  onPress={() => {
-                    themoviedb.clearHitorialList();
-                    ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
-                  }}>
-                <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Eliminar historial</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+              <TouchableOpacity
+                style={{minWidth: 300}}
+                activeOpacity={0.9}
+                onPress={() => {
+                  themoviedb.clearHitorialList();
+                  ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
+                }}>
+                <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Eliminar historial</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
           </View>
 
           <View>
             <Text style={styles.optionTitle}>Salir de Filmist</Text>
-            <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity
-                  style={{minWidth: 300}}
-                  activeOpacity={0.9}
-                  onPress={this._loggout}>
+            <TouchableOpacity
+              style={{minWidth: 300}}
+              activeOpacity={0.9}
+              onPress={this._loggout}>
+              <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={{color: colors.getList().white, fontWeight: '400', textAlign: 'left', fontSize: 14}}>Cerrar sesión</Text>
-                </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View>

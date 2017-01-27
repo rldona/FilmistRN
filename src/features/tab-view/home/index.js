@@ -45,7 +45,11 @@ export default class Home extends Component {
 
   render() {
     if (!this.state.allLoaded) {
-      return <Loading />
+      return (
+        <View style={{marginTop: 20}}>
+          <Loading />
+        </View>
+      )
     }
 
     return (

@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import * as themoviedb from '../../services/movies-service';
+import * as Animatable from 'react-native-animatable';
 import * as colors from '../../common/colors';
 
 import Header from '../../common/header';
@@ -31,8 +32,32 @@ export default class Search extends Component {
       query: '',
       search: '',
       keyboardTransition: 0,
-      heightCompAdd: 0
+      heightCompAdd: 0,
+      up: false,
+      down: false
     };
+
+    const scrollTopActive = {
+      from: {
+        opacity: 1,
+      },
+      to: {
+        opacity: 1,
+      },
+    };
+
+    const scrollTopDesactive = {
+      from: {
+        opacity: 0,
+      },
+      to: {
+        opacity: 0,
+      },
+    };
+
+    Animatable.initializeRegistryWithDefinitions({
+      scrollTopActive, scrollTopDesactive
+    });
   }
 
   componentWillMount() {
@@ -94,9 +119,19 @@ export default class Search extends Component {
           title="Buscar"
           type="movie"
           collection="search"
+          onScrollList={this._onScrollList.bind(this)}
           query={this.state.search} />
       );
     }
+  }
+
+  _onScrollList = (direction, offset) => {
+    if (offset >= 1000) {
+      this.refs.scrollTop.scrollTopActive(500);
+    } else {
+      this.refs.scrollTop.scrollTopDesactive(500);
+    }
+
   }
 
   render() {
@@ -133,6 +168,22 @@ export default class Search extends Component {
 
             {this.renderResult()}
 
+            <Animatable.View
+              ref="scrollTop"
+              // animation="bounceInUp"
+              // delay={1000}
+              iterationCount={1}
+              useNativeDriver={true}
+              style={styles.button}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => { _scrollView.scrollTo({y: 0, x: 0, animated: true}); }}>
+                <Text style={{textAlign: 'center'}}>
+                  <Icon name='arrow-upward' size={30} color='#FFF' />
+                </Text>
+              </TouchableOpacity>
+            </Animatable.View>
+
       </View>
     )
   }
@@ -146,7 +197,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height,
     backgroundColor: '#222',
-    height: height
   },
   group: {
     flexDirection: 'row',
@@ -182,6 +232,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 20,
     borderRadius: 3
+  },
+  button: {
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    opacity: 0,
+    elevation: 10,
+    backgroundColor: colors.getList().app, // #E91E63 4CAF50
+    // width: 60,
+    padding: 10,
+    borderRadius: 50
   }
 });
 

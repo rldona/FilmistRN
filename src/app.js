@@ -6,10 +6,15 @@ import {
   BackAndroid,
   Platform,
   View,
+  AsyncStorage,
   Alert,
   StyleSheet,
+  Dimensions
 } from 'react-native';
 
+const { width, height } = Dimensions.get('window');
+
+import * as loginService from './services/login-service';
 import * as themoviedb from './services/movies-service';
 import * as colors from './common/colors';
 
@@ -24,26 +29,34 @@ import Search from './features/search';
 
 import CustomTransitions from './common/custom-transitions';
 
-// const config = {
-//   apiKey: "AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4",
-//   authDomain: "filmist-react-native.firebaseapp.com",
-//   databaseURL: "https://filmist-react-native.firebaseio.com",
-//   storageBucket: "filmist-react-native.appspot.com",
-//   messagingSenderId: "489986447626"
-// };
-
 export default class App extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      currentIndex: 1
-    }
+      currentIndex: 1,
+    };
+
+    // AsyncStorage.setItem('ping', 'pong !');
+
+    // AsyncStorage.getItem('firebase:authUser:AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4:[DEFAULT]').then((item) => {
+    //   console.log(JSON.parse(item)); // pong !
+    // });
+
+    // AsyncStorage.removeItem('ping');
+
+    // AsyncStorage.clear();
+
+    AsyncStorage.getAllKeys().then((data) => {
+      console.log(data);
+    });
+
   }
 
-  componentDidMount() {
+  componentWillMount() {
 
+    loginService.init();
     themoviedb.init();
 
     // let allowBackAndroid = 1; // TODO: alamacenar en el servicio. Una vez logado cambiar a 1
@@ -111,7 +124,7 @@ export default class App extends Component {
   }
 
   render() {
-    let initScene = 1; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
+    let initScene = 0; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
 
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
@@ -142,7 +155,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: height,
     backgroundColor: colors.getList().primary
   }
 });

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  AsyncStorage,
   StyleSheet,
   Dimensions
 } from 'react-native';
@@ -35,6 +36,8 @@ export default class App extends Component {
     initTab = 0;
 
     themoviedb.setCurrentTab({title: 'FILMIST'});
+
+    // AsyncStorage.setItem('login', 'true');
 
     this.state = {
       index: initTab,
