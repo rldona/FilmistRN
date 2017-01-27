@@ -53,17 +53,17 @@ export default class App extends Component {
 
         //let allowExitApp = themoviedb.getAllowExitApp();
 
-        if (this.state.currentIndex > 1) {
+        if (this.state.currentIndex === 0.1 || this.state.currentIndex === 0.2 || this.state.currentIndex === 0.3 || this.state.currentIndex > 1) {
           themoviedb.getNavigator().pop();
         } else {
-          Alert.alert(
-            'Salir',
-            '¿Realmente quieres salir?',
-            [
-              {text: 'No', onPress: () => { return false }, style: 'cancel' },
-              {text: 'Sí', onPress: () => BackAndroid.exitApp() }
-            ]
-          );
+          // Alert.alert(
+          //   'Salir',
+          //   '¿Realmente quieres salir?',
+          //   [
+          //     {text: 'No', onPress: () => { return false }, style: 'cancel' },
+          //     {text: 'Sí', onPress: () => BackAndroid.exitApp() }
+          //   ]
+          // );
         }
 
         return true;
@@ -124,14 +124,14 @@ export default class App extends Component {
           renderScene={this.navigatorRenderScene.bind(this)}
           configureScene={(route) => {
 
-            return CustomTransitions.NONE;
+            // return CustomTransitions.NONE;
 
-            // if (route.index === 0 || route.index === 1) {
-            //   return CustomTransitions.NONE;
-            // } else {
-            //   // return Navigator.SceneConfigs.FloatFromBottomAndroid;
-            //   return CustomTransitions.FloatFromBottomAndroidCustom;
-            // }
+            if (route.index === 0 || route.index === 1) {
+              return CustomTransitions.NONE;
+            } else {
+              // return Navigator.SceneConfigs.FloatFromBottomAndroid;
+              return CustomTransitions.FloatFromBottomAndroidCustom;
+            }
 
           }}/>
 

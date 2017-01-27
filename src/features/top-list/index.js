@@ -28,8 +28,33 @@ export default class TopList extends Component {
     this.state = {
       title: themoviedb.getCurrentTitle(),
       type: themoviedb.getCurrentType(),
-      collection: themoviedb.getCurrentCollection()
+      collection: themoviedb.getCurrentCollection(),
+      up: false,
+      down: false
     };
+
+    const scrollTopActive = {
+      from: {
+        opacity: 1,
+      },
+      to: {
+        opacity: 1,
+      },
+    };
+
+    const scrollTopDesactive = {
+      from: {
+        opacity: 0,
+      },
+      to: {
+        opacity: 0,
+      },
+    };
+
+    Animatable.initializeRegistryWithDefinitions({
+      scrollTopActive, scrollTopDesactive
+    });
+
   }
 
   _onActionSelected = (action) => {
@@ -41,6 +66,15 @@ export default class TopList extends Component {
         alert('right');
         break;
     }
+  }
+
+  _onScrollList = (direction, offset) => {
+    if (offset >= 1000) {
+      this.refs.scrollTop.scrollTopActive(500);
+    } else {
+      this.refs.scrollTop.scrollTopDesactive(500);
+    }
+
   }
 
   render() {
@@ -57,11 +91,14 @@ export default class TopList extends Component {
           title={this.state.title}
           type={this.state.type}
           collection={this.state.collection}
+          onScrollList={this._onScrollList.bind(this)}
           {...this.props} />
 
         <Animatable.View
-          animation="bounceInUp"
-          delay={1000}
+          ref="scrollTop"
+          // animation="bounceInUp"
+          // delay={1000}
+          iterationCount={1}
           useNativeDriver={true}
           style={styles.button}>
           <TouchableOpacity
@@ -89,6 +126,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 30,
+    opacity: 0,
     elevation: 10,
     backgroundColor: colors.getList().app, // #E91E63 4CAF50
     // width: 60,

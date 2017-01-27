@@ -33,7 +33,8 @@ export default class MoviesList extends Component {
     }
 
     this.state = {
-      dataMovies: typeof this.props.list === 'undefined' ? [] : this.props.list
+      dataMovies: typeof this.props.list === 'undefined' ? [] : this.props.list,
+      offset: 0
     };
   }
 
@@ -136,6 +137,19 @@ export default class MoviesList extends Component {
     }
   }
 
+  _onScroll(event) {
+    // console.log(event.nativeEvent);
+
+    var currentOffset = event.nativeEvent.contentOffset.y;
+    var direction = currentOffset > this.state.offset ? 'down' : 'up';
+
+    this.state.offset = currentOffset;
+
+    // console.log(direction);
+
+    this.props.onScrollList(direction, currentOffset);
+  }
+
   renderScrollMovieList() {
     if (this.state.dataMovies.length === 0) {
       return (
@@ -152,6 +166,7 @@ export default class MoviesList extends Component {
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
           enableEmptySections={true}
+          onScroll={this._onScroll.bind(this)}
           onEndReached={this.infiniteScroll}
           showsVerticalScrollIndicator={false}
           horizontal={false} />
