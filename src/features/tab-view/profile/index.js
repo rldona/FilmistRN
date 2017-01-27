@@ -40,15 +40,15 @@ export default class Profile extends Component {
 
         <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, paddingVertical: 20}}>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>3</Text>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
             <Text style={{color: '#FFF', textAlign: 'center'}}>Guadadas</Text>
           </View>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>120</Text>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
             <Text style={{color: '#FFF', textAlign: 'center'}}>Vistas</Text>
           </View>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>56</Text>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
             <Text style={{color: '#FFF', textAlign: 'center'}}>Favoritas</Text>
           </View>
         </View>
