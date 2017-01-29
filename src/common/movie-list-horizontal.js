@@ -59,14 +59,14 @@ export default class MoviesListHorizontal extends Component {
   }
 
   _onSelectMovie(movie) {
-    themoviedb.getMovie('movie', movie.id).then((data) => {
-      data.runtime = data.runtime === 0 ? 90 : data.runtime;
-      themoviedb.setCurrentMovie(data);
-      themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
-    });
+    // themoviedb.getMovie('movie', movie.id).then((data) => {
+    //   data.runtime = data.runtime === 0 ? 90 : data.runtime;
+    //   themoviedb.setCurrentMovie(data);
+    //   themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
+    // });
 
-    // themoviedb.setCurrentMovie(movie);
-    // themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
+    themoviedb.setCurrentMovie(movie);
+    themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
   }
 
   renderMovie(movie) {

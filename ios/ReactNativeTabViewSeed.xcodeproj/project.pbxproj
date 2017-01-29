@@ -34,6 +34,7 @@
 		9B0A1955A4DE431BAA331F3F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CAFFE06CA774916904BB0A6 /* Octicons.ttf */; };
 		A7F4FACE517044C0AEBABA58 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74D7306B702A43168D4E3B0D /* SimpleLineIcons.ttf */; };
 		4A55017211D14AD5805E19A1 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20E6A5F799B54C3C8955B807 /* Zocial.ttf */; };
+		ABA26EFE272D4CCA94FBE743 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF5CACE632045ECA17572FD /* libRNImagePicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,6 +257,8 @@
 		8CAFFE06CA774916904BB0A6 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		74D7306B702A43168D4E3B0D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		20E6A5F799B54C3C8955B807 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6770D5E529D5477587E52D3E /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6FF5CACE632045ECA17572FD /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +286,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				1C73ED1414774E1ABE8D4D5E /* libRNVectorIcons.a in Frameworks */,
+				ABA26EFE272D4CCA94FBE743 /* libRNImagePicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +432,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				85004F9188384F02A7D9BFF3 /* RNVectorIcons.xcodeproj */,
+				6770D5E529D5477587E52D3E /* RNImagePicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -881,6 +886,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -897,6 +903,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNativeTabViewSeed.app/ReactNativeTabViewSeed";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};

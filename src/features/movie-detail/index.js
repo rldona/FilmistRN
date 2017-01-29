@@ -158,6 +158,7 @@ export default class MovieDetail extends Component {
             resizeMode={'cover'}
             style={{height: 220, backfaceVisibility: 'hidden'}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 220, backgroundColor: 'rgba(0, 0, 0, 0.15)'}}></View>
             <Header
               isTransparent={true}
               title=""
