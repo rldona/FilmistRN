@@ -40,17 +40,17 @@ export default class App extends Component {
 
     // AsyncStorage.setItem('ping', 'pong !');
 
-    // AsyncStorage.getItem('firebase:authUser:AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4:[DEFAULT]').then((item) => {
-    //   console.log(JSON.parse(item)); // pong !
+    // AsyncStorage.getItem('imageProfile').then((item) => {
+    //   console.log(item);
     // });
 
     // AsyncStorage.removeItem('ping');
 
     // AsyncStorage.clear();
 
-    AsyncStorage.getAllKeys().then((data) => {
-      console.log(data);
-    });
+    // AsyncStorage.getAllKeys().then((data) => {
+    //   console.log(data);
+    // });
 
   }
 

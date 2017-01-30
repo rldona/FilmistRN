@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   Platform,
+  AsyncStorage,
   ScrollView,
   View,
   StyleSheet
@@ -15,17 +16,9 @@ import {
 import * as loginService from '../../../services/login-service';
 import * as colors from '../../../common/colors';
 
+import ImagePicker from 'react-native-image-crop-picker';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-var ImagePicker = require('react-native-image-picker');
-
-var options = {
-  title: 'Elige un avatar...',
-  storageOptions: {
-    skipBackup: true,
-    path: 'images'
-  }
-};
 
 export default class Profile extends Component {
 
@@ -37,6 +30,13 @@ export default class Profile extends Component {
       name: loginService.getCurrentUser().displayName || '?',
       email: loginService.getCurrentUser().email || '?'
     }
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem('imageProfile').then((item) => {
+      source = { uri: 'data:image/jpeg;base64,' + item };
+      this.setState({ avatarSource: source });
+    });
   }
 
   _takePhoto() {
@@ -55,35 +55,22 @@ export default class Profile extends Component {
     // JSON.parse(objeto) -> recupera
     //
 
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+    // TODO: abrir un menu para elegir una foto de la galería o hacer una foto con la cámara
 
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source;
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true
+    }).then(image => {
+      let source;
+      // image.path // file:///data/user/0/com.reactnativetabviewseed/cache/react-native-image-crop-picker/c96fbb55-3e6a-4444-a5b1-f75ea766bf64.jpg
+      // image.data // base64
+      source = { uri: 'data:image/jpeg;base64,' + image.data };
 
-        // You can display the image using either data...
-        source = { uri: 'data:image/jpeg;base64,' + response.data };
+      AsyncStorage.setItem('imageProfile', image.data);
 
-        // Or a reference to the platform specific asset location
-        if (Platform.OS === 'android') {
-          source = { uri: response.uri };
-        } else {
-          source = { uri: response.uri.replace('file://', '') };
-        }
-
-        this.setState({
-          avatarSource: source
-        });
-      }
+      this.setState({ avatarSource: source });
     });
 
   }

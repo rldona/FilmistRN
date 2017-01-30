@@ -12,6 +12,10 @@ export default class Score extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      starSize: 25
+    };
   }
 
   renderStars() {
@@ -22,17 +26,17 @@ export default class Score extends Component {
     let plus      = 0;
 
     for (let i = 0; i < scoreSize; i++) {
-      stars.push(<Icon name="star" color={colors.getList().app} size={30} />);
+      stars.push(<Icon name="star" color={colors.getList().app} size={this.state.starSize} />);
     }
 
     if (scoreRest > 0 && scoreSize !== 5) {
-      stars.push(<Icon name="star-half" color={colors.getList().app} size={30} />);
+      stars.push(<Icon name="star-half" color={colors.getList().app} size={this.state.starSize} />);
     }
 
     plus = 5 - stars.length;
 
     for (let i = 0; i < plus; i++) {
-      stars.push(<Icon name="star-border" color="#333" size={30} />)
+      stars.push(<Icon name="star-border" color="#333" size={this.state.starSize} />)
     }
 
     return (
