@@ -16,6 +16,7 @@ import * as colors from './colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loading from './loading';
+import Score from './score';
 
 const { width, height } = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -102,8 +103,11 @@ export default class MoviesList extends Component {
             <View>
               <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150}}>{movie.title}</Text>
               <Text style={{color: '#999', fontSize: 14, lineHeight: 25}}>{movie.release_date.split('-')[0]}</Text>
-              <Text style={{color: '#FFF', fontSize: 16, marginTop: 20}}>{movie.vote_average}</Text>
-              <Text style={{color: '#FFF', fontSize: 16, marginTop: 5}}>{movie.vote_count}</Text>
+
+              <Score score={movie.vote_average} />
+
+              {/*<Text style={{color: '#FFF', fontSize: 16, marginTop: 20}}>{movie.vote_average}</Text>
+              <Text style={{color: '#FFF', fontSize: 16, marginTop: 5}}>{movie.vote_count}</Text>*/}
             </View>
           </View>
         </TouchableOpacity>

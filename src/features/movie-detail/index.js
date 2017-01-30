@@ -18,6 +18,8 @@ import * as colors from '../../common/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../common/header';
 import Loading from '../../common/loading';
+import Score from '../../common/score';
+
 import MoviesListHorizontal from '../../common/movie-list-horizontal';
 
 const { width, height } = Dimensions.get('window');
@@ -38,13 +40,13 @@ export default class MovieDetail extends Component {
 
   componentDidMount() {
     // InteractionManager.runAfterInteractions(() => {
-    //   themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
-    //     data.runtime = data.runtime === 0 ? 90 : data.runtime;
-    //     this.setState({
-    //       movie: data,
-    //       loaded: true
-    //     });
-    //   });
+    themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
+      data.runtime = data.runtime === 0 ? 90 : data.runtime;
+      this.setState({
+        movie: data,
+        loaded: true
+      });
+    });
     // });
   }
 
@@ -168,28 +170,31 @@ export default class MovieDetail extends Component {
 
         </View>
 
-        <View style={{position: 'absolute', top: 120, left: 15, width: 110, height: 150}}>
+        {/*<View style={{position: 'absolute', top: 120, left: 15, width: 110, height: 150}}>
           <Image
             resizeMode={'cover'}
             style={{width: 110, height: 160, borderRadius: 3, borderWidth: 1, borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
             source={{uri: 'http://image.tmdb.org/t/p/w150' + this.state.movie.poster_path}} />
-        </View>
+        </View>*/}
 
-        <View style={{padding: 0, marginTop: 60}}>
+        <View style={{padding: 0, marginTop: 0}}>
 
-          <View style={styles.infoContainer}>
+          {/*<View style={styles.infoContainer}>
             <Text style={styles.infoItem}><Icon name='thumb-up' color='#4CAF50' size={15} /> {this.state.movie.vote_average}</Text>
             <Text style={styles.infoItem}><Icon name='favorite' color='#F44336' size={15} /> {this.state.movie.vote_count}</Text>
             <Text style={styles.infoItem}><Icon name='timelapse' color='#03A9F4'size={15} /> {this.state.movie.runtime}</Text>
-          </View>
+          </View>*/}
 
-          <View style={{padding: 15, paddingBottom: 20}}>
-            <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginVertical: 10}}>
+          <View style={{padding: 15}}>
+            <Text style={{fontSize: 19, fontWeight: '600', color: '#FFF', marginBottom: 10}}>
               {this.state.movie.title}
             </Text>
+
+            <Score score={this.state.movie.vote_average} />
+
             <Text
               numberOfLines={this.state.overviewNumberLines}
-              style={{fontSize: 14, lineHeight: 26, fontWeight: '300', color: '#FFF', marginBottom: 0, textAlign: 'auto' }}>
+              style={{fontSize: 15, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 10, marginBottom: 0, textAlign: 'auto' }}>
               {this.state.movie.overview.length > 0 ? this.state.movie.overview : 'Sinopsis no disponible'}
             </Text>
 
@@ -203,10 +208,10 @@ export default class MovieDetail extends Component {
                   style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
-                  <Text style={{textAlign: 'center', color: colors.getList().app, fontSize: 12}}>
+                  <Text style={{textAlign: 'center', color: "#555", fontSize: 12}}>
                     {this._renderMoreLinesText()}
                   </Text>
-                  <Icon color={colors.getList().app} name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
+                  <Icon color="#555" name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
                 </TouchableOpacity> : null
 
             }
@@ -223,7 +228,7 @@ export default class MovieDetail extends Component {
             <Text style={styles.extendInfoTitle}>Duración</Text><Text style={styles.extendInfoText}>{this.state.movie.runtime} minutos</Text>
           </View>
           <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Año de estreno</Text><Text style={styles.extendInfoText}>{this.state.movie.release_date.split('-')[0]}</Text>
+            <Text style={styles.extendInfoTitle}>Estreno</Text><Text style={styles.extendInfoText}>{this.state.movie.release_date.split('-')[2]}/{this.state.movie.release_date.split('-')[1]}/{this.state.movie.release_date.split('-')[0]}</Text>
           </View>
           <View style={styles.extendInfoRow}>
             <Text style={styles.extendInfoTitle}>Director</Text><Text style={styles.extendInfoText}>-</Text>
@@ -254,7 +259,7 @@ export default class MovieDetail extends Component {
           position="horizontal"
           {...this.props} />
 
-        <View style={{paddingVertical: 20}}></View>
+        <View style={{paddingVertical: 10}}></View>
 
       </ScrollView>
 
@@ -308,7 +313,8 @@ const styles = StyleSheet.create({
     borderRadius: 3
   },
   extendInfo: {
-    backgroundColor: colors.getList().black,
+    elevation: 10,
+    backgroundColor: '#171717',
     padding: 15,
     marginBottom: 10
   },

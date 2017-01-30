@@ -54,6 +54,7 @@ export default class Home extends Component {
 
     return (
       <View renderToHardwareTextureAndroid={true}>
+
         <ScrollView
             ref={(scrollView) => { _scrollView = scrollView; }}
             // onScroll={() => { console.log('onScroll!'); }}

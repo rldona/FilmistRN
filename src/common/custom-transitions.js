@@ -51,8 +51,8 @@ const NONE = Object.assign({}, Navigator.SceneConfigs.FadeAndroid, {
 
 const FloatFromBottomAndroidCustom = Object.assign({}, Navigator.SceneConfigs.FadeAndroid, {
     gestures: null,
-    defaultTransitionVelocity: 15,
-    springFriction: 5,
+    defaultTransitionVelocity: 20,
+    springFriction: 2,
     animationInterpolators: {
       into: buildStyleInterpolator(FromTheFrontAndroid),
       out: buildStyleInterpolator(ToTheBackAndroid),

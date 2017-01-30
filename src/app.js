@@ -142,8 +142,8 @@ export default class App extends Component {
             if (route.index === 0 || route.index === 1) {
               return CustomTransitions.NONE;
             } else {
-              // return Navigator.SceneConfigs.FloatFromBottomAndroid;
-              return CustomTransitions.FloatFromBottomAndroidCustom;
+              return Navigator.SceneConfigs.FloatFromBottomAndroid;
+              // return CustomTransitions.FloatFromBottomAndroidCustom;
             }
 
           }}/>
