@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {
   View,
+  Text,
   StyleSheet,
 } from 'react-native';
 
@@ -42,6 +43,7 @@ export default class Score extends Component {
     return (
       <View style={[styles.row, styles.score]}>
         {stars}
+        <Text style={{color: '#CCC', marginTop: 5, marginLeft: 10, fontSize: 12}}>{this.props.score}/10</Text>
       </View>
     );
 
@@ -49,7 +51,7 @@ export default class Score extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.row}>
         {this.renderStars()}
       </View>
     )

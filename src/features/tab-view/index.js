@@ -37,7 +37,7 @@ export default class App extends Component {
 
     themoviedb.setCurrentTab({title: 'FILMIST'});
 
-    // AsyncStorage.setItem('login', 'true');
+    AsyncStorage.setItem('login', 'true');
 
     this.state = {
       index: initTab,

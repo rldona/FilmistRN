@@ -101,8 +101,8 @@ export default class MoviesList extends Component {
               style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
               source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
             <View>
-              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150}}>{movie.title}</Text>
-              <Text style={{color: '#999', fontSize: 14, lineHeight: 25}}>{movie.release_date.split('-')[0]}</Text>
+              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 15, marginBottom: 5}}>{movie.title}</Text>
+              <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.release_date.split('-')[0]}</Text>
 
               <Score score={movie.vote_average} />
 

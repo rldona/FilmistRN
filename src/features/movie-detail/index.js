@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../common/header';
 import Loading from '../../common/loading';
 import Score from '../../common/score';
+import SwitchLists from '../../common/switch-lists';
 
 import MoviesListHorizontal from '../../common/movie-list-horizontal';
 
@@ -152,13 +153,14 @@ export default class MovieDetail extends Component {
 
       <ScrollView
         // ref={(scrollView) => { _scrollView = scrollView; }}
+        showsVerticalScrollIndicator={false}
         style={{ backgroundColor: colors.getList().primary, height: height }}>
 
         <View>
 
           <Image
             resizeMode={'cover'}
-            style={{height: 220, backfaceVisibility: 'hidden'}}
+            style={{height: 220, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
             <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 220, backgroundColor: 'rgba(0, 0, 0, 0.15)'}}></View>
             <Header
@@ -185,20 +187,24 @@ export default class MovieDetail extends Component {
             <Text style={styles.infoItem}><Icon name='timelapse' color='#03A9F4'size={15} /> {this.state.movie.runtime}</Text>
           </View>*/}
 
-          <View style={{padding: 15}}>
-            <Text style={{fontSize: 19, fontWeight: '600', color: '#FFF', marginBottom: 10}}>
+          <View style={{padding: 15, paddingBottom: 10}}>
+            <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
               {this.state.movie.title}
+            </Text>
+
+            <Text style={{fontSize: 12, fontWeight: '400', color: '#CCC', marginBottom: 2}}>
+              {this.state.movie.release_date.split('-')[0]}
             </Text>
 
             <Score score={this.state.movie.vote_average} />
 
             <Text
               numberOfLines={this.state.overviewNumberLines}
-              style={{fontSize: 15, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 10, marginBottom: 0, textAlign: 'auto' }}>
+              style={{fontSize: 14, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 0, marginBottom: 0, textAlign: 'auto' }}>
               {this.state.movie.overview.length > 0 ? this.state.movie.overview : 'Sinopsis no disponible'}
             </Text>
 
-            <View style={{paddingVertical: 10}}></View>
+            <View style={{paddingVertical: 5}}></View>
 
             {
 
@@ -208,10 +214,10 @@ export default class MovieDetail extends Component {
                   style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
-                  <Text style={{textAlign: 'center', color: "#555", fontSize: 12}}>
+                  {/*<Text style={{textAlign: 'center', color: "#555", fontSize: 12}}>
                     {this._renderMoreLinesText()}
-                  </Text>
-                  <Icon color="#555" name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
+                  </Text>*/}
+                  <Icon color={colors.getList().app} name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
                 </TouchableOpacity> : null
 
             }
@@ -220,7 +226,23 @@ export default class MovieDetail extends Component {
 
         </View>
 
-        <View style={styles.extendInfo}>
+        <View style={{paddingLeft: 15, paddingRight: 15}}>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Dirigida por: Damien Cazelle</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Protagonizada por: Sebástina Loix, Angél López, Antonio Javier González Roca, Antonio Bandera, Celin Dion</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Escrita por: Raúl López Doña</Text>
+        </View>
+
+        <View style={{marginTop: 20, paddingLeft: 15, paddingRight: 15, flexDirection: 'row', alignItems: 'flex-end'}}>
+
+          <Icon name='loupe' color={colors.getList().app} size={22} />
+          {/* <Icon name='library-add' color={colors.getList().app} size={23} /> */}
+          <Text style={{fontSize: 16, color: colors.getList().app, marginLeft: 5}}>Añade a listas</Text>
+
+        </View>
+
+        <SwitchLists />
+
+        {/*<View style={styles.extendInfo}>
           <View style={styles.extendInfoRow}>
             <Text style={styles.extendInfoTitle}>Título original</Text><Text style={styles.extendInfoText}>{this.state.movie.original_title}</Text>
           </View>
@@ -242,7 +264,7 @@ export default class MovieDetail extends Component {
           <View style={styles.extendInfoRow}>
             <Text style={styles.extendInfoTitle}>Fotografía</Text><Text style={styles.extendInfoText}>-</Text>
           </View>
-        </View>
+        </View>*/}
 
         <View>
           {/* Actores*/}

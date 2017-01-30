@@ -13,6 +13,7 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as userService from '../../../services/user-service';
 import * as loginService from '../../../services/login-service';
 import * as colors from '../../../common/colors';
 
@@ -27,16 +28,46 @@ export default class Profile extends Component {
 
     this.state = {
       avatarSource: null,
-      name: loginService.getCurrentUser().displayName || '?',
-      email: loginService.getCurrentUser().email || '?'
+      name: userService.getCurrentUser().displayName || '?',
+      email: userService.getCurrentUser().email || '?'
     }
   }
 
   componentWillMount() {
-    AsyncStorage.getItem('imageProfile').then((item) => {
-      source = { uri: 'data:image/jpeg;base64,' + item };
-      this.setState({ avatarSource: source });
+
+    console.log(userService.getCurrentUser());
+
+    // TODO: recuper por usuario (UID)
+
+    AsyncStorage.getItem('users').then((usersArray) => {
+
+      let users = JSON.parse(usersArray);
+
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].uid === userService.getCurrentUser().uid) {
+          // users[i][field] = data;
+          source = { uri: 'data:image/jpeg;base64,' + users[i].photoURL };
+          this.setState({ avatarSource: source });
+        }
+      }
+
+      // AsyncStorage.setItem('users', users);
+
     });
+
+
+    // AsyncStorage.getItem('imageProfile').then((item) => {
+    //   if (item) {
+
+    //     // userService.updateUser('photoURL', item);
+
+    //     source = { uri: 'data:image/jpeg;base64,' + item };
+    //     this.setState({ avatarSource: source });
+    //   }
+    // });
+  }
+
+  componentDidMount() {
   }
 
   _takePhoto() {
@@ -58,16 +89,18 @@ export default class Profile extends Component {
     // TODO: abrir un menu para elegir una foto de la galería o hacer una foto con la cámara
 
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
+      width: 200,
+      height: 200,
       cropping: true,
       includeBase64: true
     }).then(image => {
       let source;
-      // image.path // file:///data/user/0/com.reactnativetabviewseed/cache/react-native-image-crop-picker/c96fbb55-3e6a-4444-a5b1-f75ea766bf64.jpg
-      // image.data // base64
+
       source = { uri: 'data:image/jpeg;base64,' + image.data };
 
+      userService.updateUser('photoURL', image.data);
+
+      // TODO: guardar en el objeto de usuario (UID)
       AsyncStorage.setItem('imageProfile', image.data);
 
       this.setState({ avatarSource: source });

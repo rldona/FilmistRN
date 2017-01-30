@@ -14,6 +14,7 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
+import * as userService from './services/user-service';
 import * as loginService from './services/login-service';
 import * as themoviedb from './services/movies-service';
 import * as colors from './common/colors';
@@ -48,9 +49,12 @@ export default class App extends Component {
 
     // AsyncStorage.clear();
 
-    // AsyncStorage.getAllKeys().then((data) => {
-    //   console.log(data);
-    // });
+    AsyncStorage.getAllKeys().then((data) => {
+      console.log(data);
+      // AsyncStorage.getItem(data[0]).then((item) => {
+      //   console.log(JSON.parse(item));
+      // });
+    });
 
   }
 

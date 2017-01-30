@@ -85,7 +85,7 @@ export default class MoviesListHorizontal extends Component {
   }
 
   renderScrollMovieList() {
-    if (this.state.dataMovies.length === 0) {
+    if (this.state.dataMovies.length === 0 && typeof this.props.showLoading === 'undefined') {
       return (
         <Loading />
       )
@@ -111,6 +111,7 @@ export default class MoviesListHorizontal extends Component {
         <ListView
           style={{ marginBottom: 0}}
           dataSource={this.state.dataMovies}
+          // pagingEnabled={true}
           initialListSize={1}
           renderRow={(rowData) => this.renderMovie(rowData)}
           horizontal={true}
@@ -134,7 +135,7 @@ export default class MoviesListHorizontal extends Component {
 var styles = StyleSheet.create({
   title: {
     color: '#FFF',
-    fontWeight: '600',
+    fontWeight: '400',
     paddingTop: 5,
     paddingLeft: 15,
     fontSize: 16,

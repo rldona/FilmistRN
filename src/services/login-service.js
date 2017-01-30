@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import * as userService from './user-service';
 import * as themoviedb from './movies-service';
 
 let currentUser;
@@ -19,6 +20,11 @@ export const login = (email, password) => {
   firebase.auth().signInWithEmailAndPassword(email,password)
     .then((user) => {
       currentUser = user;
+
+      userService.setCurrentUser(user);
+
+      userService.init();
+
       themoviedb.getNavigator().push({index: 1, title: 'home'});
     }).catch((error) => {
       alert(error.message);
@@ -33,8 +39,11 @@ export const register = (name, email, password) => {
       user.updateProfile({
         displayName: name,
         photoURL: ''
-      }).then(() => {
+      }).then((user) => {
         currentUser = user;
+
+        userService.setCurrentUser(user);
+
         themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
       }, (error) => {
         alert(error);

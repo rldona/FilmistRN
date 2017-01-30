@@ -12,6 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import * as userService from '../../services/user-service';
 import * as loginService from '../../services/login-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
@@ -40,10 +41,19 @@ export default class Welcome extends Component {
   componentDidMount() {
     AsyncStorage.getAllKeys().then((data) => {
       if (data.length > 0) {
-        AsyncStorage.getItem(data[0]).then((item) => {
+        AsyncStorage.getItem('login').then((item) => {
           if (item) {
-            loginService.setCurrentUser(JSON.parse(item));
-            themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
+
+            AsyncStorage.getItem(data[0]).then((user) => {
+              loginService.setCurrentUser(JSON.parse(user));
+
+              userService.setCurrentUser(JSON.parse(user));
+
+              userService.init();
+
+              themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
+            });
+
           } else {
             this.setState({showWelcome: true});
           }
@@ -107,7 +117,7 @@ export default class Welcome extends Component {
 
       return (
         <View style={{backgroundColor: colors.getList().primary, height: height}}>
-          {/*<Loading position="center" />*/}
+          <Loading position="center" />
         </View>
       );
 

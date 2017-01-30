@@ -52,7 +52,7 @@ export default class Settings extends Component {
   }
 
   _loggout() {
-    AsyncStorage.clear().then(() => {
+    AsyncStorage.removeItem('login').then(() => {
       loginService.logout();
     });
   }
