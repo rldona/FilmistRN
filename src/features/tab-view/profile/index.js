@@ -125,7 +125,7 @@ export default class Profile extends Component {
     } else {
       return (
         <TouchableOpacity onPress={this._takePhoto.bind(this)}>
-          <View style={{flexDirection: 'column', alignItems: 'center', backgroundColor: colors.getList().secondary, width: 100, height: 100, borderRadius: 50, marginBottom: 20, borderRadius: 50}}>
+          <View style={{flexDirection: 'column', alignItems: 'center', backgroundColor: colors.getList().secondary, width: 100, height: 100, borderRadius: 50, marginBottom: 20}}>
             <Text style={{marginTop: 25}}>
               <Icon name="face" color="#CCC" size={50} />
             </Text>
