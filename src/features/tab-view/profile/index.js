@@ -43,12 +43,16 @@ export default class Profile extends Component {
 
       let users = JSON.parse(usersArray);
 
-      for (let i = 0; i < users.length; i++) {
-        if (users[i].uid === userService.getCurrentUser().uid) {
-          // users[i][field] = data;
-          source = { uri: 'data:image/jpeg;base64,' + users[i].photoURL };
-          this.setState({ avatarSource: source });
+      if (users) {
+
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].uid === userService.getCurrentUser().uid) {
+            // users[i][field] = data;
+            source = { uri: 'data:image/jpeg;base64,' + users[i].photoURL };
+            this.setState({ avatarSource: source });
+          }
         }
+
       }
 
       // AsyncStorage.setItem('users', users);

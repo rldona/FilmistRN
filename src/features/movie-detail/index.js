@@ -214,9 +214,9 @@ export default class MovieDetail extends Component {
                   style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
-                  {/*<Text style={{textAlign: 'center', color: "#555", fontSize: 12}}>
+                  <Text style={{textAlign: 'center', color: colors.getList().app, fontSize: 12}}>
                     {this._renderMoreLinesText()}
-                  </Text>*/}
+                  </Text>
                   <Icon color={colors.getList().app} name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
                 </TouchableOpacity> : null
 
@@ -234,9 +234,9 @@ export default class MovieDetail extends Component {
 
         <View style={{marginTop: 20, paddingLeft: 15, paddingRight: 15, flexDirection: 'row', alignItems: 'flex-end'}}>
 
-          <Icon name='loupe' color={colors.getList().app} size={22} />
-          {/* <Icon name='library-add' color={colors.getList().app} size={23} /> */}
-          <Text style={{fontSize: 16, color: colors.getList().app, marginLeft: 5}}>Añade a listas</Text>
+          <Icon name='loupe' color="#CCC" size={22} />
+          {/* <Icon name='library-add' color="#CCC" size={23} /> */}
+          <Text style={{fontSize: 16, color: '#CCC', marginLeft: 5}}>Guarda en tus listas</Text>
 
         </View>
 

@@ -105,7 +105,7 @@ export default class MoviesListHorizontal extends Component {
               themoviedb.setCurrentCollection(this.props.collection);
               themoviedb.getNavigator().push({index: 4, route: 'top-list'});
             }}>
-            <Text style={styles.viewAll}>VER MÁS</Text>
+            <Text style={styles.viewAll}>VER TODAS</Text>
           </TouchableOpacity>
         </View>
         <ListView

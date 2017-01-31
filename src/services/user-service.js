@@ -25,7 +25,7 @@ export const init = () => {
 
           AsyncStorage.getItem('users').then((users) => {
 
-            console.log(users);
+            // console.log(users);
 
             if (users) {
 
@@ -35,7 +35,8 @@ export const init = () => {
               if (findUser(firebaseConfig.uid, JSON.parse(users))) {
                 // 3. Está en la lista. Establecer por como actual
                 console.log('3. Está en la lista. Establecer por como actual');
-                currentUser = users[i];
+                // currentUser = users[0];
+                // console.log(users[0]);
               } else {
                 // 4. No está registrado. Crear
                 console.log('4. No está registrado. Crear...');
@@ -99,6 +100,8 @@ export const createUser = (firebase) => {
     AsyncStorage.setItem('users', JSON.stringify(users));
   });
 
+  init();
+
 }
 
 export const findUser = (uid, users) => {
@@ -133,6 +136,8 @@ export const updateUser = (field, data) => {
     AsyncStorage.setItem('users', JSON.stringify(users));
 
   });
+
+  init();
 
 }
 

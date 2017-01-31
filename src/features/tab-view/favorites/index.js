@@ -24,8 +24,8 @@ export default class Favorites extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Historial title="Las veré algún día" list={this.state.saved} />
-        <Historial title="Ya las he visto" list={this.state.viewed} />
+        <Historial title="Las quiero ver" list={this.state.saved} />
+        <Historial title="Las he visto" list={this.state.viewed} />
         <Historial title="Mis favoritas" list={this.state.favorites} />
       </ScrollView>
     );
