@@ -22,9 +22,9 @@ export default class SwitchLists extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SwitchListsItem icon="turned-in-not" title="La quiero ver" />
-        <SwitchListsItem icon="remove-red-eye" title="Ya la he visto" />
-        <SwitchListsItem icon="star" title="Mis favoritas" />
+        <SwitchListsItem user={this.props.user} icon="turned-in-not" title="La quiero ver" type="saved" />
+        <SwitchListsItem user={this.props.user} icon="remove-red-eye" title="Ya la he visto" type="viewed" />
+        <SwitchListsItem user={this.props.user} icon="star" title="Mis favoritas" type="favorite" />
       </View>
     )
   }

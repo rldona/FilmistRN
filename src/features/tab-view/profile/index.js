@@ -48,8 +48,10 @@ export default class Profile extends Component {
         for (let i = 0; i < users.length; i++) {
           if (users[i].uid === userService.getCurrentUser().uid) {
             // users[i][field] = data;
-            source = { uri: 'data:image/jpeg;base64,' + users[i].photoURL };
-            this.setState({ avatarSource: source });
+            if (users[i].photoURL) {
+              source = { uri: 'data:image/jpeg;base64,' + users[i].photoURL };
+              this.setState({ avatarSource: source });
+            }
           }
         }
 
@@ -63,7 +65,7 @@ export default class Profile extends Component {
     // AsyncStorage.getItem('imageProfile').then((item) => {
     //   if (item) {
 
-    //     // userService.updateUser('photoURL', item);
+    //     // userService.updateField('photoURL', item);
 
     //     source = { uri: 'data:image/jpeg;base64,' + item };
     //     this.setState({ avatarSource: source });
@@ -102,10 +104,10 @@ export default class Profile extends Component {
 
       source = { uri: 'data:image/jpeg;base64,' + image.data };
 
-      userService.updateUser('photoURL', image.data);
+      userService.updateField('photoURL', image.data);
 
       // TODO: guardar en el objeto de usuario (UID)
-      AsyncStorage.setItem('imageProfile', image.data);
+      // AsyncStorage.setItem('imageProfile', image.data);
 
       this.setState({ avatarSource: source });
     });

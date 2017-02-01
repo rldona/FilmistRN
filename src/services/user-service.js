@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-let users = [];
+let usersList;
 let firebaseConfig;
 let currentUser;
 
@@ -29,7 +29,17 @@ export const init = () => {
 
             if (users) {
 
-              console.log(JSON.parse(users));
+              usersList = JSON.parse(users);
+
+              for (let i = 0; i < usersList.length; i++) {
+                if (usersList[i].uid === firebaseConfig.uid) {
+                  currentUser = usersList[i];
+                }
+              }
+
+              // console.log(currentUser);
+
+              // console.log(JSON.parse(users));
 
               // 2. ¿ Que usario ha entrado y está en la lista ?
               if (findUser(firebaseConfig.uid, JSON.parse(users))) {
@@ -50,7 +60,10 @@ export const init = () => {
               // init users array
               AsyncStorage.setItem('users', JSON.stringify([]));
 
+              createUser(firebaseConfig);
+
             }
+
 
           });
 
@@ -79,24 +92,23 @@ export const createUser = (firebase) => {
     name: firebase.displayName,
     email: firebase.email,
     photoURL: null,
-    lists: [
-      {
-        saved: []
-      },
-      {
-        views: []
-      },
-      {
-        favorite: []
-      }
-    ]
+    movies: {},
+    historial: []
   };
+
+  // 2123: {
+  //   saved: false,
+  //   viewed: false,
+  //   favorite: true
+  // }
 
   console.log('new user');
 
   AsyncStorage.getItem('users').then(usersArray => {
     let users = JSON.parse(usersArray);
+
     users.push(user);
+
     AsyncStorage.setItem('users', JSON.stringify(users));
   });
 
@@ -116,14 +128,33 @@ export const findUser = (uid, users) => {
 
 }
 
-export const updateUser = (field, data) => {
-  console.log(field);
-  console.log(currentUser);
+export const updateUser = (data) => {
+
+  AsyncStorage.getItem('users').then((usersList) => {
+
+    let users = JSON.parse(usersList);
+
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].uid === currentUser.uid) {
+        users[i] = null;
+        users[i] = data;
+      }
+    }
+
+    AsyncStorage.setItem('users', JSON.stringify(users));
+
+  });
+
+}
+
+export const updateField = (field, data) => {
+  // console.log(field);
+  // console.log(currentUser);
   // console.log(data);
 
-  AsyncStorage.getItem('users').then((usersArray) => {
+  AsyncStorage.getItem('users').then((usersList) => {
 
-    let users = JSON.parse(usersArray);
+    let users = JSON.parse(usersList);
 
     for (let i = 0; i < users.length; i++) {
       if (users[i].uid === currentUser.uid) {
@@ -131,13 +162,11 @@ export const updateUser = (field, data) => {
       }
     }
 
-    console.log(users);
+    // console.log(users);
 
     AsyncStorage.setItem('users', JSON.stringify(users));
 
   });
-
-  init();
 
 }
 
@@ -155,6 +184,6 @@ export const getCurrentUser = () => {
   return currentUser;
 }
 
-export const getUser = () => {
-  return firebase.auth().currentUser;
+export const getUsers = () => {
+  return usersList;
 }

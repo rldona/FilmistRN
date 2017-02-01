@@ -8,6 +8,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import * as themoviedb from '../../services/movies-service';
+import * as userService from '../../services/user-service';
 import * as colors from '../colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -25,18 +27,42 @@ export default class SwitchListsItem extends Component {
     };
   }
 
+  componentDidMount() {
+    // let currentUser = userService.getCurrentUser();
+    setTimeout(() => {
+      this.setState({color: this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type] ? colors.getList().app : '#555'});
+    }, 250);
+  }
+
   _changeState() {
-    if (this.state.added) {
+
+    // let currentUser = userService.getCurrentUser();
+
+    // console.log(this.state.added);
+    // console.log(this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type]);
+
+    // this.setState({
+    //   added: this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type]
+    // });
+
+    if (this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type]) {
       this.setState({
         added: false,
         color: '#555'
       });
+      this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type] = false;
     } else {
       this.setState({
         added: true,
         color: colors.getList().app
       });
+      this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type] = true;
     }
+
+    userService.updateUser(this.props.user);
+
+    // console.log(this.props.user);
+
   }
 
   render() {

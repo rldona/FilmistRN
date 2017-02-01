@@ -12,6 +12,7 @@ import {
   InteractionManager
 } from 'react-native';
 
+import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
@@ -49,6 +50,25 @@ export default class MovieDetail extends Component {
       });
     });
     // });
+
+    let currentUser = userService.getCurrentUser();
+
+    // console.log(currentUser);
+
+    if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
+      console.log('la pelicula no tiene listados añadidos');
+      currentUser.movies[themoviedb.getCurrentMovie().id] = {
+        saved: false,
+        viewed: false,
+        favorite: false
+      };
+    }
+
+    // console.log(currentUser);
+
+    userService.setCurrentUser(currentUser);
+    userService.updateUser(currentUser);
+
   }
 
   _onActionSelected = (action) => {
@@ -94,6 +114,14 @@ export default class MovieDetail extends Component {
     } else {
       return 'expand-less';
     }
+  }
+
+  renderSwitchLists() {
+    let currentUser = userService.getCurrentUser();
+
+    return (
+      <SwitchLists user={currentUser} />
+    )
   }
 
   render() {
@@ -240,7 +268,8 @@ export default class MovieDetail extends Component {
 
         </View>
 
-        <SwitchLists />
+
+        {this.renderSwitchLists()}
 
         {/*<View style={styles.extendInfo}>
           <View style={styles.extendInfoRow}>

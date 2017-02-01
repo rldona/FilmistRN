@@ -49,12 +49,12 @@ export default class App extends Component {
 
     // AsyncStorage.clear();
 
-    AsyncStorage.getAllKeys().then((data) => {
-      console.log(data);
-      // AsyncStorage.getItem(data[0]).then((item) => {
-      //   console.log(JSON.parse(item));
-      // });
-    });
+    // AsyncStorage.getAllKeys().then((data) => {
+    //   console.log(data);
+    //   AsyncStorage.getItem('users').then((users) => {
+    //     console.log(JSON.parse(users));
+    //   });
+    // });
 
   }
 

@@ -29,9 +29,9 @@ export default class Historial extends Component {
   }
 
   componentWillReceiveProps() {
-    if (themoviedb.getHistorialList().length > 0) {
+    if (this.props.list.length > 0) {
       this.setState({
-        dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
+        dataMovies: ds.cloneWithRows(this.props.list)
       });
     } else {
       this.setState({
