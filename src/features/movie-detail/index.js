@@ -53,8 +53,6 @@ export default class MovieDetail extends Component {
 
     let currentUser = userService.getCurrentUser();
 
-    // console.log(currentUser);
-
     if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
       console.log('la pelicula no tiene listados añadidos');
       currentUser.movies[themoviedb.getCurrentMovie().id] = {
