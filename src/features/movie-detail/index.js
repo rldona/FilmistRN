@@ -62,8 +62,6 @@ export default class MovieDetail extends Component {
       };
     }
 
-    // console.log(currentUser);
-
     userService.setCurrentUser(currentUser);
     userService.updateUser(currentUser);
 
