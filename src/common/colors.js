@@ -1,6 +1,6 @@
 const colors = {
   login: '#e2e2e2',
-  app: '#4CAF50', // 4CAF50 2196F3
+  app: '#4CAF50',
   google: '#4285f4',
   white: '#FFF',
   black: '#000',
