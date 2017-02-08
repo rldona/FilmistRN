@@ -95,20 +95,19 @@ export default class MoviesList extends Component {
           style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
           onPress={this._onSelectMovie.bind(this, movie)}
           activeOpacity={0.9}>
-          <View style={{flexDirection: 'row', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
+
             <Image
               resizeMode={'cover'}
               style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
               source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+
             <View>
-              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 15, marginBottom: 5}}>{movie.title}</Text>
+              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.title}</Text>
               <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.release_date.split('-')[0]}</Text>
-
               <Score score={movie.vote_average} />
-
-              {/*<Text style={{color: '#FFF', fontSize: 16, marginTop: 20}}>{movie.vote_average}</Text>
-              <Text style={{color: '#FFF', fontSize: 16, marginTop: 5}}>{movie.vote_count}</Text>*/}
             </View>
+
           </View>
         </TouchableOpacity>
       </View>

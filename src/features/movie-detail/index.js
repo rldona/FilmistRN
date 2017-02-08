@@ -35,6 +35,11 @@ export default class MovieDetail extends Component {
       // movie: null,
       // loaded: false,
       movie: themoviedb.getCurrentMovie(),
+      cast: {
+        director: '-',
+        writer: '-',
+        actors: []
+      },
       loaded: true,
       overviewNumberLines: 2
     }
@@ -50,6 +55,29 @@ export default class MovieDetail extends Component {
       });
     });
     // });
+
+    themoviedb.getCredits(themoviedb.getCurrentMovie().id).then((data) => {
+      console.log(data);
+      let cast = {
+        director: data.crew[0].name,
+        writer: data.crew[1].name,
+        actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
+      };
+
+      for (let i = 0; i < data.crew.length; i++) {
+        if (data.crew[i].job === 'Director') {
+          cast.director = data.crew[i].name;
+        }
+        if (data.crew[i].job === 'Novel') {
+          cast.writer= data.crew[i].name;
+        }
+      }
+
+      this.setState({cast: cast});
+
+    }).catch((error) => {
+      console.log(error);
+    })
 
     let currentUser = userService.getCurrentUser();
 
@@ -126,7 +154,7 @@ export default class MovieDetail extends Component {
       return (
         <View style={{backgroundColor: colors.getList().primary, height: height}}>
 
-          <View style={{backgroundColor: colors.getList().secondary, height: 220}}>
+          <View style={{backgroundColor: colors.getList().secondary, height: 190}}>
             <Header
               isTransparent={true}
               title=""
@@ -184,9 +212,9 @@ export default class MovieDetail extends Component {
 
           <Image
             resizeMode={'cover'}
-            style={{height: 220, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
+            style={{height: 190, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 220, backgroundColor: 'rgba(0, 0, 0, 0.15)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 190, backgroundColor: 'rgba(0, 0, 0, 0.3)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -213,14 +241,16 @@ export default class MovieDetail extends Component {
 
           <View style={{padding: 15, paddingBottom: 10}}>
             <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
-              {this.state.movie.title}
+              {this.state.movie.title} ({this.state.movie.release_date.split('-')[0]})
             </Text>
 
-            <Text style={{fontSize: 12, fontWeight: '400', color: '#CCC', marginBottom: 2}}>
-              {this.state.movie.release_date.split('-')[0]}
-            </Text>
+            {/*<Text style={{fontSize: 16, fontWeight: '400', color: '#CCC', marginBottom: 2}}>
+              ({this.state.movie.release_date.split('-')[0]})
+            </Text>*/}
 
-            <Score score={this.state.movie.vote_average} />
+            <View style={{marginTop: 5}}>
+              <Score score={this.state.movie.vote_average} />
+            </View>
 
             <Text
               numberOfLines={this.state.overviewNumberLines}
@@ -251,9 +281,9 @@ export default class MovieDetail extends Component {
         </View>
 
         <View style={{paddingLeft: 15, paddingRight: 15}}>
-          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Dirigida por: Damien Cazelle</Text>
-          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Protagonizada por: Sebástina Loix, Angél López, Antonio Javier González Roca, Antonio Bandera, Celin Dion</Text>
-          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Escrita por: Raúl López Doña</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Dirigida por: {this.state.cast.director}</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Protagonizada por: {this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Escrita por: {this.state.cast.writer}</Text>
         </View>
 
         <View style={{marginTop: 20, paddingLeft: 15, paddingRight: 15, flexDirection: 'row', alignItems: 'flex-end'}}>
@@ -264,32 +294,7 @@ export default class MovieDetail extends Component {
 
         </View>
 
-
         {this.renderSwitchLists()}
-
-        {/*<View style={styles.extendInfo}>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Título original</Text><Text style={styles.extendInfoText}>{this.state.movie.original_title}</Text>
-          </View>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Duración</Text><Text style={styles.extendInfoText}>{this.state.movie.runtime} minutos</Text>
-          </View>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Estreno</Text><Text style={styles.extendInfoText}>{this.state.movie.release_date.split('-')[2]}/{this.state.movie.release_date.split('-')[1]}/{this.state.movie.release_date.split('-')[0]}</Text>
-          </View>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Director</Text><Text style={styles.extendInfoText}>-</Text>
-          </View>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Guión</Text><Text style={styles.extendInfoText}>-</Text>
-          </View>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Música</Text><Text style={styles.extendInfoText}>-</Text>
-          </View>
-          <View style={styles.extendInfoRow}>
-            <Text style={styles.extendInfoTitle}>Fotografía</Text><Text style={styles.extendInfoText}>-</Text>
-          </View>
-        </View>*/}
 
         <View>
           {/* Actores*/}

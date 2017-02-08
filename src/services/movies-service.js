@@ -105,8 +105,6 @@ export const getCurrentTab = () => {
   return currentTab;
 }
 
-
-
 export const setCurrentTitle = (title) => {
   currentTitle = title;
 }
@@ -130,10 +128,6 @@ export const setCurrentCollection = (collection) => {
 export const getCurrentCollection = () => {
   return currentCollection;
 }
-
-
-
-
 
 export const search = (query, currentPage) => {
   let page = currentPage || 1;
@@ -195,7 +189,24 @@ export const getSimilar = (type, id, currentPage) => {
 }
 
 export const getMovie = (type, id) => {
-  var filmlistAPI = END_POINT + type + '/' + id + '?' + 'api_key=' + API_KEY + '&language=' + currentLang;
+  let filmlistAPI = END_POINT + type + '/' + id + '?' + 'api_key=' + API_KEY + '&language=' + currentLang;
+
+  return fetch(filmlistAPI, {
+      headers: {
+        'Cache-Control': 'force-cache'
+      }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+export const getCredits = (id) => {
+  let filmlistAPI = END_POINT + 'movie' + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&language=' + currentLang;
 
   return fetch(filmlistAPI, {
       headers: {
