@@ -199,7 +199,10 @@ export default class MovieDetail extends Component {
       )
     }
 
+    // save to historial
     themoviedb.setHistorialList(this.state.movie);
+    var historial = themoviedb.getHistorialList();
+    console.log('historial list: ', historial);
 
     return (
 

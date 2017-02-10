@@ -47,6 +47,12 @@ export default class MoviesList extends Component {
 
   loadMovies() {
 
+    if (this.props.collection === 'historial') {
+      this.setState({
+        dataMovies: ds.cloneWithRows(themoviedb.getHistorialListFull())
+      });
+    }
+
     if (this.props.collection === 'similar') {
       themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id).then((data) => {
         movies = [];

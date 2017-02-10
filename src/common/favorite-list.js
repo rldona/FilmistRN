@@ -18,29 +18,26 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const { width, height } = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class Historial extends Component {
+export default class FavoriteList extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      dataMovies: this.props.historial.length > 0 ? ds.cloneWithRows(this.props.historial) : null
+      dataMovies: this.props.list.length > 0 ? ds.cloneWithRows(this.props.list) : null
     };
   }
 
   componentWillReceiveProps() {
-
-    if (themoviedb.getHistorialList().length > 0) {
+    if (this.props.list.length > 0) {
       this.setState({
-        dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
+        dataMovies: ds.cloneWithRows(this.props.list)
       });
     } else {
       this.setState({
         dataMovies: null
       });
     }
-
-    return true;
   }
 
   _onSelectMovie(movie) {
@@ -101,12 +98,6 @@ export default class Historial extends Component {
             {title}
           </Text>
           <TouchableOpacity
-            onPress={() => {
-              themoviedb.setCurrentTitle('Lo último que has buscado');
-              {/*themoviedb.setCurrentType(this.props.type);*/}
-              themoviedb.setCurrentCollection('historial');
-              themoviedb.getNavigator().push({index: 4, route: 'top-list'});
-            }}
             activeOpacity={0.9}>
             {
               themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
