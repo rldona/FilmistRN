@@ -16,67 +16,28 @@ import * as colors from './colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');
-
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class Historial extends Component {
+export default class FavoriteList extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      dataMovies: null
+      dataMovies: this.props.list.length > 0 ? ds.cloneWithRows(this.props.list) : null
     };
-
-    themoviedb.getHistorialList().then((historial) => {
-      console.log(JSON.parse(historial));
-
-      let historialListLimited = [];
-      let limit = 5
-
-      if (JSON.parse(historial).length > 0) {
-        for (let i = 0; i < limit; i++) {
-          if (typeof JSON.parse(historial)[i] !== 'undefined') {
-            historialListLimited.push(JSON.parse(historial)[i]);
-          }
-        }
-      }
-
-      console.log(historialListLimited.length);
-
-      this.setState({
-        dataMovies: ds.cloneWithRows(historialListLimited)
-      });
-    });
   }
 
   componentWillReceiveProps() {
-    themoviedb.getHistorialList().then((historial) => {
-
-      console.log('historial (promise) ', JSON.parse(historial));
-
-      let historialListLimited = [];
-      let limit = 5
-
-      if (JSON.parse(historial).length > 0) {
-        for (let i = 0; i < limit; i++) {
-          if (typeof JSON.parse(historial)[i] !== 'undefined') {
-            historialListLimited.push(JSON.parse(historial)[i]);
-          }
-        }
-      }
-
-      if (JSON.parse(historial) === null) {
-        this.setState({
-          dataMovies: null
-        });
-      } else {
-        this.setState({
-          dataMovies: ds.cloneWithRows(JSON.parse(historialListLimited))
-        });
-      }
-
-    });
+    if (this.props.list.length > 0) {
+      this.setState({
+        dataMovies: ds.cloneWithRows(this.props.list)
+      });
+    } else {
+      this.setState({
+        dataMovies: null
+      });
+    }
   }
 
   _onSelectMovie(movie) {
@@ -125,23 +86,6 @@ export default class Historial extends Component {
     )
   }
 
-  renderButtonMore() {
-    themoviedb.getHistorialList().then((data) => {
-      if (JSON.parse(data).length > 4) {
-        return (
-          <Text style={styles.viewAll}>VER MÁS</Text>
-        );
-      } else {
-        return null;
-      }
-    });
-
-    return (
-      <Text style={styles.viewAll}>VER MÁS</Text>
-    );
-
-  }
-
   render() {
 
     const { title } = this.props;
@@ -154,14 +98,10 @@ export default class Historial extends Component {
             {title}
           </Text>
           <TouchableOpacity
-            onPress={() => {
-              themoviedb.setCurrentTitle('Lo último que has buscado');
-              {/*themoviedb.setCurrentType(this.props.type);*/}
-              themoviedb.setCurrentCollection('historial');
-              themoviedb.getNavigator().push({index: 4, route: 'top-list'});
-            }}
             activeOpacity={0.9}>
-            {this.renderButtonMore()}
+            {
+              themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
+            }
           </TouchableOpacity>
         </View>
 

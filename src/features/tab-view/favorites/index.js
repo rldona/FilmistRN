@@ -10,7 +10,8 @@ import {
 
 import * as themoviedb from '../../../services/movies-service';
 import * as userService from '../../../services/user-service';
-import Historial from '../../../common/historial';
+
+import FavoriteList from '../../../common/favorite-list';
 
 export default class Favorites extends Component {
 
@@ -50,8 +51,6 @@ export default class Favorites extends Component {
           }
       }
 
-      console.log(favorite);
-
       this.setState({saved: saved});
       this.setState({viewed: viewed});
       this.setState({favorite: favorite});
@@ -63,9 +62,9 @@ export default class Favorites extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Historial title="Las quiero ver" list={this.state.saved} />
-        <Historial title="Las he visto" list={this.state.viewed} />
-        <Historial title="Mis favoritas" list={this.state.favorite} />
+        <FavoriteList title="Las quiero ver" list={this.state.saved} />
+        <FavoriteList title="Las he visto" list={this.state.viewed} />
+        <FavoriteList title="Mis favoritas" list={this.state.favorite} />
       </ScrollView>
     );
   }

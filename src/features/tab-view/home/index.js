@@ -43,6 +43,14 @@ export default class Home extends Component {
     });
   }
 
+  componentWillReceiveProps() {
+    if (themoviedb.getHistorialList().length > 0) {
+      this.setState({
+        movies: themoviedb.getHistorialList()
+      });
+    }
+  }
+
   render() {
     if (!this.state.allLoaded) {
       return (
@@ -94,7 +102,7 @@ export default class Home extends Component {
             position="horizontal"
             {...this.props} />
 
-          <Historial title="Lo último que has buscado" list={this.state.movies} />
+          <Historial title="Lo último que has buscado" historial={this.state.movies} />
 
           <View style={{paddingVertical: 15}}></View>
 
