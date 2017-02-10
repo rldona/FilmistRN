@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native';
-
 const END_POINT = 'http://api.themoviedb.org/3/';
 const API_KEY   = 'd29e0f4d164566ae95cfb5022b6ef0c0';
 
@@ -29,49 +27,33 @@ export const init = () => {
 }
 
 export const setHistorialList = (movie) => {
-
-  console.log('guardando... ', movie);
-
-  AsyncStorage.getItem('historial').then(historial => {
-    let historialList = JSON.parse(historial) || [];
-
-    if (!found(movie, historialList)) {
-      historialList.unshift(movie);
-      AsyncStorage.setItem('historial', JSON.stringify(historialList));
-    }
-  });
+  if (!found(movie)) {
+    historialList.unshift(movie);
+  }
 }
 
 export const getHistorialList = () => {
-  // let historialListLimited = [];
-  // let limit = 5
+  let historialListLimited = [];
+  let limit = 5
 
-  // if (historialList.length > 0) {
-  //   for (let i = 0; i < limit; i++) {
-  //     if (typeof historialList[i] !== 'undefined') {
-  //       historialListLimited.push(historialList[i]);
-  //     }
-  //   }
-  // }
+  if (historialList.length > 0) {
+    for (let i = 0; i < limit; i++) {
+      if (typeof historialList[i] !== 'undefined') {
+        historialListLimited.push(historialList[i]);
+      }
+    }
+  }
 
-  // return historialListLimited;
-
-  return AsyncStorage.getItem('historial');
-}
-
-export const getHistorialListFull = () => {
-  return AsyncStorage.getItem('historial');
+  return historialListLimited;
 }
 
 export const clearHitorialList = () => {
-  AsyncStorage.removeItem('historial').then(() => {
-    historialList = [];
-  });
+  historialList = [];
 }
 
-function found(movie, list) {
-  for (let i = 0; i < list.length; i++) {
-    if (movie.id === list[i].id) {
+function found(movie) {
+  for (let i = 0; i < historialList.length; i++) {
+    if (movie.id === historialList[i].id) {
       return true
     }
   }
