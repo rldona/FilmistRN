@@ -51,8 +51,8 @@ export default class App extends Component {
 
     // AsyncStorage.getAllKeys().then((data) => {
     //   console.log(data);
-    //   AsyncStorage.getItem('historial').then((historial) => {
-    //     console.log(JSON.parse(historial));
+    //   AsyncStorage.getItem('users').then((users) => {
+    //     console.log(JSON.parse(users));
     //   });
     // });
 
