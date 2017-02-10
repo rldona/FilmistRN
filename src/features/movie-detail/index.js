@@ -53,11 +53,14 @@ export default class MovieDetail extends Component {
         movie: data,
         loaded: true
       });
+
+      // save to historial
+      themoviedb.setHistorialList(this.state.movie);
+
     });
     // });
 
     themoviedb.getCredits(themoviedb.getCurrentMovie().id).then((data) => {
-      console.log(data);
       let cast = {
         director: data.crew[0].name,
         writer: data.crew[1].name,
@@ -198,8 +201,6 @@ export default class MovieDetail extends Component {
         </View>
       )
     }
-
-    themoviedb.setHistorialList(this.state.movie);
 
     return (
 
