@@ -51,10 +51,6 @@ export const getHistorialListFull = () => {
   return historialList;
 }
 
-export const getHistorialListFull = () => {
-  return historialList;
-}
-
 export const clearHitorialList = () => {
   historialList = [];
 }
