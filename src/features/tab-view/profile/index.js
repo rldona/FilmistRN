@@ -35,8 +35,6 @@ export default class Profile extends Component {
 
   componentWillMount() {
 
-    console.log(userService.getCurrentUser());
-
     // TODO: recuper por usuario (UID)
 
     AsyncStorage.getItem('users').then((usersArray) => {

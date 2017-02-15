@@ -57,7 +57,6 @@ export default class MovieDetail extends Component {
     // });
 
     themoviedb.getCredits(themoviedb.getCurrentMovie().id).then((data) => {
-      console.log(data);
       let cast = {
         director: data.crew[0].name,
         writer: data.crew[1].name,
@@ -82,7 +81,6 @@ export default class MovieDetail extends Component {
     let currentUser = userService.getCurrentUser();
 
     if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
-      console.log('la pelicula no tiene listados añadidos');
       currentUser.movies[themoviedb.getCurrentMovie().id] = {
         saved: false,
         viewed: false,

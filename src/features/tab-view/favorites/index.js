@@ -50,8 +50,6 @@ export default class Favorites extends Component {
           }
       }
 
-      console.log(favorite);
-
       this.setState({saved: saved});
       this.setState({viewed: viewed});
       this.setState({favorite: favorite});
