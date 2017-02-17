@@ -35,7 +35,6 @@ export const register = (name, email, password) => {
 
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((user) => {
-      // update user name
       user.updateProfile({
         displayName: name,
         photoURL: ''
