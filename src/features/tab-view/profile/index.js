@@ -13,13 +13,14 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as themoviedb from '../../../services/movies-service';
 import * as userService from '../../../services/user-service';
 import * as loginService from '../../../services/login-service';
 import * as colors from '../../../common/colors';
 
 import ImagePicker from 'react-native-image-crop-picker';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Historial from '../../../common/historial';
 
 export default class Profile extends Component {
 
@@ -158,7 +159,9 @@ export default class Profile extends Component {
           </View>
         </View>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, paddingVertical: 20}}>
+        <Historial title="Lo último que has visto" />
+
+        {/*<View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, paddingVertical: 20}}>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
             <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
             <Text style={{color: '#FFF', textAlign: 'center'}}>Guadadas</Text>
@@ -171,7 +174,7 @@ export default class Profile extends Component {
             <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
             <Text style={{color: '#FFF', textAlign: 'center'}}>Favoritas</Text>
           </View>
-        </View>
+        </View>*/}
 
       </ScrollView>
 

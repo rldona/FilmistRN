@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 
 import * as themoviedb from '../../services/movies-service';
+import * as userService from '../../services/user-service';
 
 import RadioButtonsItem from './radio-buttons-item';
 
@@ -37,6 +38,8 @@ export default class RadioButtons extends Component {
 
     // set new language
     themoviedb.setLang(this.state.options[id].language);
+
+    userService.updateField('lang', this.state.options[id].language);
   }
 
   renderItems() {

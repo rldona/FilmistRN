@@ -15,7 +15,7 @@ import * as themoviedb from '../../../services/movies-service';
 import Loading from '../../../common/loading';
 import CategoriesList from '../../../common/categories-list';
 import MoviesListHorizontal from '../../../common/movie-list-horizontal';
-import Historial from '../../../common/historial';
+// import Historial from '../../../common/historial';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -28,7 +28,7 @@ export default class Home extends Component {
       lang: this.props.lang,
       allData: null,
       allLoaded: false,
-      movies: themoviedb.getHistorialList()
+      // movies: themoviedb.getHistorialList()
     };
   }
 
@@ -93,8 +93,6 @@ export default class Home extends Component {
             collection="top_rated"
             position="horizontal"
             {...this.props} />
-
-          <Historial title="Lo último que has buscado" list={this.state.movies} />
 
           <View style={{paddingVertical: 15}}></View>
 

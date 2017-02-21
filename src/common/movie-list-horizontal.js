@@ -8,6 +8,8 @@ import {
   ListView,
   StyleSheet,
   Dimensions,
+  Vibration,
+  ToastAndroid,
   InteractionManager
 } from 'react-native';
 
@@ -73,6 +75,7 @@ export default class MoviesListHorizontal extends Component {
     return(
       <TouchableOpacity
         onPress={this._onSelectMovie.bind(this, movie)}
+        onLongPress={() => {ToastAndroid.show(movie.title, ToastAndroid.SHORT); Vibration.vibrate([0, 20])}}
         activeOpacity={0.9}>
         <View style={{paddingVertical: 10}}>
           <Image
@@ -86,9 +89,8 @@ export default class MoviesListHorizontal extends Component {
 
   renderScrollMovieList() {
     if (this.state.dataMovies.length === 0 && typeof this.props.showLoading === 'undefined') {
-      return (
-        <Loading />
-      )
+      // <Loading />
+      return null
     }
 
     return (

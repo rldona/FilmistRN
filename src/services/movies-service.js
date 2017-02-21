@@ -1,9 +1,11 @@
+import * as userService from './user-service';
+
 const END_POINT = 'http://api.themoviedb.org/3/';
 const API_KEY   = 'd29e0f4d164566ae95cfb5022b6ef0c0';
 
 let allowExitApp;
 let navigator;
-let currentLang = 'es';
+let currentLang;
 let currentMovie;
 let currentTitle;
 let currentType;
@@ -18,7 +20,8 @@ let currentTab = {
 let historialList = [];
 
 export const init = () => {
-  allowExitApp = false;
+  allowExitApp = true;
+  currentLang = 'es';
   distance = 2;
   currentMovie = null;
   currentTitle= '-';
@@ -32,9 +35,13 @@ export const setHistorialList = (movie) => {
   }
 }
 
-export const getHistorialList = () => {
+export const getHistorialList = (clear) => {
   let historialListLimited = [];
-  let limit = 5
+  let limit = 10;
+
+  if (typeof clear !== 'undefined') {
+    return [];
+  }
 
   if (historialList.length > 0) {
     for (let i = 0; i < limit; i++) {
@@ -53,6 +60,7 @@ export const getHistorialListFull = () => {
 
 export const clearHitorialList = () => {
   historialList = [];
+  getHistorialList(true);
 }
 
 function found(movie) {

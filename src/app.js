@@ -51,12 +51,12 @@ export default class App extends Component {
 
     // AsyncStorage.clear();
 
-    // AsyncStorage.getAllKeys().then((data) => {
-    //   console.log(data);
-    //   AsyncStorage.getItem('users').then((users) => {
-    //     console.log(JSON.parse(users));
-    //   });
-    // });
+    AsyncStorage.getAllKeys().then((data) => {
+      console.log(data);
+      AsyncStorage.getItem('users').then((users) => {
+        console.log(JSON.parse(users));
+      });
+    });
 
   }
 
@@ -73,26 +73,26 @@ export default class App extends Component {
     loginService.init();
     themoviedb.init();
 
-    // let allowBackAndroid = 1; // TODO: alamacenar en el servicio. Una vez logado cambiar a 1
-
     if (Platform.OS === 'android') {
       BackAndroid.addEventListener('hardwareBackPress', () => {
-
-        //let allowExitApp = themoviedb.getAllowExitApp();
+        let allowExitApp = themoviedb.getAllowExitApp();
 
         if (this.state.currentIndex === 0.1 || this.state.currentIndex === 0.2 || this.state.currentIndex === 0.3 || this.state.currentIndex > 1) {
           themoviedb.getNavigator().pop();
         } else {
-          // Alert.alert(
-          //   'Salir',
-          //   '¿Realmente quieres salir?',
-          //   [
-          //     {text: 'No', onPress: () => { return false }, style: 'cancel' },
-          //     {text: 'Sí', onPress: () => BackAndroid.exitApp() }
-          //   ]
-          // );
+          if (allowExitApp) {
+            Alert.alert(
+              'Salir',
+              '¿Realmente quieres salir?',
+              [
+                {text: 'No', onPress: () => { return false }, style: 'cancel' },
+                {text: 'Sí', onPress: () => BackAndroid.exitApp() }
+              ]
+            );
+          } else {
+            return true;
+          }
         }
-
         return true;
       });
     }

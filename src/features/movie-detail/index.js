@@ -210,9 +210,9 @@ export default class MovieDetail extends Component {
 
           <Image
             resizeMode={'cover'}
-            style={{height: 190, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
+            style={{height: 200, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 190, backgroundColor: 'rgba(0, 0, 0, 0.3)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.3)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -239,8 +239,11 @@ export default class MovieDetail extends Component {
 
           <View style={{padding: 15, paddingBottom: 10}}>
             <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
-              {this.state.movie.title} ({this.state.movie.release_date.split('-')[0]})
+              {this.state.movie.title}
             </Text>
+            {/*<Text style={{fontSize: 14, fontWeight: '400', color: '#FFF', marginBottom: 2}}>
+              {this.state.movie.release_date.split('-')[0]}
+            </Text>*/}
 
             {/*<Text style={{fontSize: 16, fontWeight: '400', color: '#CCC', marginBottom: 2}}>
               ({this.state.movie.release_date.split('-')[0]})
@@ -279,20 +282,27 @@ export default class MovieDetail extends Component {
         </View>
 
         <View style={{paddingLeft: 15, paddingRight: 15}}>
-          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Dirigida por: {this.state.cast.director}</Text>
-          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Protagonizada por: {this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
-          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 3, fontWeight: '400'}}>Escrita por: {this.state.cast.writer}</Text>
+
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Director</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.director}</Text>
+
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+
+          {/*<Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Escritor {this.state.cast.writer}</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.writer}</Text>*/}
+
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año de estreno</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.release_date.split('-')[0]}</Text>
+
         </View>
 
-        <View style={{marginTop: 20, paddingLeft: 15, paddingRight: 15, flexDirection: 'row', alignItems: 'flex-end'}}>
-
+        {/*<View style={{marginTop: 20, paddingLeft: 15, paddingRight: 15, flexDirection: 'row', alignItems: 'flex-end'}}>
           <Icon name='loupe' color="#CCC" size={22} />
-          {/* <Icon name='library-add' color="#CCC" size={23} /> */}
           <Text style={{fontSize: 16, color: '#CCC', marginLeft: 5}}>Guarda en tus listas</Text>
+        </View>*/}
 
-        </View>
-
-        {this.renderSwitchLists()}
+        {/*{this.renderSwitchLists()}*/}
 
         <View>
           {/* Actores*/}

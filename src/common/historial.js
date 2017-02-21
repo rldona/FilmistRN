@@ -24,20 +24,39 @@ export default class Historial extends Component {
     super(props);
 
     this.state = {
-      dataMovies: this.props.list.length > 0 ? ds.cloneWithRows(this.props.list) : null
+      dataMovies: null
     };
   }
 
-  componentWillReceiveProps() {
-    if (this.props.list.length > 0) {
+  // componentWillReceiveProps() {
+
+  //   console.log(this.props.list)
+
+  //   if (this.props.list.length > 0) {
+  //     this.setState({
+  //       movies: ds.cloneWithRows(this.props.list)
+  //     });
+  //   } else {
+  //     this.setState({
+  //       movies: null
+  //     });
+  //   }
+  // }
+
+  shouldComponentUpdate() {
+    if (themoviedb.getHistorialList().length > 0) {
       this.setState({
-        dataMovies: ds.cloneWithRows(this.props.list)
+        dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
       });
-    } else {
+    }
+
+    if (themoviedb.getHistorialList().length === 0) {
       this.setState({
         dataMovies: null
       });
     }
+
+    return true;
   }
 
   _onSelectMovie(movie) {
@@ -48,6 +67,7 @@ export default class Historial extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
+        style={{marginBottom: 15}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -59,7 +79,7 @@ export default class Historial extends Component {
           </View>
         </Image>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
-          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 17}}>{movie.title}</Text>
+          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 14}}>{movie.title}</Text>
           <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
         </View>
       </TouchableOpacity>
@@ -69,14 +89,14 @@ export default class Historial extends Component {
   renderHistorialList() {
     if (!this.state.dataMovies) {
       return (
-        <View>
+        <View style={{marginHorizontal: 15, marginTop: 15}}>
           <Text style={styles.grid}>VACÍO</Text>
         </View>
       )
     }
 
     return (
-      <View>
+      <View style={{margin: 15}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -91,18 +111,16 @@ export default class Historial extends Component {
     const { title } = this.props;
 
     return (
-      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 15, marginTop: 20, marginLeft: 10, marginRight: 10}}>
+      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0}}>
 
-        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-          <Text style={styles.title}>
-            {title}
-          </Text>
-          <TouchableOpacity
+        <View>
+          <Text style={styles.optionTitle}>{title}</Text>
+          {/*<TouchableOpacity
             activeOpacity={0.9}>
             {
               themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
             }
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
         </View>
 
         {this.renderHistorialList()}
@@ -126,9 +144,18 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#444'
   },
-  title: {
+  optionTitle: {
+    padding: 15,
+    color: '#FFF',
+    fontSize: 15,
+    marginBottom: 0,
+    backgroundColor: colors.getList().secondary,
+    // marginBottom: 10
+  },
+  titlel: {
     fontWeight: '600',
     paddingTop: 5,
+    backgroundColor: colors.getList().secondary,
     paddingLeft: 5,
     fontSize: 16,
     textAlign: 'left',

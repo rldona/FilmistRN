@@ -75,7 +75,10 @@ export default class Settings extends Component {
             <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
               <Checkbox
                 checked={this.state.allowExitApp}
-                onChange={(checked) => this.setState({allowExitApp: checked})} />
+                onChange={(checked) => {
+                  this.setState({allowExitApp: checked});
+                  themoviedb.setAllowExitApp(!checked);
+                }} />
             </View>
           </View>
 
