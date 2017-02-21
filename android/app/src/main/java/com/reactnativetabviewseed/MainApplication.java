@@ -15,6 +15,8 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;    //import package
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -28,7 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new PickerPackage(),
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+            new RCTSplashScreenPackage()    //register Module
       );
     }
   };

@@ -2,6 +2,9 @@ package com.reactnativetabviewseed;
 
 import com.facebook.react.ReactActivity;
 
+import android.os.Bundle;
+import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen
+
 public class MainActivity extends ReactActivity {
 
     /**
@@ -12,4 +15,11 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "ReactNativeTabViewSeed";
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        RCTSplashScreen.openSplashScreen(this);   //open splashscreen
+        super.onCreate(savedInstanceState);
+    }
+
 }

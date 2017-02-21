@@ -30,6 +30,8 @@ import Search from './features/search';
 
 import CustomTransitions from './common/custom-transitions';
 
+import SplashScreen from 'react-native-smart-splash-screen';
+
 export default class App extends Component {
 
   constructor(props) {
@@ -56,6 +58,14 @@ export default class App extends Component {
     //   });
     // });
 
+  }
+
+  componentDidMount () {
+    SplashScreen.close({
+      animationType: SplashScreen.animationType.scale,
+      duration: 250,
+      delay: 250,
+    });
   }
 
   componentWillMount() {
