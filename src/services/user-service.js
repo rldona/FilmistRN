@@ -6,89 +6,52 @@ let currentUser;
 
 export const init = () => {
 
-  console.log('4. Init user-service...');
+  // console.log('4. Init user-service...');
 
   // 1. ¿ Cuatos usuarios guardados ?
-
   AsyncStorage.getAllKeys().then((data) => {
-
-    // AsyncStorage.getItem('users').then((users) => {
-    //   console.log(JSON.parse(users));
-    // });
-
     if (data) {
-
       AsyncStorage.getItem(data[0]).then((firebase) => {
-
-
         if (firebase) {
-
           firebaseConfig = JSON.parse(firebase);
-
           AsyncStorage.getItem('users').then((users) => {
-
-            // console.log(users);
-
             if (users) {
-
               usersList = JSON.parse(users);
-
               for (let i = 0; i < usersList.length; i++) {
                 if (usersList[i].uid === firebaseConfig.uid) {
                   currentUser = usersList[i];
                 }
               }
-
-              // console.log(currentUser);
-
-              // console.log(JSON.parse(users));
-
               // 2. ¿ Que usario ha entrado y está en la lista ?
               if (findUser(firebaseConfig.uid, JSON.parse(users))) {
                 // 3. Está en la lista. Establecer por como actual
-                console.log('3. Está en la lista. Establecer como actual');
+                // console.log('3. Está en la lista. Establecer como actual');
                 // currentUser = users[0];
                 // console.log(users[0]);
               } else {
                 // 4. No está registrado. Crear
-                console.log('4. No está registrado. Crear...');
+                // console.log('4. No está registrado. Crear...');
                 createUser(firebaseConfig);
               }
-
             } else {
-
-              console.log('No hay usuarios creados. Nuevo array');
+              // console.log('No hay usuarios creados. Nuevo array');
 
               // init users array
               AsyncStorage.setItem('users', JSON.stringify([]));
-
               createUser(firebaseConfig);
-
             }
-
-
           });
-
         } else {
-
-          console.log('No existe configuración de Firebase');
-
+          // console.log('No existe configuración de Firebase');
         }
-
       });
-
     } else {
-
-      console.log('No hay datos');
-
+      // console.log('No hay datos');
     }
-
   });
-
 }
 
 export const createUser = (firebase) => {
-
   let user = {
     uid: firebase.uid,
     name: firebase.displayName,
@@ -99,8 +62,6 @@ export const createUser = (firebase) => {
     lang: 'es',
     allowExitApp: true,
   };
-
-  console.log('new user');
 
   AsyncStorage.getItem('users').then(usersArray => {
     let users = JSON.parse(usersArray);
@@ -123,13 +84,10 @@ export const findUser = (uid, users) => {
   }
 
   return false;
-
 }
 
 export const updateUser = (data) => {
-
   AsyncStorage.getItem('users').then((usersList) => {
-
     let users = JSON.parse(usersList);
 
     for (let i = 0; i < users.length; i++) {
@@ -146,12 +104,7 @@ export const updateUser = (data) => {
 }
 
 export const updateField = (field, data) => {
-  console.log(field);
-  // console.log(currentUser);
-  console.log(data);
-
   AsyncStorage.getItem('users').then((usersList) => {
-
     let users = JSON.parse(usersList);
 
     for (let i = 0; i < users.length; i++) {
@@ -160,19 +113,10 @@ export const updateField = (field, data) => {
       }
     }
 
-    console.log(users);
-
     AsyncStorage.setItem('users', JSON.stringify(users));
-
   });
 
 }
-
-export const deleteUser = (uid) => {
-
-}
-
-/// ?? ///
 
 export const setCurrentUser = (user) => {
   currentUser = user;

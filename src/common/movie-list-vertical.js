@@ -49,6 +49,9 @@ export default class MoviesList extends Component {
 
     if (this.props.collection === 'similar') {
       themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id).then((data) => {
+
+        console.log(data);
+
         movies = [];
         movies = data;
         page   = 2;
@@ -95,63 +98,64 @@ export default class MoviesList extends Component {
   }
 
   renderMovieList(movie) {
-
     if (movie.first_air_date === '') {
       movie.first_air_date = '2016-01-01';
     }
 
-    switch (movie.media_type) {
-      case 'person':
-        return null;
-      case 'tv':
-        return (
-          <View style={{borderRadius: 3}}>
-            <TouchableOpacity
-              style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
-              onPress={this._onSelectMovie.bind(this, movie)}
-              activeOpacity={0.9}>
-              <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
-
-                <Image
-                  resizeMode={'cover'}
-                  style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
-                  source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
-
-                <View>
-                  <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.name}</Text>
-                  <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.first_air_date.split('-')[0]}</Text>
-                  <Score score={movie.vote_average} />
-                </View>
-
-              </View>
-            </TouchableOpacity>
-          </View>
-        )
-      case 'movie':
-        return (
-          <View style={{borderRadius: 3}}>
-            <TouchableOpacity
-              style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
-              onPress={this._onSelectMovie.bind(this, movie)}
-              activeOpacity={0.9}>
-              <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
-
-                <Image
-                  resizeMode={'cover'}
-                  style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
-                  source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
-
-                <View>
-                  <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.title}</Text>
-                  <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.release_date.split('-')[0]}</Text>
-                  <Score score={movie.vote_average} />
-                </View>
-
-              </View>
-            </TouchableOpacity>
-          </View>
-        )
+    if (movie.media_type === 'person') {
+      return null;
     }
+
+    if(movie.media_type === 'tv' || movie.name) {
+      return (
+        <View style={{borderRadius: 3}}>
+          <TouchableOpacity
+            style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
+            onPress={this._onSelectMovie.bind(this, movie)}
+            activeOpacity={0.9}>
+            <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
+
+              <Image
+                resizeMode={'cover'}
+                style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
+                source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+
+              <View>
+                <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.name}</Text>
+                <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.first_air_date.split('-')[0]}</Text>
+                <Score score={movie.vote_average} />
+              </View>
+
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+
+    return (
+      <View style={{borderRadius: 3}}>
+        <TouchableOpacity
+          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
+          onPress={this._onSelectMovie.bind(this, movie)}
+          activeOpacity={0.9}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
+
+            <Image
+              resizeMode={'cover'}
+              style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
+              source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+
+            <View>
+              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.title}</Text>
+              <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.release_date.split('-')[0]}</Text>
+              <Score score={movie.vote_average} />
+            </View>
+
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+
   }
 
   infiniteScroll = () => {

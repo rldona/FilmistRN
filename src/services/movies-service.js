@@ -23,7 +23,7 @@ let historialList = [];
 
 export const init = () => {
 
-  console.log('3. Init movies-service...');
+  // console.log('3. Init movies-service...');
 
   allowExitApp = true;
   currentLang = 'es';
@@ -221,10 +221,6 @@ export const getMovie = (type, id) => {
 }
 
 export const getCredits = (type, id) => {
-
-  console.log(type);
-  console.log(id);
-
   if (typeof type === 'undefined') {
     type = 'movie';
   }

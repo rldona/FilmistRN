@@ -6,7 +6,7 @@ let currentUser;
 
 export const init = () => {
 
-  console.log('2. Init login-service...');
+  // console.log('2. Init login-service...');
 
   const config = {
     apiKey: "AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4",

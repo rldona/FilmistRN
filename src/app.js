@@ -71,7 +71,7 @@ export default class App extends Component {
 
   componentWillMount() {
 
-    console.log('1. Init app... ');
+    // console.log('1. Init app... ');
 
     loginService.init();
     themoviedb.init();
