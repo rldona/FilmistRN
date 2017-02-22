@@ -150,7 +150,7 @@ export default class Search extends Component {
             onSubmitEditing={(search) => this._searchMovie()}
             value={this.state.query}
             placeholder="Busca películas o series"
-            autoFocus={false}
+            autoFocus={true}
             underlineColorAndroid='#FFF'
             selectionColor='#000'
             clearButtonMode={'while-editing'}

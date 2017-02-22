@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import * as loginService from '../../services/login-service';
+import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
@@ -37,9 +38,23 @@ export default class Login extends Component {
   }
 
   _login() {
-    loginService.login(this.state.email, this.state.password);
-    this.setState({showLoading: true});
     Keyboard.dismiss();
+
+    if (this.state.email !== '' && this.state.password !== '') {
+      this.setState({showLoading: true});
+
+      loginService.login(this.state.email, this.state.password)
+        .then((user) => {
+          userService.setCurrentUser(user);
+          userService.init();
+          themoviedb.getNavigator().push({index: 1, title: 'home'});
+        }).catch((error) => {
+          alert(error.message);
+          this.setState({showLoading: false});
+        });
+
+    }
+
   }
 
   _remember() {
@@ -51,6 +66,46 @@ export default class Login extends Component {
       return <Text style={styles.buttonTextClear}>INICIA SESIÓN</Text>;
     } else {
       return <Loading color="#FFF" size={19} />;
+    }
+  }
+
+  renderButton() {
+    if (this.state.email !== '' && this.state.password !== '') {
+      return {
+        marginTop: 30,
+        paddingTop: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 17,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: colors.getList().app,
+        backgroundColor: colors.getList().app,
+        marginBottom: 15,
+        minWidth: 300
+      }
+    } else {
+      return {
+        marginTop: 30,
+        paddingTop: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 17,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: '#444',
+        backgroundColor: '#444',
+        marginBottom: 15,
+        minWidth: 300
+      }
+    }
+  }
+
+  renderButtonOpacity() {
+    if (this.state.email !== '' && this.state.password !== '') {
+      return 0.8;
+    } else {
+      return 1;
     }
   }
 
@@ -86,7 +141,7 @@ export default class Login extends Component {
           onSubmitEditing={this._login.bind(this)}
           secureTextEntry={true} />
 
-        <TouchableOpacity onPress={this._login.bind(this)} style={styles.button} activeOpacity={0.9}>
+        <TouchableOpacity onPress={this._login.bind(this)} style={this.renderButton()} activeOpacity={this.renderButtonOpacity()}>
           {this.showButtonLoading()}
         </TouchableOpacity>
 

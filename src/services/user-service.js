@@ -6,6 +6,8 @@ let currentUser;
 
 export const init = () => {
 
+  console.log('4. Init user-service...');
+
   // 1. ¿ Cuatos usuarios guardados ?
 
   AsyncStorage.getAllKeys().then((data) => {
@@ -44,7 +46,7 @@ export const init = () => {
               // 2. ¿ Que usario ha entrado y está en la lista ?
               if (findUser(firebaseConfig.uid, JSON.parse(users))) {
                 // 3. Está en la lista. Establecer por como actual
-                console.log('3. Está en la lista. Establecer por como actual');
+                console.log('3. Está en la lista. Establecer como actual');
                 // currentUser = users[0];
                 // console.log(users[0]);
               } else {
@@ -93,14 +95,10 @@ export const createUser = (firebase) => {
     email: firebase.email,
     photoURL: null,
     movies: {},
-    historial: []
+    historial: [],
+    lang: 'es',
+    allowExitApp: true,
   };
-
-  // 2123: {
-  //   saved: false,
-  //   viewed: false,
-  //   favorite: true
-  // }
 
   console.log('new user');
 
@@ -148,9 +146,9 @@ export const updateUser = (data) => {
 }
 
 export const updateField = (field, data) => {
-  // console.log(field);
+  console.log(field);
   // console.log(currentUser);
-  // console.log(data);
+  console.log(data);
 
   AsyncStorage.getItem('users').then((usersList) => {
 
@@ -162,7 +160,7 @@ export const updateField = (field, data) => {
       }
     }
 
-    // console.log(users);
+    console.log(users);
 
     AsyncStorage.setItem('users', JSON.stringify(users));
 

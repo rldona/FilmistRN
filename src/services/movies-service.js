@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 import * as userService from './user-service';
 
 const END_POINT = 'http://api.themoviedb.org/3/';
@@ -20,6 +22,9 @@ let currentTab = {
 let historialList = [];
 
 export const init = () => {
+
+  console.log('3. Init movies-service...');
+
   allowExitApp = true;
   currentLang = 'es';
   distance = 2;
@@ -144,9 +149,7 @@ export const getCurrentCollection = () => {
 export const search = (query, currentPage) => {
   let page = currentPage || 1;
 
-  // /multi
-
-  let filmlistAPI = END_POINT + 'search/movie' + '?query=' + query + '&' + 'api_key=' + API_KEY + '&page=' + page + '&include_adult=false&language=' + currentLang;
+  let filmlistAPI = END_POINT + 'search/multi' + '?query=' + query + '&' + 'api_key=' + API_KEY + '&page=' + page + '&include_adult=false&language=' + currentLang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -217,8 +220,16 @@ export const getMovie = (type, id) => {
     });
 }
 
-export const getCredits = (id) => {
-  let filmlistAPI = END_POINT + 'movie' + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&language=' + currentLang;
+export const getCredits = (type, id) => {
+
+  console.log(type);
+  console.log(id);
+
+  if (typeof type === 'undefined') {
+    type = 'movie';
+  }
+
+  let filmlistAPI = END_POINT + type + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&language=' + currentLang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -237,9 +248,9 @@ export const getCredits = (id) => {
 export const getAllPopular = () => {
   var urls = [
     END_POINT + 'movie' + '/' + 'now_playing' + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang,
-    END_POINT + 'movie' + '/' + 'upcoming' + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang,
-    END_POINT + 'movie' + '/' + 'popular' + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang,
-    END_POINT + 'movie' + '/' + 'top_rated' + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang
+    END_POINT + 'movie' + '/' + 'upcoming'    + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang,
+    END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang,
+    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + currentLang
   ];
 
   return Promise.all(

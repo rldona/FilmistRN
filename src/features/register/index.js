@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import * as loginService from '../../services/login-service';
+import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
@@ -32,9 +33,37 @@ export default class Register extends Component {
   }
 
   _register() {
-    this.setState({showLoading: true});
-    loginService.register(this.state.name, this.state.email, this.state.password);
     Keyboard.dismiss();
+
+    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.passwordRepeat !== '') {
+      this.setState({showLoading: true});
+
+      loginService.register(this.state.email, this.state.password).then((user) => {
+
+        user.displayName = this.state.name;
+
+        userService.setCurrentUser(user);
+
+        userService.init();
+
+        user.updateProfile({
+          displayName: this.state.name,
+          photoURL: ''
+        }).then((user) => {
+          // currentUser = user;
+
+          themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
+        }, (error) => {
+          alert(error);
+        });
+
+      }).catch((error) => {
+        alert(error.message);
+        this.setState({showLoading: false});
+      });
+
+    }
+
   }
 
   _goBack() {
@@ -46,6 +75,38 @@ export default class Register extends Component {
       return <Text style={styles.buttonTextClear}>REGÍSTRO</Text>;
     } else {
       return <Loading color="#FFF" size={19} />;
+    }
+  }
+
+  renderButtonStyle() {
+    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.passwordRepeat !== '') {
+      return {
+        marginTop: 30,
+        paddingTop: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 17,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: colors.getList().app,
+        backgroundColor: colors.getList().app,
+        marginBottom: 20,
+        minWidth: 300,
+      }
+    } else {
+      return {
+        marginTop: 30,
+        paddingTop: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 17,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: '#444',
+        backgroundColor: '#444',
+        marginBottom: 20,
+        minWidth: 300
+      }
     }
   }
 
@@ -100,7 +161,7 @@ export default class Register extends Component {
           onSubmitEditing={this._register.bind(this)}
           secureTextEntry={true} />
 
-        <TouchableOpacity onPress={this._register.bind(this)} style={styles.button} activeOpacity={0.9}>
+        <TouchableOpacity onPress={this._register.bind(this)} style={this.renderButtonStyle()} activeOpacity={0.9}>
           {this.showButtonLoading()}
         </TouchableOpacity>
 

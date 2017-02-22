@@ -85,33 +85,73 @@ export default class MoviesList extends Component {
     // });
 
     themoviedb.setCurrentMovie(movie);
-    themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
+
+    if (movie.media_type === 'movie') {
+      themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
+    } else {
+      themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});
+    }
+
   }
 
   renderMovieList(movie) {
-    return(
-      <View style={{borderRadius: 3}}>
-        <TouchableOpacity
-          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
-          onPress={this._onSelectMovie.bind(this, movie)}
-          activeOpacity={0.9}>
-          <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
 
-            <Image
-              resizeMode={'cover'}
-              style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
-              source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+    if (movie.first_air_date === '') {
+      movie.first_air_date = '2016-01-01';
+    }
 
-            <View>
-              <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.title}</Text>
-              <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.release_date.split('-')[0]}</Text>
-              <Score score={movie.vote_average} />
-            </View>
+    switch (movie.media_type) {
+      case 'person':
+        return null;
+      case 'tv':
+        return (
+          <View style={{borderRadius: 3}}>
+            <TouchableOpacity
+              style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
+              onPress={this._onSelectMovie.bind(this, movie)}
+              activeOpacity={0.9}>
+              <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
 
+                <Image
+                  resizeMode={'cover'}
+                  style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
+                  source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+
+                <View>
+                  <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.name}</Text>
+                  <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.first_air_date.split('-')[0]}</Text>
+                  <Score score={movie.vote_average} />
+                </View>
+
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-    )
+        )
+      case 'movie':
+        return (
+          <View style={{borderRadius: 3}}>
+            <TouchableOpacity
+              style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
+              onPress={this._onSelectMovie.bind(this, movie)}
+              activeOpacity={0.9}>
+              <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
+
+                <Image
+                  resizeMode={'cover'}
+                  style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
+                  source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+
+                <View>
+                  <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.title}</Text>
+                  <Text style={{color: '#999', fontSize: 14, lineHeight: 25, marginBottom: 10}}>{movie.release_date.split('-')[0]}</Text>
+                  <Score score={movie.vote_average} />
+                </View>
+
+              </View>
+            </TouchableOpacity>
+          </View>
+        )
+    }
   }
 
   infiniteScroll = () => {

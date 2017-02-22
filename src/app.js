@@ -25,6 +25,7 @@ import Register from './features/register';
 import Remember from './features/remember';
 import TabView from './features/tab-view';
 import MovieDetail from './features/movie-detail';
+import MovieDetailTv from './features/movie-detail-tv';
 import TopList from './features/top-list';
 import Search from './features/search';
 
@@ -51,12 +52,12 @@ export default class App extends Component {
 
     // AsyncStorage.clear();
 
-    AsyncStorage.getAllKeys().then((data) => {
-      console.log(data);
-      AsyncStorage.getItem('users').then((users) => {
-        console.log(JSON.parse(users));
-      });
-    });
+    // AsyncStorage.getAllKeys().then((data) => {
+    //   console.log(data);
+    //   AsyncStorage.getItem('users').then((users) => {
+    //     console.log(JSON.parse(users));
+    //   });
+    // });
 
   }
 
@@ -69,6 +70,8 @@ export default class App extends Component {
   }
 
   componentWillMount() {
+
+    console.log('1. Init app... ');
 
     loginService.init();
     themoviedb.init();
@@ -130,6 +133,8 @@ export default class App extends Component {
         return <TabView />
       case 2:
         return <MovieDetail />
+      case 2.1:
+        return <MovieDetailTv />
       case 3:
         return <Search />
       case 4:

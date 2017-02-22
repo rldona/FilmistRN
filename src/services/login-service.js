@@ -5,6 +5,9 @@ import * as themoviedb from './movies-service';
 let currentUser;
 
 export const init = () => {
+
+  console.log('2. Init login-service...');
+
   const config = {
     apiKey: "AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4",
     authDomain: "filmist-react-native.firebaseapp.com",
@@ -17,59 +20,19 @@ export const init = () => {
 }
 
 export const login = (email, password) => {
-  firebase.auth().signInWithEmailAndPassword(email,password)
-    .then((user) => {
-      currentUser = user;
-
-      userService.setCurrentUser(user);
-
-      userService.init();
-
-      themoviedb.getNavigator().push({index: 1, title: 'home'});
-    }).catch((error) => {
-      alert(error.message);
-    });
+  return firebase.auth().signInWithEmailAndPassword(email,password);
 }
 
-export const register = (name, email, password) => {
-
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      user.updateProfile({
-        displayName: name,
-        photoURL: ''
-      }).then((user) => {
-        currentUser = user;
-
-        userService.setCurrentUser(user);
-
-        themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
-      }, (error) => {
-        alert(error);
-      });
-    }).catch(function(error) {
-      alert(error.message);
-    });
-
+export const register = (email, password) => {
+  return firebase.auth().createUserWithEmailAndPassword(email, password);
 }
 
 export const retrievePassword = (email) => {
-  const auth  = firebase.auth();
-
-  auth.sendPasswordResetEmail(email)
-    .then(function() {
-      themoviedb.getNavigator().replace({ index: 0.1, title: 'login'});
-    }, function(error) {
-      alert(error.message);
-    });
+  return firebase.auth().sendPasswordResetEmail(email);
 }
 
 export const logout = (user) => {
-  firebase.auth().signOut().then(function() {
-    themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
-  }, function(error) {
-    alert(error.message);
-  });
+  return firebase.auth().signOut();
 }
 
 export const setCurrentUser = (user) => {

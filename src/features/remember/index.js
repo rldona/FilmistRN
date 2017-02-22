@@ -35,9 +35,19 @@ export default class Remember extends Component {
   }
 
   _remember() {
-    this.setState({showLoading: true});
-    loginService.retrievePassword(this.state.email);
     Keyboard.dismiss();
+
+    if (this.state.email !== '') {
+      this.setState({showLoading: true});
+
+      loginService.retrievePassword(this.state.email)
+        .then(() => {
+          themoviedb.getNavigator().replace({ index: 0.1, title: 'login'});
+        }, (error) => {
+          alert(error.message);
+          this.setState({showLoading: false});
+        });
+    }
   }
 
   showButtonLoading() {
@@ -45,6 +55,46 @@ export default class Remember extends Component {
       return <Text style={styles.buttonTextClear}>CAMBIAR LA CONTRASEÑA</Text>;
     } else {
       return <Loading color="#FFF" size={19} />;
+    }
+  }
+
+  renderButtonStyle() {
+    if (this.state.email !== '') {
+      return {
+        marginTop: 30,
+        paddingTop: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 17,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: colors.getList().app,
+        backgroundColor: colors.getList().app,
+        marginBottom: 20,
+        minWidth: 300
+      }
+    } else {
+      return {
+        marginTop: 30,
+        paddingTop: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 17,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: '#444',
+        backgroundColor: '#444',
+        marginBottom: 20,
+        minWidth: 300
+      }
+    }
+  }
+
+  renderButtonOpacityStyle() {
+    if (this.state.email !== '') {
+      return 0.8;
+    } else {
+      return 1;
     }
   }
 
@@ -70,7 +120,7 @@ export default class Remember extends Component {
           autoFocus={false}
         />
 
-        <TouchableOpacity onPress={this._remember.bind(this)} style={styles.button} activeOpacity={0.9}>
+        <TouchableOpacity onPress={this._remember.bind(this)} style={this.renderButtonStyle()} activeOpacity={this.renderButtonOpacityStyle()}>
           {this.showButtonLoading()}
         </TouchableOpacity>
 

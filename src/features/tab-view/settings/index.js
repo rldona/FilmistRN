@@ -14,6 +14,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import * as userService from '../../../services/user-service';
 import * as loginService from '../../../services/login-service';
 import * as themoviedb from '../../../services/movies-service';
 import * as colors from '../../../common/colors';
@@ -52,8 +53,11 @@ export default class Settings extends Component {
   }
 
   _loggout() {
-    AsyncStorage.removeItem('login').then(() => {
-      loginService.logout();
+    loginService.logout().then(function() {
+      themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
+      AsyncStorage.removeItem('login');
+    }, function(error) {
+      alert(error.message);
     });
   }
 
@@ -78,6 +82,7 @@ export default class Settings extends Component {
                 onChange={(checked) => {
                   this.setState({allowExitApp: checked});
                   themoviedb.setAllowExitApp(!checked);
+                  userService.updateField('allowExitApp', checked);
                 }} />
             </View>
           </View>

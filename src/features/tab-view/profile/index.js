@@ -27,23 +27,19 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
 
+    console.log('/// PROFILE: ', userService.getCurrentUser());
+
     this.state = {
       avatarSource: null,
-      name: userService.getCurrentUser().displayName || '?',
-      email: userService.getCurrentUser().email || '?'
+      name: userService.getCurrentUser().displayName || '-',
+      email: userService.getCurrentUser().email || '-'
     }
   }
 
   componentWillMount() {
-
-    // TODO: recuper por usuario (UID)
-
     AsyncStorage.getItem('users').then((usersArray) => {
-
       let users = JSON.parse(usersArray);
-
       if (users) {
-
         for (let i = 0; i < users.length; i++) {
           if (users[i].uid === userService.getCurrentUser().uid) {
             // users[i][field] = data;
@@ -53,26 +49,8 @@ export default class Profile extends Component {
             }
           }
         }
-
       }
-
-      // AsyncStorage.setItem('users', users);
-
     });
-
-
-    // AsyncStorage.getItem('imageProfile').then((item) => {
-    //   if (item) {
-
-    //     // userService.updateField('photoURL', item);
-
-    //     source = { uri: 'data:image/jpeg;base64,' + item };
-    //     this.setState({ avatarSource: source });
-    //   }
-    // });
-  }
-
-  componentDidMount() {
   }
 
   _takePhoto() {

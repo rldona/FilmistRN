@@ -26,7 +26,7 @@ import MoviesListHorizontal from '../../common/movie-list-horizontal';
 
 const { width, height } = Dimensions.get('window');
 
-export default class MovieDetail extends Component {
+export default class MovieDetailTv extends Component {
 
   constructor(props) {
     super(props);
@@ -45,10 +45,9 @@ export default class MovieDetail extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // InteractionManager.runAfterInteractions(() => {
-    themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
-      data.runtime = data.runtime === 0 ? 90 : data.runtime;
+    themoviedb.getMovie('tv', themoviedb.getCurrentMovie().id).then((data) => {
       this.setState({
         movie: data,
         loaded: true
@@ -56,7 +55,7 @@ export default class MovieDetail extends Component {
     });
     // });
 
-    themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
+    themoviedb.getCredits('tv', themoviedb.getCurrentMovie().id).then((data) => {
       let cast = {
         director: data.crew[0].name,
         writer: data.crew[1].name,
@@ -76,21 +75,7 @@ export default class MovieDetail extends Component {
 
     }).catch((error) => {
       console.log(error);
-    })
-
-    let currentUser = userService.getCurrentUser();
-
-    if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
-      currentUser.movies[themoviedb.getCurrentMovie().id] = {
-        saved: false,
-        viewed: false,
-        favorite: false
-      };
-    }
-
-    userService.setCurrentUser(currentUser);
-    userService.updateUser(currentUser);
-
+    });
   }
 
   _onActionSelected = (action) => {
@@ -106,7 +91,7 @@ export default class MovieDetail extends Component {
 
   share() {
     Share.share({
-      message: 'Te recomiendo esta película: https://filmist.es/movies/' + this.state.movie.id
+      message: 'Te recomiendo esta serie: https://filmist.es/movies/' + this.state.movie.id
     })
     .then(() => console.log('ok'))
     .catch((error) => this.setState({result: 'error: ' + error.message}));
@@ -201,7 +186,6 @@ export default class MovieDetail extends Component {
     return (
 
       <ScrollView
-        // ref={(scrollView) => { _scrollView = scrollView; }}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: colors.getList().primary, height: height }}>
 
@@ -221,18 +205,11 @@ export default class MovieDetail extends Component {
 
         </View>
 
-        {/*<View style={{position: 'absolute', top: 120, left: 15, width: 110, height: 150}}>
-          <Image
-            resizeMode={'cover'}
-            style={{width: 110, height: 160, borderRadius: 3, borderWidth: 1, borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
-            source={{uri: 'http://image.tmdb.org/t/p/w150' + this.state.movie.poster_path}} />
-        </View>*/}
-
         <View style={{padding: 0, marginTop: 0}}>
 
           <View style={{padding: 15, paddingBottom: 10}}>
             <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
-              {this.state.movie.title}
+              {this.state.movie.name}
             </Text>
 
             <View style={{marginTop: 5}}>
@@ -249,6 +226,7 @@ export default class MovieDetail extends Component {
 
             {
               this.state.movie.overview.length > 0 ?
+
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
                   onPress={this._onExtendOverview}
@@ -266,23 +244,23 @@ export default class MovieDetail extends Component {
 
         <View style={{paddingLeft: 15, paddingRight: 15}}>
 
-          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Duración</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.runtime} min</Text>
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Temporadas</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_seasons}</Text>
 
-          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Director</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.director}</Text>
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Capítulos</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_episodes}</Text>
 
           <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
 
           <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año de estreno</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.release_date.split('-')[0]}</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.first_air_date.split('-')[0]}</Text>
 
         </View>
 
         <MoviesListHorizontal
           title="Descubre del mismo género"
-          type="movie"
+          type="tv"
           collection="similar"
           position="horizontal"
           {...this.props} />
