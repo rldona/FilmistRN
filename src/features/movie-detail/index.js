@@ -210,9 +210,9 @@ export default class MovieDetail extends Component {
 
           <Image
             resizeMode={'cover'}
-            style={{height: 200, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
+            style={{height: 190, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.3)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 190, backgroundColor: 'rgba(0, 0, 0, 0.3)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -282,6 +282,9 @@ export default class MovieDetail extends Component {
         </View>
 
         <View style={{paddingLeft: 15, paddingRight: 15}}>
+
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Duración</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.runtime} min</Text>
 
           <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Director</Text>
           <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.director}</Text>

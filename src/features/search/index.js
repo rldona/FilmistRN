@@ -141,7 +141,7 @@ export default class Search extends Component {
         <Header
           isTransparent={false}
           title=""
-          actions={{ left: { icon: 'arrow-back' }, right: { icon: 'filter-list' } }}
+          actions={{ left: { icon: 'arrow-back' }}}
           onActionSelected={this._onActionSelected.bind(this)} />
 
           <TextInput
@@ -162,7 +162,7 @@ export default class Search extends Component {
             autoCorrect={false}
             returnKeyType="search" />
 
-            <View style={{position: 'absolute', top: 40, right: 70, paddingHorizontal: 5}}>
+            <View style={{position: 'absolute', top: 40, right: 20, paddingHorizontal: 5}}>
               {this.renderClearInputIcon()}
             </View>
 
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     left: 55,
     // elevation: 5,
     // marginHorizontal: 20,
-    width: width-110,
+    width: width-70,
     backgroundColor: '#FFF',
     height: 40,
     fontSize: 16,
