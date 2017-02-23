@@ -68,7 +68,12 @@ export default class MoviesListHorizontal extends Component {
     // });
 
     themoviedb.setCurrentMovie(movie);
-    themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
+
+    if (movie.first_air_date) {
+      themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});
+    } else {
+      themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
+    }
   }
 
   renderMovie(movie) {
@@ -95,7 +100,7 @@ export default class MoviesListHorizontal extends Component {
 
     return (
       <View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 15}}>
           <Text style={styles.title}>
             {this.props.title}
           </Text>
@@ -113,7 +118,7 @@ export default class MoviesListHorizontal extends Component {
         <ListView
           style={{ marginBottom: 0}}
           dataSource={this.state.dataMovies}
-          // pagingEnabled={true}
+          // rrpagingEnabled={true}
           initialListSize={1}
           renderRow={(rowData) => this.renderMovie(rowData)}
           horizontal={true}
@@ -140,7 +145,7 @@ var styles = StyleSheet.create({
     fontWeight: '400',
     paddingTop: 5,
     paddingLeft: 15,
-    fontSize: 16,
+    fontSize: 17,
     marginBottom: 15,
   },
   viewAll: {

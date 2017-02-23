@@ -209,9 +209,9 @@ export default class MovieDetail extends Component {
 
           <Image
             resizeMode={'cover'}
-            style={{height: 190, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
+            style={{height: 200, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 190, backgroundColor: 'rgba(0, 0, 0, 0.3)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.25)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -241,7 +241,7 @@ export default class MovieDetail extends Component {
 
             <Text
               numberOfLines={this.state.overviewNumberLines}
-              style={{fontSize: 14, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 0, marginBottom: 0, textAlign: 'auto' }}>
+              style={{fontSize: 15, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 10, marginBottom: 0, textAlign: 'auto' }}>
               {this.state.movie.overview.length > 0 ? this.state.movie.overview : 'Sinopsis no disponible'}
             </Text>
 
@@ -264,19 +264,31 @@ export default class MovieDetail extends Component {
 
         </View>
 
-        <View style={{paddingLeft: 15, paddingRight: 15}}>
+        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
 
-          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Duración</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.runtime} min</Text>
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
 
-          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Director</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.director}</Text>
+            <View>
+              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Director</Text>
+              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 8, fontWeight: '400', textAlign: 'center'}}>{this.state.cast.director}</Text>
+            </View>
 
-          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+            <View style={{minWidth: 40}}>
+              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Año</Text>
+              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.release_date.split('-')[0]}</Text>
+            </View>
 
-          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año de estreno</Text>
-          <Text style={{fontSize: 12, color: "#AAA", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.release_date.split('-')[0]}</Text>
+            <View style={{minWidth: 80}}>
+              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400', textAlign: 'center'}}>Duración</Text>
+              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 8, fontWeight: '400', textAlign: 'center'}}>{this.state.movie.runtime} min</Text>
+            </View>
+
+          </View>
+
+          <View>
+            <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
+            <Text style={{fontSize: 14, color: "#FFF", marginBottom: 0, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+          </View>
 
         </View>
 

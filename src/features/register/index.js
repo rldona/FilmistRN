@@ -35,7 +35,7 @@ export default class Register extends Component {
   _register() {
     Keyboard.dismiss();
 
-    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.passwordRepeat !== '') {
+    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5 && this.state.passwordRepeat !== '' && this.state.password === this.state.passwordRepeat) {
       this.setState({showLoading: true});
 
       loginService.register(this.state.email, this.state.password).then((user) => {
@@ -51,19 +51,49 @@ export default class Register extends Component {
           photoURL: ''
         }).then((user) => {
           // currentUser = user;
-
           themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
         }, (error) => {
           alert(error);
         });
 
       }).catch((error) => {
-        alert(error.message);
         this.setState({showLoading: false});
+
+        if (error.code === 'auth/invalid-email') {
+          alert('El formato de email introducido no es correcto');
+          return true;
+        }
+        if (error.code === 'auth/email-already-in-use') {
+          alert('El email ya está registrado. ¿Has olvidado la contraseña?');
+        }
       });
+    } else {
+      this.setState({showLoading: false});
 
+      if (this.state.name === '') {
+        alert('Tienes que introducir un nombre');
+        return true;
+      }
+      if (this.state.email === '') {
+        alert('Tienes que introducir un email');
+        return true;
+      }
+      if (this.state.password === '') {
+        alert('Tienes que introducir una contraseña');
+        return true;
+      }
+      if (this.state.password.length < 6) {
+        alert('La contraseña debe tener al menos 6 caractéres alfanuméricos');
+        return true;
+      }
+      if (this.state.passwordRepeat === '') {
+        alert('Tienes que repetir la contraseña');
+        return true;
+      }
+      if (this.state.password !== this.state.passwordRepeat) {
+        alert('La contraseña y la confirmación no coinciden');
+      }
     }
-
   }
 
   _goBack() {
@@ -79,7 +109,7 @@ export default class Register extends Component {
   }
 
   renderButtonStyle() {
-    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.passwordRepeat !== '') {
+    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5 && this.state.passwordRepeat !== '' && this.state.password === this.state.passwordRepeat) {
       return {
         marginTop: 30,
         paddingTop: 17,
@@ -102,11 +132,19 @@ export default class Register extends Component {
         paddingBottom: 17,
         borderRadius: 3,
         borderWidth: 2,
-        borderColor: '#444',
-        backgroundColor: '#444',
+        borderColor: '#222',
+        backgroundColor: '#222',
         marginBottom: 20,
         minWidth: 300
       }
+    }
+  }
+
+  renderButtonOpacity() {
+    if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5 && this.state.passwordRepeat !== '' && this.state.password === this.state.passwordRepeat) {
+      return 0.8;
+    } else {
+      return 1;
     }
   }
 
@@ -161,7 +199,7 @@ export default class Register extends Component {
           onSubmitEditing={this._register.bind(this)}
           secureTextEntry={true} />
 
-        <TouchableOpacity onPress={this._register.bind(this)} style={this.renderButtonStyle()} activeOpacity={0.9}>
+        <TouchableOpacity onPress={this._register.bind(this)} style={this.renderButtonStyle()} activeOpacity={this.renderButtonOpacity()}>
           {this.showButtonLoading()}
         </TouchableOpacity>
 

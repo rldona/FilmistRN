@@ -37,16 +37,31 @@ export default class Remember extends Component {
   _remember() {
     Keyboard.dismiss();
 
-    if (this.state.email !== '') {
+    if (this.state.email !== '' && this.state.email.length > 4) {
       this.setState({showLoading: true});
 
       loginService.retrievePassword(this.state.email)
         .then(() => {
           themoviedb.getNavigator().replace({ index: 0.1, title: 'login'});
         }, (error) => {
-          alert(error.message);
+          if (error.code === 'auth/invalid-email') {
+            alert('El formato de email introducido no es correcto');
+          }
+          if (error.code === 'auth/user-not-found') {
+            alert('El email no pertenece a ningún usuario');
+          }
           this.setState({showLoading: false});
         });
+    } else {
+      this.setState({showLoading: false});
+
+      if (this.state.email === '') {
+        alert('Tienes que introducir un email');
+        return true;
+      }
+      if (this.state.email.length < 4) {
+        alert('El formato de email introducido no es correcto');
+      }
     }
   }
 
@@ -59,7 +74,7 @@ export default class Remember extends Component {
   }
 
   renderButtonStyle() {
-    if (this.state.email !== '') {
+    if (this.state.email !== '' && this.state.email.length > 4) {
       return {
         marginTop: 30,
         paddingTop: 17,
@@ -82,8 +97,8 @@ export default class Remember extends Component {
         paddingBottom: 17,
         borderRadius: 3,
         borderWidth: 2,
-        borderColor: '#444',
-        backgroundColor: '#444',
+        borderColor: '#222',
+        backgroundColor: '#222',
         marginBottom: 20,
         minWidth: 300
       }
@@ -91,7 +106,7 @@ export default class Remember extends Component {
   }
 
   renderButtonOpacityStyle() {
-    if (this.state.email !== '') {
+    if (this.state.email !== '' && this.state.email.length > 4) {
       return 0.8;
     } else {
       return 1;
@@ -115,6 +130,7 @@ export default class Remember extends Component {
           value={this.state.email}
           autoFocus={true}
           placeholder="Email"
+          placeholderTextColor="#666"
           onSubmitEditing={this._remember.bind(this)}
           returnKeyType="done"
           autoFocus={false}

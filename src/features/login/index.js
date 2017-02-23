@@ -40,7 +40,7 @@ export default class Login extends Component {
   _login() {
     Keyboard.dismiss();
 
-    if (this.state.email !== '' && this.state.password !== '') {
+    if (this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5) {
       this.setState({showLoading: true});
 
       loginService.login(this.state.email, this.state.password)
@@ -49,10 +49,34 @@ export default class Login extends Component {
           userService.init();
           themoviedb.getNavigator().push({index: 1, title: 'home'});
         }).catch((error) => {
-          alert(error.message);
           this.setState({showLoading: false});
+          if (error.code === 'auth/invalid-email') {
+            alert('El formato de email introducido no es correcto');
+            return true;
+          }
+          if (error.code === 'auth/wrong-password') {
+            alert('La contraseña introducida es incorrecta');
+            return true;
+          }
+          if (error.code === 'auth/user-not-found') {
+            alert('El email que has introducido no está registrado');
+          }
         });
+    } else {
+      this.setState({showLoading: false});
 
+      if (this.state.email === '') {
+        alert('Tienes que introducir un email');
+        return true;
+      }
+      if (this.state.password === '') {
+        alert('Tienes que introducir una contraseña');
+        return true;
+      }
+      if (this.state.password.length < 6) {
+        alert('La contraseña debe tener al menos 6 caractéres alfanuméricos');
+        return true;
+      }
     }
 
   }
@@ -70,7 +94,7 @@ export default class Login extends Component {
   }
 
   renderButton() {
-    if (this.state.email !== '' && this.state.password !== '') {
+    if (this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5) {
       return {
         marginTop: 30,
         paddingTop: 17,
@@ -93,8 +117,8 @@ export default class Login extends Component {
         paddingBottom: 17,
         borderRadius: 3,
         borderWidth: 2,
-        borderColor: '#444',
-        backgroundColor: '#444',
+        borderColor: '#222',
+        backgroundColor: '#222',
         marginBottom: 15,
         minWidth: 300
       }

@@ -87,12 +87,14 @@ export default class MoviesList extends Component {
     //   themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
     // });
 
+    console.log(movie);
+
     themoviedb.setCurrentMovie(movie);
 
-    if (movie.media_type === 'movie') {
-      themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
-    } else {
+    if (movie.first_air_date) {
       themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});
+    } else {
+      themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
     }
 
   }

@@ -79,6 +79,14 @@ export default class Home extends Component {
             {...this.props} />
 
           <MoviesListHorizontal
+            title="Películas top en Filmist"
+            type="movie"
+            list={ds.cloneWithRows(this.state.allData[3].results)}
+            collection="top_rated"
+            position="horizontal"
+            {...this.props} />
+
+          <MoviesListHorizontal
             title="Películas recomendadas"
             type="movie"
             list={ds.cloneWithRows(this.state.allData[2].results)}
@@ -87,12 +95,21 @@ export default class Home extends Component {
             {...this.props} />
 
           <MoviesListHorizontal
-            title="Películas mejor valoradas"
-            type="movie"
+            title="Series top en Filmist"
+            type="tv"
+            list={ds.cloneWithRows(this.state.allData[3].results)}
+            collection="popular"
+            position="horizontal"
+            {...this.props} />
+
+          <MoviesListHorizontal
+            title="Descubre más series"
+            type="tv"
             list={ds.cloneWithRows(this.state.allData[3].results)}
             collection="top_rated"
             position="horizontal"
             {...this.props} />
+
 
           <View style={{paddingVertical: 15}}></View>
 

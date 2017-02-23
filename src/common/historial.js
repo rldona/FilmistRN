@@ -74,12 +74,12 @@ export default class Historial extends Component {
           resizeMode={'cover'}
           style={{minWidth: 300, borderRadius: 3, marginHorizontal: 0, backfaceVisibility: 'hidden'}}
           source={{uri: 'https://image.tmdb.org/t/p/w300/' + movie.backdrop_path}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 20, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
-            <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 35, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
+            {/*<Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />*/}
           </View>
         </Image>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
-          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 14}}>{movie.title}</Text>
+          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 14}}>{movie.title || movie.name}</Text>
           <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
         </View>
       </TouchableOpacity>

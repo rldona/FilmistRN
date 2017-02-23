@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
   },
   titleApp: {
     color: '#FFF',
-    fontSize: 18,
+    fontSize: 20,
+    letterSpacing: 5,
     marginLeft: 10,
     fontWeight: '600',
     textAlign: 'left',
