@@ -42,7 +42,9 @@ export default class Remember extends Component {
 
       loginService.retrievePassword(this.state.email)
         .then(() => {
+
           themoviedb.getNavigator().replace({ index: 0.1, title: 'login'});
+
         }, (error) => {
           if (error.code === 'auth/invalid-email') {
             alert('El formato de email introducido no es correcto');
@@ -115,7 +117,6 @@ export default class Remember extends Component {
 
   render() {
     return(
-
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
@@ -141,14 +142,12 @@ export default class Remember extends Component {
         </TouchableOpacity>
 
       </View>
-
     )
   }
 
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -156,47 +155,39 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     padding: 30
   },
-
   center: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 200,
     backgroundColor: 'rgba(255,255,255,0.2)'
   },
-
   textBack: {
     marginTop: 24,
     paddingLeft: -5,
     marginBottom: 30,
   },
-
   arrowBack: {
     width: 30,
     height: 30
   },
-
   label: {
     textAlign: 'left',
     fontSize: 25,
     marginBottom: 30,
     color: colors.getList().white
   },
-
   labelRemember: {
     fontSize: 18,
     marginBottom: 30,
     color: colors.getList().white
   },
-
   input: {
-    // height: 40,
     minWidth: 300,
     marginBottom: 25,
     fontSize: 15,
     paddingVertical: 10,
     color: colors.getList().white
   },
-
   button: {
     marginTop: 30,
     paddingTop: 17,
@@ -210,7 +201,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     minWidth: 300,
   },
-
   buttonClear: {
     paddingTop: 17,
     paddingLeft: 20,
@@ -223,20 +213,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     minWidth: 300
   },
-
-
   buttonText: {
     color: '#444',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14
   },
-
   buttonTextClear: {
     color: colors.getList().white,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14
   }
-
 });

@@ -1,11 +1,13 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
   View
 } from 'react-native';
 
-import * as themoviedb from '../../services/movies-service';
-import * as userService from '../../services/user-service';
+import * as settingsService from '../../services/settings-service';
+import * as moviesService from '../../services/movies-service';
 
 import RadioButtonsItem from './radio-buttons-item';
 
@@ -37,9 +39,17 @@ export default class RadioButtons extends Component {
     });
 
     // set new language
-    themoviedb.setLang(this.state.options[id].language);
+    moviesService.setOptions('lang', this.state.options[id].language);
 
-    userService.updateField('lang', this.state.options[id].language);
+    let user = firebase.auth().currentUser;
+
+    firebase.database().ref('users/' + user.uid).update({
+      settings: {
+        lang: this.state.options[id].language,
+        allowExitApp: settingsService.getOptions().allowExitApp,
+        avatar: settingsService.getOptions().avatar
+      }
+    });
   }
 
   renderItems() {

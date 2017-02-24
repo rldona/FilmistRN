@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -12,15 +14,14 @@ import {
   Dimensions
 } from 'react-native';
 
-import * as userService from '../../services/user-service';
 import * as loginService from '../../services/login-service';
-import * as themoviedb from '../../services/movies-service';
+import * as settingsService from '../../services/settings-service';
+import * as userService from '../../services/user-service';
+import * as moviesService from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loading from '../../common/loading';
-
-const primaryColor = '#e2e2e2'; // backgroundColor={primaryColor}
 
 const { width, height } = Dimensions.get('window');
 
@@ -34,28 +35,17 @@ export default class Welcome extends Component {
     };
   }
 
-  componentWillMount() {
-    primaryColor = '#e2e2e2';
-  }
-
   componentDidMount() {
-    AsyncStorage.getAllKeys().then((data) => {
-      if (data.length > 0) {
-        AsyncStorage.getItem('login').then((item) => {
-          if (item) {
-
-            AsyncStorage.getItem(data[0]).then((user) => {
-              loginService.setCurrentUser(JSON.parse(user));
-
-              userService.setCurrentUser(JSON.parse(user));
-
-              userService.init();
-
-              themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
-            });
-
-          } else {
-            this.setState({showWelcome: true});
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        userService.setCurrentUser(user);
+        firebase.database().ref('users/' + user.uid).on('child_added', (data) => {
+          if (data.val() && typeof data.val() !== 'undefined' && data.val() !== '') {
+            settingsService.setOption('lang', data.val().lang);
+            settingsService.setOption('allowExitApp', data.val().allowExitApp);
+            settingsService.setOption('avatar', data.val().avatar);
+            // moviesService.init();
+            moviesService.getNavigator().resetTo({index: 1, title: 'home'});
           }
         });
       } else {
@@ -66,18 +56,16 @@ export default class Welcome extends Component {
 
   _goTo(route) {
     if (route === 'login') {
-      themoviedb.getNavigator().push({index: 0.1, title: 'login'});
+      moviesService.getNavigator().push({index: 0.1, title: 'login'});
     } else {
-      themoviedb.getNavigator().push({index: 0.2, title: 'register'});
+      moviesService.getNavigator().push({index: 0.2, title: 'register'});
     }
   }
 
   render() {
 
     if (this.state.showWelcome) {
-
-      return(
-
+      return (
         <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
           <Image source={require('../../assets/img/logo.png')} style={styles.logo}/>
@@ -108,19 +96,14 @@ export default class Welcome extends Component {
             </Text>
           </TouchableOpacity>
 
-
         </View>
-
       )
-
     } else {
-
       return (
         <View style={{backgroundColor: colors.getList().primary, height: height}}>
           <Loading position="center" />
         </View>
       );
-
     }
 
   }
@@ -131,7 +114,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: colors.getList().primary,
     padding: 30
   },

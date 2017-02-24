@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -14,8 +16,8 @@ import {
   Dimensions
 } from 'react-native';
 
-import * as userService from '../../../services/user-service';
 import * as loginService from '../../../services/login-service';
+import * as settingsService from '../../../services/settings-service';
 import * as themoviedb from '../../../services/movies-service';
 import * as colors from '../../../common/colors';
 
@@ -32,11 +34,11 @@ export default class Settings extends Component {
     super(props);
 
     this.state = {
-      allowExitApp: false,
+      allowExitApp: settingsService.getOptions().allowExitApp,
       radioButtons: [
-        {id: 0, language: 'es', title: 'Español', state: themoviedb.getLang() === 'es' ? true : false},
-        {id: 1, language: 'en', title: 'Inglés', state: themoviedb.getLang() === 'en' ? true : false},
-        {id: 2, language: 'fr', title: 'Francés', state: themoviedb.getLang() === 'fr' ? true : false}
+        {id: 0, language: 'es', title: 'Español', state: settingsService.getOptions().lang === 'es' ? true : false},
+        {id: 1, language: 'en', title: 'Inglés', state: settingsService.getOptions().lang === 'en' ? true : false},
+        {id: 2, language: 'fr', title: 'Francés', state: settingsService.getOptions().lang === 'fr' ? true : false}
       ]
     };
   }
@@ -53,10 +55,10 @@ export default class Settings extends Component {
   }
 
   _loggout() {
-    loginService.logout().then(function() {
+    loginService.logout().then(() => {
+      themoviedb.clearHitorialList();
       themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
-      AsyncStorage.removeItem('login');
-    }, function(error) {
+    }, (error) => {
       alert(error.message);
     });
   }
@@ -80,9 +82,19 @@ export default class Settings extends Component {
               <Checkbox
                 checked={this.state.allowExitApp}
                 onChange={(checked) => {
-                  this.setState({allowExitApp: checked});
-                  themoviedb.setAllowExitApp(!checked);
-                  userService.updateField('allowExitApp', checked);
+                  this.setState({allowExitApp: !checked});
+
+                  settingsService.setOption('allowExitApp', !this.state.allowExitApp);
+
+                  let user = firebase.auth().currentUser;
+
+                  firebase.database().ref('users/' + user.uid).set({
+                    settings: {
+                      lang: settingsService.getOptions().lang,
+                      allowExitApp: !this.state.allowExitApp,
+                      avatar: settingsService.getOptions().avatar,
+                    }
+                  });
                 }} />
             </View>
           </View>
@@ -136,24 +148,20 @@ const styles = StyleSheet.create({
   },
   column: {
     flexDirection: 'column',
-    // paddingHorizontal: 10
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-    // marginBottom: 15
   },
   optionTitle: {
     padding: 15,
     color: '#FFF',
     fontSize: 15,
     backgroundColor: colors.getList().secondary,
-    // marginBottom: 10
   },
   optionText: {
     color: '#CCC',
-    // paddingLeft: 20
   },
   userName: {
     color: '#FFF',

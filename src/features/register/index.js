@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -34,31 +36,27 @@ export default class Register extends Component {
 
   _register() {
     Keyboard.dismiss();
-
     if (this.state.name !== '' && this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5 && this.state.passwordRepeat !== '' && this.state.password === this.state.passwordRepeat) {
       this.setState({showLoading: true});
-
       loginService.register(this.state.email, this.state.password).then((user) => {
-
-        user.displayName = this.state.name;
-
-        userService.setCurrentUser(user);
-
-        userService.init();
-
-        user.updateProfile({
+        let updateUser = firebase.auth().currentUser;
+        this.setState({showLoading: false});
+        firebase.database().ref('users/' + user.uid).set({
+          settings: {
+            lang: 'es',
+            allowExitApp: false
+          }
+        });
+        updateUser.updateProfile({
           displayName: this.state.name,
-          photoURL: ''
-        }).then((user) => {
-          // currentUser = user;
+          photoURL: null
+        }).then(() => {
           themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
         }, (error) => {
           alert(error);
         });
-
       }).catch((error) => {
         this.setState({showLoading: false});
-
         if (error.code === 'auth/invalid-email') {
           alert('El formato de email introducido no es correcto');
           return true;
@@ -102,9 +100,9 @@ export default class Register extends Component {
 
   showButtonLoading() {
     if (!this.state.showLoading) {
-      return <Text style={styles.buttonTextClear}>REGÍSTRO</Text>;
+      return <Text style={styles.buttonTextClear}>REGÍSTRO</Text>
     } else {
-      return <Loading color="#FFF" size={19} />;
+      return <Loading color="#FFF" size={19} />
     }
   }
 
@@ -240,10 +238,8 @@ const styles = StyleSheet.create({
     color: colors.getList().white
   },
   input: {
-    // height: 40,
     paddingVertical: 10,
     minWidth: 300,
-    // marginBottom: 25,
     fontSize: 15,
     color: colors.getList().white
   },

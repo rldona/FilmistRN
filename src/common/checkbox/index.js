@@ -29,7 +29,7 @@ export default class Checkbox extends Component {
       <TouchableOpacity
         style={styles.row}
         activeOpacity={1}
-        onPress={this.props.onChange.bind(this, !this.props.checked)}>
+        onPress={this.props.onChange.bind(this, this.props.checked)}>
         <Text style={{color: '#FFF'}}>{this.props.checked ? 'Habilitado' : 'Deshabilitado'}</Text>
         {this.renderIconCheck(this.props.checked)}
       </TouchableOpacity>

@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -10,12 +12,13 @@ import {
   InteractionManager
 } from 'react-native';
 
+import * as settingsService from '../../../services/settings-service';
+import * as userService from '../../../services/user-service';
 import * as themoviedb from '../../../services/movies-service';
 
 import Loading from '../../../common/loading';
 import CategoriesList from '../../../common/categories-list';
 import MoviesListHorizontal from '../../../common/movie-list-horizontal';
-// import Historial from '../../../common/historial';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -25,22 +28,20 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      lang: this.props.lang,
       allData: null,
-      allLoaded: false,
-      // movies: themoviedb.getHistorialList()
+      allLoaded: false
     };
   }
 
   componentWillMount() {
-    InteractionManager.runAfterInteractions(() => {
+    // InteractionManager.runAfterInteractions(() => {
       themoviedb.getAllPopular().then((data) => {
         this.setState({
           allData: data,
           allLoaded: true,
         });
       });
-    });
+    // });
   }
 
   render() {
@@ -55,10 +56,7 @@ export default class Home extends Component {
     return (
       <View renderToHardwareTextureAndroid={true}>
 
-        <ScrollView
-            ref={(scrollView) => { _scrollView = scrollView; }}
-            // onScroll={() => { console.log('onScroll!'); }}
-            style={styles.containerLists}>
+        <ScrollView style={styles.containerLists}>
 
           <CategoriesList {...this.props} />
 

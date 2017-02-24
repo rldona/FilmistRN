@@ -78,18 +78,18 @@ export default class MovieDetail extends Component {
       console.log(error);
     })
 
-    let currentUser = userService.getCurrentUser();
+    // let currentUser = userService.getCurrentUser();
 
-    if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
-      currentUser.movies[themoviedb.getCurrentMovie().id] = {
-        saved: false,
-        viewed: false,
-        favorite: false
-      };
-    }
+    // if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
+    //   currentUser.movies[themoviedb.getCurrentMovie().id] = {
+    //     saved: false,
+    //     viewed: false,
+    //     favorite: false
+    //   };
+    // }
 
-    userService.setCurrentUser(currentUser);
-    userService.updateUser(currentUser);
+    // userService.setCurrentUser(currentUser);
+    // userService.updateUser(currentUser);
 
   }
 
@@ -137,13 +137,13 @@ export default class MovieDetail extends Component {
     }
   }
 
-  renderSwitchLists() {
-    let currentUser = userService.getCurrentUser();
+  // renderSwitchLists() {
+  //   let currentUser = userService.getCurrentUser();
 
-    return (
-      <SwitchLists user={currentUser} />
-    )
-  }
+  //   return (
+  //     <SwitchLists user={currentUser} />
+  //   )
+  // }
 
   render() {
 
@@ -201,7 +201,6 @@ export default class MovieDetail extends Component {
     return (
 
       <ScrollView
-        // ref={(scrollView) => { _scrollView = scrollView; }}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: colors.getList().primary, height: height }}>
 

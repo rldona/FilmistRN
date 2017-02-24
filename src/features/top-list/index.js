@@ -128,8 +128,7 @@ const styles = StyleSheet.create({
     right: 30,
     opacity: 0,
     elevation: 10,
-    backgroundColor: colors.getList().app, // #E91E63 4CAF50
-    // width: 60,
+    backgroundColor: colors.getList().app,
     padding: 10,
     borderRadius: 50
   }

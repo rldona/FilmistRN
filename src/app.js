@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -14,9 +16,9 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-import * as userService from './services/user-service';
 import * as loginService from './services/login-service';
-import * as themoviedb from './services/movies-service';
+import * as settingsService from './services/settings-service';
+import * as moviesService from './services/movies-service';
 import * as colors from './common/colors';
 
 import Welcome from './features/welcome';
@@ -30,7 +32,6 @@ import TopList from './features/top-list';
 import Search from './features/search';
 
 import CustomTransitions from './common/custom-transitions';
-
 import SplashScreen from 'react-native-smart-splash-screen';
 
 export default class App extends Component {
@@ -42,23 +43,11 @@ export default class App extends Component {
       currentIndex: 1,
     };
 
-    // AsyncStorage.setItem('ping', 'pong !');
+    settingsService.init();
+    loginService.init();
+    moviesService.init();
 
-    // AsyncStorage.getItem('imageProfile').then((item) => {
-    //   console.log(item);
-    // });
-
-    // AsyncStorage.removeItem('ping');
-
-    // AsyncStorage.clear();
-
-    // AsyncStorage.getAllKeys().then((data) => {
-    //   console.log(data);
-    //   AsyncStorage.getItem('users').then((users) => {
-    //     console.log(JSON.parse(users));
-    //   });
-    // });
-
+    this.options = settingsService.getOptions();
   }
 
   componentDidMount () {
@@ -70,20 +59,15 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-
-    // console.log('1. Init app... ');
-
-    loginService.init();
-    themoviedb.init();
-
     if (Platform.OS === 'android') {
       BackAndroid.addEventListener('hardwareBackPress', () => {
-        let allowExitApp = themoviedb.getAllowExitApp();
+
+        this.options = settingsService.getOptions();
 
         if (this.state.currentIndex === 0.1 || this.state.currentIndex === 0.2 || this.state.currentIndex === 0.3 || this.state.currentIndex > 1) {
-          themoviedb.getNavigator().pop();
+          moviesService.getNavigator().pop();
         } else {
-          if (allowExitApp) {
+          if (!this.options.allowExitApp) {
             Alert.alert(
               'Salir',
               '¿Realmente quieres salir?',
@@ -115,7 +99,7 @@ export default class App extends Component {
 
     this.state.currentIndex = route.index;
 
-    themoviedb.setNavigator(navigator);
+    moviesService.setNavigator(navigator);
 
     switch (route.index) {
       case 0:
@@ -143,8 +127,6 @@ export default class App extends Component {
   }
 
   render() {
-    let initScene = 0; // cambiar a 1 cuando el usuario haya hecho login. Almacenar en el servicio de login.
-
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
@@ -152,7 +134,7 @@ export default class App extends Component {
 
         <Navigator
           ref="navigator"
-          initialRoute={{ index: initScene }}
+          initialRoute={{ index: 0 }}
           renderScene={this.navigatorRenderScene.bind(this)}
           configureScene={(route) => {
 

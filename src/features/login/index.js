@@ -46,7 +46,6 @@ export default class Login extends Component {
       loginService.login(this.state.email, this.state.password)
         .then((user) => {
           userService.setCurrentUser(user);
-          userService.init();
           themoviedb.getNavigator().push({index: 1, title: 'home'});
         }).catch((error) => {
           this.setState({showLoading: false});
@@ -181,7 +180,6 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -189,47 +187,38 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     padding: 30
   },
-
   center: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 200,
     backgroundColor: 'rgba(255,255,255,0.2)'
   },
-
   textBack: {
     marginTop: 24,
     paddingLeft: -5,
     marginBottom: 30,
   },
-
   arrowBack: {
     width: 30,
     height: 30
   },
-
   label: {
     textAlign: 'left',
     fontSize: 25,
     marginBottom: 30,
     color: colors.getList().white
   },
-
   labelRemember: {
     fontSize: 18,
     marginBottom: 30,
     color: colors.getList().white
   },
-
   input: {
-    // height: 40,
     minWidth: 300,
-    // marginBottom: 25,
     fontSize: 15,
     paddingVertical: 10,
     color: colors.getList().white
   },
-
   button: {
     marginTop: 30,
     paddingTop: 17,
@@ -243,7 +232,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     minWidth: 300
   },
-
   buttonClear: {
     paddingTop: 17,
     paddingLeft: 20,
@@ -256,19 +244,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     minWidth: 300
   },
-
   buttonText: {
     color: colors.getList().app,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14
   },
-
   buttonTextClear: {
     color: '#FFF',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14
   }
-
 });

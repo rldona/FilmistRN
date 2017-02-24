@@ -192,8 +192,6 @@ export default class Search extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // alignItems: 'center',
     flexDirection: 'row',
     height: height,
     backgroundColor: '#222',
@@ -206,7 +204,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#222'
   },
   movie: {
-    // height: 50,
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
@@ -224,8 +221,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 32,
     left: 55,
-    // elevation: 5,
-    // marginHorizontal: 20,
     width: width-70,
     backgroundColor: '#FFF',
     height: 40,
@@ -239,10 +234,8 @@ const styles = StyleSheet.create({
     right: 30,
     opacity: 0,
     elevation: 10,
-    backgroundColor: colors.getList().app, // #E91E63 4CAF50
-    // width: 60,
+    backgroundColor: colors.getList().app,
     padding: 10,
     borderRadius: 50
   }
 });
-

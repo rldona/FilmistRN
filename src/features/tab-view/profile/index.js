@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import * as firebase from 'firebase';
 
+import React, { Component } from 'react';
 
 import {
   ListView,
@@ -13,6 +14,7 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as settingsService from '../../../services/settings-service';
 import * as themoviedb from '../../../services/movies-service';
 import * as userService from '../../../services/user-service';
 import * as loginService from '../../../services/login-service';
@@ -28,65 +30,33 @@ export default class Profile extends Component {
     super(props);
 
     this.state = {
-      avatarSource: null,
-      name: userService.getCurrentUser().displayName || '-',
-      email: userService.getCurrentUser().email || '-'
+      avatarSource: settingsService.getOptions().avatar,
+      name: userService.getCurrentUser().displayName,
+      email: userService.getCurrentUser().email
     }
   }
 
-  componentWillMount() {
-    AsyncStorage.getItem('users').then((usersArray) => {
-      let users = JSON.parse(usersArray);
-      if (users) {
-        for (let i = 0; i < users.length; i++) {
-          if (users[i].uid === userService.getCurrentUser().uid) {
-            // users[i][field] = data;
-            if (users[i].photoURL) {
-              source = { uri: 'data:image/jpeg;base64,' + users[i].photoURL };
-              this.setState({ avatarSource: source });
-            }
-          }
-        }
-      }
-    });
-  }
-
   _takePhoto() {
-
-    // NOTA:
-    //
-    // 1. hacer foto con al cámara o elegir de la galeria
-    // 2. crear un objeto donde guardar toda la info del usuario por UID
-    // 3. guardar response.uri en el objeto junto con el resto de configuraciones de usuario
-    // 4. parsear el objeto y gardar con AsyncStorage
-    // 5. recupear toda la info del usuario al iniciar la app
-    //
-    // para guardar y recupearar objectos se hace de la misma forma que con LocaStorage
-    //
-    // JSON.stringify(testObject) -> guarda
-    // JSON.parse(objeto) -> recupera
-    //
-
-    // TODO: abrir un menu para elegir una foto de la galería o hacer una foto con la cámara
-
     ImagePicker.openPicker({
       width: 200,
       height: 200,
       cropping: true,
       includeBase64: true
     }).then(image => {
-      let source;
+      let user = firebase.auth().currentUser;
 
-      source = { uri: 'data:image/jpeg;base64,' + image.data };
+      firebase.database().ref('users/' + user.uid).set({
+        settings: {
+          lang: settingsService.getOptions().lang,
+          allowExitApp: settingsService.getOptions().allowExitApp,
+          avatar: { uri: 'data:image/jpeg;base64,' + image.data }
+        }
+      });
 
-      userService.updateField('photoURL', image.data);
+      settingsService.setOption('avatar', { uri: 'data:image/jpeg;base64,' + image.data });
 
-      // TODO: guardar en el objeto de usuario (UID)
-      // AsyncStorage.setItem('imageProfile', image.data);
-
-      this.setState({ avatarSource: source });
+      this.setState({ avatarSource: { uri: 'data:image/jpeg;base64,' + image.data } });
     });
-
   }
 
   renderAvatar() {
@@ -118,20 +88,11 @@ export default class Profile extends Component {
 
         <View style={{paddingHorizontal: 15, paddingVertical: 30}}>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-
-            {/*<Image
-              resizeMode={'cover'}
-              style={{width: 100, height: 100, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
-              source={this.state.avatarSource} />*/}
-              {/*source={{uri: 'content://media/external/images/media/15'}} />*/}
-
             {this.renderAvatar()}
-
             <View>
               <Text style={styles.userName}>{this.state.name}</Text>
               <Text style={styles.userEmail}>{this.state.email}</Text>
             </View>
-
           </View>
         </View>
 

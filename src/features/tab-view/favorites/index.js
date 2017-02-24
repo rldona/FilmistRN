@@ -25,36 +25,36 @@ export default class Favorites extends Component {
 
   componentDidMount() {
 
-    setTimeout(() => {
-      var user = userService.getCurrentUser();
+    // setTimeout(() => {
+    //   var user = userService.getCurrentUser();
 
-      var saved    = [];
-      var viewed   = [];
-      var favorite = [];
+    //   var saved    = [];
+    //   var viewed   = [];
+    //   var favorite = [];
 
-      for (var key in user.movies) {
-          if (user.movies[key].saved) {
-            themoviedb.getMovie('movie', key).then((movie) => {
-              saved.push(movie);
-            });
-          }
-          if (user.movies[key].viewed) {
-            themoviedb.getMovie('movie', key).then((movie) => {
-              viewed.push(movie);
-            });
-          }
-          if (user.movies[key].favorite) {
-            themoviedb.getMovie('movie', key).then((movie) => {
-              favorite.push(movie);
-            });
-          }
-      }
+    //   for (var key in user.movies) {
+    //       if (user.movies[key].saved) {
+    //         themoviedb.getMovie('movie', key).then((movie) => {
+    //           saved.push(movie);
+    //         });
+    //       }
+    //       if (user.movies[key].viewed) {
+    //         themoviedb.getMovie('movie', key).then((movie) => {
+    //           viewed.push(movie);
+    //         });
+    //       }
+    //       if (user.movies[key].favorite) {
+    //         themoviedb.getMovie('movie', key).then((movie) => {
+    //           favorite.push(movie);
+    //         });
+    //       }
+    //   }
 
-      this.setState({saved: saved});
-      this.setState({viewed: viewed});
-      this.setState({favorite: favorite});
+    //   this.setState({saved: saved});
+    //   this.setState({viewed: viewed});
+    //   this.setState({favorite: favorite});
 
-    }, 1000);
+    // }, 1000);
 
   }
 

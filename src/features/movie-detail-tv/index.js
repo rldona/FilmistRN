@@ -56,20 +56,18 @@ export default class MovieDetailTv extends Component {
     // });
 
     themoviedb.getCredits('tv', themoviedb.getCurrentMovie().id).then((data) => {
-      let cast = {
-        director: data.crew[0].name,
-        writer: data.crew[1].name,
-        actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
-      };
 
-      for (let i = 0; i < data.crew.length; i++) {
-        if (data.crew[i].job === 'Director') {
-          cast.director = data.crew[i].name;
-        }
-        if (data.crew[i].job === 'Novel') {
-          cast.writer= data.crew[i].name;
-        }
-      }
+      console.log(data.cast[0]);
+
+      let cast = {
+        actors: [
+          data.cast[0].name,
+          data.cast[1].name,
+          data.cast[2].name,
+          data.cast[3].name,
+          data.cast[4].name
+        ]
+      };
 
       this.setState({cast: cast});
 
