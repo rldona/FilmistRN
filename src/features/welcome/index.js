@@ -35,7 +35,7 @@ export default class Welcome extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         userService.setCurrentUser(user);
@@ -100,10 +100,13 @@ export default class Welcome extends Component {
       )
     } else {
       return (
-        <View style={{backgroundColor: colors.getList().primary, height: height}}>
-          <Loading position="center" />
+        <View style={{elevation: 10, backgroundColor: colors.getList().primary, height: height, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{backgroundColor: colors.getList().secondary, padding: 20, borderRadius: 3}}>
+            <Loading color="#FFF" />
+            <Text style={{fontSize: 16, color: '#FFF', fontWeight: '400', marginTop: 10}}>Cargando configuración...</Text>
+          </View>
         </View>
-      );
+      )
     }
 
   }

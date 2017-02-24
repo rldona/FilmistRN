@@ -45,12 +45,8 @@ export default class Profile extends Component {
     }).then(image => {
       let user = firebase.auth().currentUser;
 
-      firebase.database().ref('users/' + user.uid).set({
-        settings: {
-          lang: settingsService.getOptions().lang,
-          allowExitApp: settingsService.getOptions().allowExitApp,
-          avatar: { uri: 'data:image/jpeg;base64,' + image.data }
-        }
+      firebase.database().ref('users/' + user.uid + '/settings/avatar').set({
+        uri: 'data:image/jpeg;base64,' + image.data
       });
 
       settingsService.setOption('avatar', { uri: 'data:image/jpeg;base64,' + image.data });

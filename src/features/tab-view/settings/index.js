@@ -82,19 +82,24 @@ export default class Settings extends Component {
               <Checkbox
                 checked={this.state.allowExitApp}
                 onChange={(checked) => {
-                  this.setState({allowExitApp: !checked});
-
-                  settingsService.setOption('allowExitApp', !this.state.allowExitApp);
-
                   let user = firebase.auth().currentUser;
 
-                  firebase.database().ref('users/' + user.uid).set({
-                    settings: {
-                      lang: settingsService.getOptions().lang,
-                      allowExitApp: !this.state.allowExitApp,
-                      avatar: settingsService.getOptions().avatar,
+                  this.setState({allowExitApp: !checked});
+                  settingsService.setOption('allowExitApp', !this.state.allowExitApp);
+
+                  firebase.database().ref('users/' + user.uid + '/settings/allowExitApp').set(!this.state.allowExitApp);
+
+                  {/*firebase.database().ref('users/' + user.uid + '/favorites/').set([
+                    {
+                      title: 'El diablo metió la mano',
+                      sinopsis: 'añljksfdñlkajsfkljasñdfkla'
+                    },
+                    {
+                      title: 'El diablo metió la mano',
+                      sinopsis: 'añljksfdñlkajsfkljasñdfkla'
                     }
-                  });
+                  ]);*/}
+
                 }} />
             </View>
           </View>
