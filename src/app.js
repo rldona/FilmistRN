@@ -96,9 +96,7 @@ export default class App extends Component {
   }
 
   navigatorRenderScene(route, navigator) {
-
     this.state.currentIndex = route.index;
-
     moviesService.setNavigator(navigator);
 
     switch (route.index) {
@@ -137,16 +135,13 @@ export default class App extends Component {
           initialRoute={{ index: 0 }}
           renderScene={this.navigatorRenderScene.bind(this)}
           configureScene={(route) => {
-
             // return CustomTransitions.NONE;
-
             if (route.index === 0 || route.index === 1) {
               return CustomTransitions.NONE;
             } else {
               return Navigator.SceneConfigs.FloatFromBottomAndroid;
               // return CustomTransitions.FloatFromBottomAndroidCustom;
             }
-
           }}/>
 
       </View>
