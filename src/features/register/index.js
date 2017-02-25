@@ -40,13 +40,16 @@ export default class Register extends Component {
       this.setState({showLoading: true});
       loginService.register(this.state.email, this.state.password).then((user) => {
         let updateUser = firebase.auth().currentUser;
+
         this.setState({showLoading: false});
+
         firebase.database().ref('users/' + user.uid).set({
           settings: {
             lang: 'es',
             allowExitApp: false
           }
         });
+
         updateUser.updateProfile({
           displayName: this.state.name,
           photoURL: null
@@ -55,6 +58,7 @@ export default class Register extends Component {
         }, (error) => {
           alert(error);
         });
+
       }).catch((error) => {
         this.setState({showLoading: false});
         if (error.code === 'auth/invalid-email') {

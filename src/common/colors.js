@@ -4,6 +4,7 @@ const colors = {
   google: '#4285f4',
   white: '#FFF',
   black: '#000',
+  gray: '#444',
   primary: '#121314',
   secondary: '#222326',
   statusBar: 'rgba(0, 0, 0, 0)',

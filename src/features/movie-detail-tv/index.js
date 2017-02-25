@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -178,8 +180,6 @@ export default class MovieDetailTv extends Component {
         </View>
       )
     }
-
-    themoviedb.setHistorialList(this.state.movie);
 
     return (
 

@@ -20,7 +20,7 @@ import * as userService from '../../services/user-service';
 import * as moviesService from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Loading from '../../common/loading';
 
 const { width, height } = Dimensions.get('window');
@@ -101,9 +101,10 @@ export default class Welcome extends Component {
     } else {
       return (
         <View style={{elevation: 10, backgroundColor: colors.getList().primary, height: height, alignItems: 'center', justifyContent: 'center'}}>
-          <View style={{backgroundColor: colors.getList().secondary, padding: 20, borderRadius: 3}}>
-            <Loading color="#FFF" />
-            <Text style={{fontSize: 16, color: '#FFF', fontWeight: '400', marginTop: 10}}>Cargando configuración...</Text>
+          <View style={{borderColor: colors.getList().app, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
+            {/*<Loading color="#FFF" />*/}
+            <Icon name="account-check" size={40} color={colors.getList().app} />
+            <Text style={{fontSize: 16, color: colors.getList().app, fontWeight: '400', marginTop: 10}}>Validando credenciales</Text>
           </View>
         </View>
       )
