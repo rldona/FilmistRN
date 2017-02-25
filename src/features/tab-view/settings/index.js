@@ -110,7 +110,12 @@ export default class Settings extends Component {
                 style={{minWidth: 300}}
                 activeOpacity={0.9}
                 onPress={() => {
+                  let user = firebase.auth().currentUser;
+
                   themoviedb.clearHitorialList();
+
+                  firebase.database().ref('users/' + user.uid + '/historial').set(null);
+
                   ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
                 }}>
                 <View style={{paddingHorizontal: 15, paddingVertical: 20}}>

@@ -31,29 +31,19 @@ export const setOptions = (option, value) => {
   options[option] = value;
 }
 
-export const setHistorialList = (movie) => {
+export const setHistorialList = (movie, type) => {
+  if (type === 'array') {
+    historialList = movie;
+    return true;
+  }
+
   if (!found(movie)) {
     historialList.unshift(movie);
   }
 }
 
-export const getHistorialList = (clear) => {
-  let historialListLimited = [];
-  let limit = 10;
-
-  if (typeof clear !== 'undefined') {
-    return [];
-  }
-
-  if (historialList.length > 0) {
-    for (let i = 0; i < limit; i++) {
-      if (typeof historialList[i] !== 'undefined') {
-        historialListLimited.push(historialList[i]);
-      }
-    }
-  }
-
-  return historialListLimited;
+export const getHistorialList = () => {
+  return historialList;
 }
 
 export const getHistorialListFull = () => {
@@ -62,7 +52,6 @@ export const getHistorialListFull = () => {
 
 export const clearHitorialList = () => {
   historialList = [];
-  getHistorialList(true);
 }
 
 function found(movie) {
