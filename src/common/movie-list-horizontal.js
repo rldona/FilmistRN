@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -67,7 +69,14 @@ export default class MoviesListHorizontal extends Component {
     //   themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
     // });
 
+    let user = firebase.auth().currentUser;
+
     themoviedb.setCurrentMovie(movie);
+    themoviedb.setHistorialList(movie);
+
+    firebase.database().ref('users/' + user.uid + '/historial').set(
+      themoviedb.getHistorialList()
+    );
 
     if (movie.first_air_date) {
       themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});
@@ -118,7 +127,7 @@ export default class MoviesListHorizontal extends Component {
         <ListView
           style={{ marginBottom: 0}}
           dataSource={this.state.dataMovies}
-          // rrpagingEnabled={true}
+          // pagingEnabled={true}
           initialListSize={1}
           renderRow={(rowData) => this.renderMovie(rowData)}
           horizontal={true}

@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -28,35 +30,25 @@ export default class Historial extends Component {
     };
   }
 
-  // componentWillReceiveProps() {
+  componentWillMount() {
+    let user         = firebase.auth().currentUser;
+    let historialRef = firebase.database().ref('users/' + user.uid);
 
-  //   console.log(this.props.list)
+    historialRef.on('value', (snapshot) => {
+      if (typeof snapshot.val().historial !== 'undefined') {
+        this.setState({
+          dataMovies: ds.cloneWithRows(snapshot.val().historial)
+        });
+      } else {
+        this.setState({
+          dataMovies: null
+        });
+      }
 
-  //   if (this.props.list.length > 0) {
-  //     this.setState({
-  //       movies: ds.cloneWithRows(this.props.list)
-  //     });
-  //   } else {
-  //     this.setState({
-  //       movies: null
-  //     });
-  //   }
-  // }
-
-  shouldComponentUpdate() {
-    if (themoviedb.getHistorialList().length > 0) {
-      this.setState({
-        dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
-      });
-    }
-
-    if (themoviedb.getHistorialList().length === 0) {
-      this.setState({
-        dataMovies: null
-      });
-    }
-
-    return true;
+      if (snapshot.val().historial) {
+        themoviedb.setHistorialList(snapshot.val().historial, 'array');
+      }
+    });
   }
 
   _onSelectMovie(movie) {

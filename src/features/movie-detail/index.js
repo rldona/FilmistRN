@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -137,14 +139,6 @@ export default class MovieDetail extends Component {
     }
   }
 
-  // renderSwitchLists() {
-  //   let currentUser = userService.getCurrentUser();
-
-  //   return (
-  //     <SwitchLists user={currentUser} />
-  //   )
-  // }
-
   render() {
 
     if (!this.state.loaded) {
@@ -195,8 +189,6 @@ export default class MovieDetail extends Component {
         </View>
       )
     }
-
-    themoviedb.setHistorialList(this.state.movie);
 
     return (
 
