@@ -1,4 +1,4 @@
-package com.reactnativetabviewseed;
+package com.filmist;
 
 import com.facebook.react.ReactActivity;
 

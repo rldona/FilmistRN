@@ -1,4 +1,4 @@
-package com.reactnativetabviewseed;
+package com.filmist;
 
 import android.app.Application;
 import android.util.Log;
