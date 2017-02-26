@@ -88,18 +88,6 @@ export default class Settings extends Component {
                   settingsService.setOption('allowExitApp', !this.state.allowExitApp);
 
                   firebase.database().ref('users/' + user.uid + '/settings/allowExitApp').set(!this.state.allowExitApp);
-
-                  {/*firebase.database().ref('users/' + user.uid + '/favorites/').set([
-                    {
-                      title: 'El diablo metió la mano',
-                      sinopsis: 'añljksfdñlkajsfkljasñdfkla'
-                    },
-                    {
-                      title: 'El diablo metió la mano',
-                      sinopsis: 'añljksfdñlkajsfkljasñdfkla'
-                    }
-                  ]);*/}
-
                 }} />
             </View>
           </View>

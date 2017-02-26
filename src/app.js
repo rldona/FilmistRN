@@ -73,7 +73,11 @@ export default class App extends Component {
               '¿Realmente quieres salir?',
               [
                 {text: 'No', onPress: () => { return false }, style: 'cancel' },
-                {text: 'Sí', onPress: () => BackAndroid.exitApp() }
+                {text: 'Sí', onPress: () => {
+                  loginService.logout().then(() => {
+                    themoviedb.getNavigator().resetTo({index: 0.1, title: 'login'});
+                  })
+                }}
               ]
             );
           } else {
