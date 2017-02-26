@@ -19,6 +19,7 @@ import * as themoviedb from '../../../services/movies-service';
 import Loading from '../../../common/loading';
 import CategoriesList from '../../../common/categories-list';
 import MoviesListHorizontal from '../../../common/movie-list-horizontal';
+import Featured from '../../../common/featured';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -34,12 +35,30 @@ export default class Home extends Component {
   }
 
   componentWillMount() {
+    let user         = firebase.auth().currentUser;
+    let featuredRef = firebase.database().ref('featured');
+
     // InteractionManager.runAfterInteractions(() => {
       themoviedb.getAllPopular().then((data) => {
-        this.setState({
-          allData: data,
-          allLoaded: true,
+
+        featuredRef.on('value', (snapshot) => {
+          this.setState({
+            featureData: {
+              title: snapshot.val().title,
+              subtitle: snapshot.val().subtitle,
+              background: snapshot.val().background,
+              visible: snapshot.val().visible,
+            },
+            allData: data,
+            allLoaded: true,
+          });
         });
+
+        // this.setState({
+        //   allData: data,
+        //   allLoaded: true,
+        // });
+
       });
     // });
   }
@@ -59,6 +78,8 @@ export default class Home extends Component {
         <ScrollView style={styles.containerLists}>
 
           <CategoriesList {...this.props} />
+
+          <Featured data={this.state.featureData} />
 
           <MoviesListHorizontal
             title="Ahora en los cines"
