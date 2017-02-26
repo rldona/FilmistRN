@@ -8,6 +8,7 @@ import {
   Text,
   Image,
   Platform,
+  Alert,
   AsyncStorage,
   ScrollView,
   View,
@@ -36,29 +37,66 @@ export default class Profile extends Component {
     }
   }
 
-  _takePhoto() {
+  imageChange() {
+    Alert.alert(
+      'Cambiar imagen',
+      '',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Ask me later pressed'),
+          style: 'cancel'
+        },
+        {
+          text: 'Galería',
+          onPress: () => this.galeryOption()
+        },
+        {
+          text: 'Cámara',
+          onPress: () => this.cameraOption()
+        }
+      ],
+      { cancelable: true }
+    )
+  }
+
+  cameraOption() {
+    ImagePicker.openCamera({
+      width: 200,
+      height: 200,
+      cropping: true
+    }).then(image => {
+      this.saveImageSelected(image, 'camera');
+    });
+  }
+
+  galeryOption() {
     ImagePicker.openPicker({
       width: 200,
       height: 200,
       cropping: true,
       includeBase64: true
     }).then(image => {
-      let user = firebase.auth().currentUser;
-
-      firebase.database().ref('users/' + user.uid + '/settings/avatar').set({
-        uri: 'data:image/jpeg;base64,' + image.data
-      });
-
-      settingsService.setOption('avatar', { uri: 'data:image/jpeg;base64,' + image.data });
-
-      this.setState({ avatarSource: { uri: 'data:image/jpeg;base64,' + image.data } });
+      this.saveImageSelected(image, 'gallery');
     });
+  }
+
+  saveImageSelected(image, type) {
+    let user = firebase.auth().currentUser;
+
+    firebase.database().ref('users/' + user.uid + '/settings/avatar').set({
+      uri: type === 'gallery' ? 'data:image/jpeg;base64,' + image.data : image.path
+    });
+
+    settingsService.setOption('avatar', { uri: type === 'gallery' ? 'data:image/jpeg;base64,' + image.data : image.path });
+
+    this.setState({ avatarSource: { uri: type === 'gallery' ? 'data:image/jpeg;base64,' + image.data : image.path } });
   }
 
   renderAvatar() {
     if (this.state.avatarSource) {
       return (
-        <TouchableOpacity onPress={this._takePhoto.bind(this)}>
+        <TouchableOpacity onPress={this.imageChange.bind(this)}>
           <Image
             resizeMode={'cover'}
             style={{width: 100, height: 100, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
@@ -67,7 +105,7 @@ export default class Profile extends Component {
       )
     } else {
       return (
-        <TouchableOpacity onPress={this._takePhoto.bind(this)}>
+        <TouchableOpacity onPress={this.imageChange.bind(this)}>
           <View style={{flexDirection: 'column', alignItems: 'center', backgroundColor: colors.getList().secondary, width: 100, height: 100, borderRadius: 50, marginBottom: 20}}>
             <Text style={{marginTop: 25}}>
               <Icon name="face" color="#CCC" size={50} />
