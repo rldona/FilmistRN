@@ -96,8 +96,8 @@ android {
         applicationId "com.filmist"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
-        versionName "5.0"
+        versionCode 6
+        versionName "6.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
