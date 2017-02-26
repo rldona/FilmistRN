@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 import React, { Component } from 'react';
 
 import {
@@ -87,9 +89,14 @@ export default class MoviesList extends Component {
     //   themoviedb.getNavigator().push({index: 2, route: 'movie-detail'});
     // });
 
-    console.log(movie);
+    let user = firebase.auth().currentUser;
 
     themoviedb.setCurrentMovie(movie);
+    themoviedb.setHistorialList(movie);
+
+    firebase.database().ref('users/' + user.uid + '/historial').set(
+      themoviedb.getHistorialList()
+    );
 
     if (movie.first_air_date) {
       themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});
