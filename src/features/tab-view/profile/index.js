@@ -62,35 +62,36 @@ export default class Profile extends Component {
 
   cameraOption() {
     ImagePicker.openCamera({
-      width: 200,
-      height: 200,
-      cropping: true
+      width: 120,
+      height: 120,
+      cropping: true,
+      includeBase64: true
     }).then(image => {
-      this.saveImageSelected(image, 'camera');
+      this.saveImageSelected(image);
     });
   }
 
   galeryOption() {
     ImagePicker.openPicker({
-      width: 200,
-      height: 200,
+      width: 120,
+      height: 120,
       cropping: true,
       includeBase64: true
     }).then(image => {
-      this.saveImageSelected(image, 'gallery');
+      this.saveImageSelected(image);
     });
   }
 
-  saveImageSelected(image, type) {
+  saveImageSelected(image) {
     let user = firebase.auth().currentUser;
 
     firebase.database().ref('users/' + user.uid + '/settings/avatar').set({
-      uri: type === 'gallery' ? 'data:image/jpeg;base64,' + image.data : image.path
+      uri: 'data:image/jpeg;base64,' + image.data
     });
 
-    settingsService.setOption('avatar', { uri: type === 'gallery' ? 'data:image/jpeg;base64,' + image.data : image.path });
+    settingsService.setOption('avatar', { uri: 'data:image/jpeg;base64,' + image.data });
 
-    this.setState({ avatarSource: { uri: type === 'gallery' ? 'data:image/jpeg;base64,' + image.data : image.path } });
+    this.setState({ avatarSource: { uri: 'data:image/jpeg;base64,' + image.data }});
   }
 
   renderAvatar() {
