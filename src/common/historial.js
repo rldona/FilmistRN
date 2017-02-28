@@ -36,8 +36,16 @@ export default class Historial extends Component {
 
     historialRef.on('value', (snapshot) => {
       if (typeof snapshot.val().historial !== 'undefined') {
+        let historialListLimit = [];
+
+        for (let i = 0; i < snapshot.val().historial.length; i++) {
+          if (i < 5) {
+            historialListLimit.push(snapshot.val().historial[i]);
+          }
+        }
+
         this.setState({
-          dataMovies: ds.cloneWithRows(snapshot.val().historial)
+          dataMovies: ds.cloneWithRows(historialListLimit)
         });
       } else {
         this.setState({
@@ -64,7 +72,7 @@ export default class Historial extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 15}}
+        style={{marginBottom: 0}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -91,7 +99,7 @@ export default class Historial extends Component {
     }
 
     return (
-      <View style={{margin: 15}}>
+      <View style={{margin: 15, borderColor: colors.getList().secondary, borderWidth: 1}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -108,14 +116,21 @@ export default class Historial extends Component {
     return (
       <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0}}>
 
-        <View>
+        <View style={styles.row}>
+
           <Text style={styles.optionTitle}>{title}</Text>
-          {/*<TouchableOpacity
-            activeOpacity={0.9}>
+
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              themoviedb.setCurrentTitle('Lo último que has visto');
+              themoviedb.setCurrentCollection('historial');
+              themoviedb.getNavigator().push({index: 4, route: 'top-list'});
+            }}>
             {
               themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
             }
-          </TouchableOpacity>*/}
+          </TouchableOpacity>
         </View>
 
         {this.renderHistorialList()}
@@ -144,13 +159,17 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 15,
     marginBottom: 0,
-    backgroundColor: colors.getList().secondary,
-    // marginBottom: 10
+    // backgroundColor: colors.getList().secondary,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // backgroundColor: colors.getList().secondary,
   },
   titlel: {
     fontWeight: '600',
     paddingTop: 5,
-    backgroundColor: colors.getList().secondary,
     paddingLeft: 5,
     fontSize: 16,
     textAlign: 'left',
@@ -161,7 +180,7 @@ const styles = StyleSheet.create({
     color: colors.getList().app,
     fontSize: 11,
     marginTop: 0,
-    marginRight: 0,
+    marginRight: 15,
     paddingTop: 5,
     paddingBottom: 5,
     minWidth: 80,

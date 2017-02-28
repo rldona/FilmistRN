@@ -13,7 +13,7 @@ import {
 import * as themoviedb from '../../../services/movies-service';
 import * as colors from '../../../common/colors';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width, height } = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -24,20 +24,14 @@ export default class FavoriteList extends Component {
     super(props);
 
     this.state = {
-      dataMovies: this.props.list.length > 0 ? ds.cloneWithRows(this.props.list) : null
+      dataMovies: null
     };
   }
 
   componentWillReceiveProps() {
-    if (this.props.list.length > 0) {
-      this.setState({
-        dataMovies: ds.cloneWithRows(this.props.list)
-      });
-    } else {
-      this.setState({
-        dataMovies: null
-      });
-    }
+    this.setState({
+      dataMovies: ds.cloneWithRows(this.props.list)
+    });
   }
 
   _onSelectMovie(movie) {
@@ -54,19 +48,18 @@ export default class FavoriteList extends Component {
           resizeMode={'cover'}
           style={{minWidth: 300, borderRadius: 3, marginHorizontal: 0, backfaceVisibility: 'hidden'}}
           source={{uri: 'https://image.tmdb.org/t/p/w300/' + movie.backdrop_path}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 20, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}>
-            <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
-          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 35, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}></View>
         </Image>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
           <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 17}}>{movie.title}</Text>
-          <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
+          <Icon name="chevron-right" size={25} color={colors.getList().white} />
         </View>
       </TouchableOpacity>
     );
   }
 
   renderHistorialList() {
+
     if (!this.state.dataMovies) {
       return (
         <View>
@@ -76,7 +69,7 @@ export default class FavoriteList extends Component {
     }
 
     return (
-      <View>
+      <View style={{marginBottom: 10, borderColor: colors.getList().secondary, borderWidth: 1}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -86,21 +79,37 @@ export default class FavoriteList extends Component {
     )
   }
 
+  renderIcon() {
+    if (this.props.type === 'saved') {
+      return 'bookmark';
+    }
+    if (this.props.type === 'favorite') {
+      return 'star';
+    }
+    if (this.props.type === 'viewed') {
+      return 'eye';
+    }
+  }
+
   render() {
 
     const { title } = this.props;
 
     return (
-      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 15, marginTop: 20, marginLeft: 10, marginRight: 10}}>
+      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0, marginTop: 0, marginLeft: 0, marginRight: 0}}>
 
-        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-          <Text style={styles.title}>
-            {title}
-          </Text>
+        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: 10}}>
+          <View style={styles.row}>
+            <Icon name={this.renderIcon()} size={25} color={colors.getList().white} />
+            <Text style={styles.title}>
+              {title}
+            </Text>
+          </View>
+
           <TouchableOpacity
             activeOpacity={0.9}>
             {
-              themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
+              themoviedb.list[this.props.type].length >= 5 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
             }
           </TouchableOpacity>
         </View>
@@ -127,12 +136,11 @@ const styles = StyleSheet.create({
     borderColor: '#444'
   },
   title: {
-    fontWeight: '600',
-    paddingTop: 5,
-    paddingLeft: 5,
+    fontWeight: '400',
+    paddingLeft: 10,
     fontSize: 16,
     textAlign: 'left',
-    marginBottom: 15,
+    paddingVertical: 15,
     color: colors.getList().white,
   },
   viewAll: {
@@ -147,5 +155,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.getList().app,
     textAlign: 'center'
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });

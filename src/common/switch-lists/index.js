@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
 import {
+  Text,
   View,
   StyleSheet,
   Dimensions,
 } from 'react-native';
 
+import * as firebase from 'firebase';
+import * as movieService from '../../services/movies-service';
 import * as colors from '../colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -17,14 +20,39 @@ export default class SwitchLists extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      data: null,
+      show: false
+    }
+  }
+
+  componentDidMount() {
+    let user = firebase.auth().currentUser;
+    let movie = movieService.getCurrentMovie();
+    let type = this.props.type;
+
+    firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id).on('value', (snapshot) => {
+      this.setState({
+        data: snapshot.val(),
+        show: true
+      })
+    });
   }
 
   render() {
+    if(!this.state.show) {
+      return null;
+    }
+
     return (
-      <View style={styles.container}>
-        <SwitchListsItem user={this.props.user} icon="turned-in-not" title="La quiero ver" type="saved" />
-        <SwitchListsItem user={this.props.user} icon="remove-red-eye" title="Ya la he visto" type="viewed" />
-        <SwitchListsItem user={this.props.user} icon="star" title="Mis favoritas" type="favorite" />
+      <View>
+        {/*<Text style={{color: '#FFF', paddingHorizontal: 15, paddingVertical: 10}}>Añade la película con tus listas</Text>*/}
+        <View style={styles.container}>
+          <SwitchListsItem icon="turned-in-not" title="La quiero ver" type="saved" checked={this.state.data.saved} />
+          <SwitchListsItem icon="remove-red-eye" title="Ya la he visto" type="viewed" checked={this.state.data.viewed} />
+          <SwitchListsItem icon="star" title="Mis favoritas" type="favorite" checked={this.state.data.favorite} />
+        </View>
       </View>
     )
   }
@@ -35,12 +63,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     paddingVertical: 20,
-    margin: 15,
+    margin: 0,
     marginBottom: 0,
     borderTopWidth: 1,
-    borderTopColor: '#333',
+    borderTopColor: colors.getList().secondary,
     borderBottomWidth: 1,
     borderBottomColor: '#333',
   },

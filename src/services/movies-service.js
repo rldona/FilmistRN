@@ -18,7 +18,14 @@ let currentTab = {
   title: 'Inicio'
 };
 
+let favorites = [];
 let historialList = [];
+
+export let list = {
+  favorite: [],
+  saved: [],
+  viewed: []
+};
 
 export const init = () => {
   options.lang = settingsService.getOptions().lang;
@@ -102,6 +109,49 @@ export const setCurrentType = (type) => {
 export const getCurrentType = () => {
   return currentType;
 }
+
+
+
+export const setFavoriteList = (movie, type, option) => {
+  if (option === 'array') {
+    list[type] = movie;
+  } else {
+    list[type].push(movie);
+  }
+}
+
+export const getFavoriteList = (type) => {
+  return list[type];
+}
+
+export const removeFavoriteList = (movie, type) => {
+  for (let i = 0; i < list[type].length; i++) {
+    if (list[type][i].id === movie.id) {
+      list[type].splice(i, 1);
+    }
+  }
+}
+
+
+
+
+export const setFavorite = (data, type) => {
+  if (type === 'list') {
+    favorites = data;
+  } else {
+    favorites.unshift(data);
+  }
+}
+
+export const getFavorites = () => {
+  return favorites;
+}
+
+export const findFavorite = (id) => {
+  return favorites.indexOf(id);
+}
+
+
 
 export const setCurrentCollection = (collection) => {
   currentCollection = collection;

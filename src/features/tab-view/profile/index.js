@@ -22,7 +22,7 @@ import * as loginService from '../../../services/login-service';
 import * as colors from '../../../common/colors';
 
 import ImagePicker from 'react-native-image-crop-picker';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Historial from '../../../common/historial';
 
 export default class Profile extends Component {
@@ -33,8 +33,59 @@ export default class Profile extends Component {
     this.state = {
       avatarSource: settingsService.getOptions().avatar,
       name: userService.getCurrentUser().displayName,
-      email: userService.getCurrentUser().email
+      email: userService.getCurrentUser().email,
+      saved: 0,
+      viewed: 0,
+      favorite: 0
     }
+  }
+
+  componentWillMount() {
+
+    //
+    //
+    // TODO: peta la primera al guardar en 'list'
+    //
+    //
+
+    let user = firebase.auth().currentUser;
+
+    firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
+      if (snapshot.val()) {
+        this.setState({
+          favorite: snapshot.val().length
+        });
+      } else {
+        this.setState({
+          favorite: 0
+        });
+      }
+    });
+
+    firebase.database().ref('users/' + user.uid + '/list/saved').on('value', (snapshot) => {
+      if (snapshot.val()) {
+        this.setState({
+          saved: snapshot.val().length
+        });
+      } else {
+        this.setState({
+          saved: 0
+        });
+      }
+    });
+
+    firebase.database().ref('users/' + user.uid + '/list/viewed').on('value', (snapshot) => {
+      if (snapshot.val()) {
+        this.setState({
+          viewed: snapshot.val().length
+        });
+      } else {
+        this.setState({
+          viewed: 0
+        });
+      }
+    });
+
   }
 
   imageChange() {
@@ -131,22 +182,22 @@ export default class Profile extends Component {
           </View>
         </View>
 
-        <Historial title="Lo último que has visto" />
+        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, marginBottom: 15, paddingVertical: 20}}>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#FFF', textAlign: 'center', marginRight: 10}}><Icon name="bookmark" size={27} color={colors.getList().white} /></Text>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.saved}</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#FFF', textAlign: 'center',  marginRight: 10}}><Icon name="eye" size={27} color={colors.getList().white} /></Text>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.viewed}</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#FFF', textAlign: 'center',  marginRight: 10}}><Icon name="star" size={27} color={colors.getList().white} /></Text>
+            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.favorite}</Text>
+          </View>
+        </View>
 
-        {/*<View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, paddingVertical: 20}}>
-          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
-            <Text style={{color: '#FFF', textAlign: 'center'}}>Guadadas</Text>
-          </View>
-          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
-            <Text style={{color: '#FFF', textAlign: 'center'}}>Vistas</Text>
-          </View>
-          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 5, fontSize: 18}}>0</Text>
-            <Text style={{color: '#FFF', textAlign: 'center'}}>Favoritas</Text>
-          </View>
-        </View>*/}
+        <Historial title="Lo último que has visto" />
 
       </ScrollView>
 

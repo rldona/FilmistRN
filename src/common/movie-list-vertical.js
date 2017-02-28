@@ -49,11 +49,14 @@ export default class MoviesList extends Component {
 
   loadMovies() {
 
+    if (this.props.collection === 'historial') {
+      this.setState({
+        dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
+      });
+    }
+
     if (this.props.collection === 'similar') {
       themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id).then((data) => {
-
-        console.log(data);
-
         movies = [];
         movies = data;
         page   = 2;
@@ -70,7 +73,7 @@ export default class MoviesList extends Component {
       });
     }
 
-    if (this.props.collection !== 'similar' && this.props.collection !== 'search') {
+    if (this.props.collection !== 'similar' && this.props.collection !== 'search' && this.props.collection !== 'historial') {
       themoviedb.getPopular(this.props.type, this.props.collection).then((data) => {
         movies = [];
         movies = data;
@@ -144,7 +147,7 @@ export default class MoviesList extends Component {
     return (
       <View style={{borderRadius: 3}}>
         <TouchableOpacity
-          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
+          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderBottomWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
           onPress={this._onSelectMovie.bind(this, movie)}
           activeOpacity={0.9}>
           <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>
@@ -168,28 +171,32 @@ export default class MoviesList extends Component {
   }
 
   infiniteScroll = () => {
-    if (this.props.collection === 'similar') {
-      themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id, page).then((data) => {
-        Array.prototype.push.apply(movies, data);
-        this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
-        page++;
-      });
-    }
+    if (this.props.collection !== 'historial') {
 
-    if (this.props.collection === 'search') {
-      themoviedb.search(this.props.query, page).then((data) => {
-        Array.prototype.push.apply(movies, data);
-        this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
-        page++;
-      });
-    }
+      if (this.props.collection === 'similar') {
+        themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id, page).then((data) => {
+          Array.prototype.push.apply(movies, data);
+          this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
+          page++;
+        });
+      }
 
-    if (this.props.collection !== 'similar' && this.props.collection !== 'search') {
-      themoviedb.getPopular(this.props.type, this.props.collection, page).then((data) => {
-        Array.prototype.push.apply(movies, data);
-        this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
-        page++;
-      });
+      if (this.props.collection === 'search') {
+        themoviedb.search(this.props.query, page).then((data) => {
+          Array.prototype.push.apply(movies, data);
+          this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
+          page++;
+        });
+      }
+
+      if (this.props.collection !== 'similar' && this.props.collection !== 'search') {
+        themoviedb.getPopular(this.props.type, this.props.collection, page).then((data) => {
+          Array.prototype.push.apply(movies, data);
+          this.setState({ 'dataMovies': ds.cloneWithRows(movies) });
+          page++;
+        });
+      }
+
     }
   }
 

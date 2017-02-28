@@ -78,21 +78,7 @@ export default class MovieDetail extends Component {
 
     }).catch((error) => {
       console.log(error);
-    })
-
-    // let currentUser = userService.getCurrentUser();
-
-    // if (typeof currentUser.movies[themoviedb.getCurrentMovie().id] === 'undefined') {
-    //   currentUser.movies[themoviedb.getCurrentMovie().id] = {
-    //     saved: false,
-    //     viewed: false,
-    //     favorite: false
-    //   };
-    // }
-
-    // userService.setCurrentUser(currentUser);
-    // userService.updateUser(currentUser);
-
+    });
   }
 
   _onActionSelected = (action) => {
@@ -282,6 +268,8 @@ export default class MovieDetail extends Component {
           </View>
 
         </View>
+
+        <SwitchLists movie={this.state.movie} />
 
         <MoviesListHorizontal
           title="Descubre del mismo género"

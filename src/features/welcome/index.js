@@ -38,16 +38,55 @@ export default class Welcome extends Component {
   componentWillMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+
         userService.setCurrentUser(user);
+
         firebase.database().ref('users/' + user.uid).on('child_added', (data) => {
           if (data.val() && typeof data.val() !== 'undefined' && data.val() !== '') {
             settingsService.setOption('lang', data.val().lang);
             settingsService.setOption('allowExitApp', data.val().allowExitApp);
             settingsService.setOption('avatar', data.val().avatar);
-            // moviesService.init();
-            moviesService.getNavigator().resetTo({index: 1, title: 'home'});
           }
+
+          firebase.database().ref('users/' + user.uid + '/favorites').once('value', (snapshot) => {
+            let arr = [];
+
+            if (snapshot.val()) {
+              moviesService.setFavorite(Object.keys(snapshot.val()), 'list');
+            }
+
+            for (let i = 0; i < moviesService.getFavorites().length; i++) {
+              arr.push(parseInt(moviesService.getFavorites()[i]));
+            }
+
+            moviesService.setFavorite(arr, 'list');
+
+            // Get lists: saved, viewed, favorite (arrays)
+
+            firebase.database().ref('users/' + user.uid + '/list/favorite').once('value', (snapshot) => {
+              if (snapshot.val()) {
+                moviesService.setFavoriteList(snapshot.val(), 'favorite', 'array');
+              }
+            });
+
+            firebase.database().ref('users/' + user.uid + '/list/saved').once('value', (snapshot) => {
+              if (snapshot.val()) {
+                moviesService.setFavoriteList(snapshot.val(), 'saved', 'array');
+              }
+            });
+
+            firebase.database().ref('users/' + user.uid + '/list/viewed').once('value', (snapshot) => {
+              if (snapshot.val()) {
+                moviesService.setFavoriteList(snapshot.val(), 'viewed', 'array');
+              }
+            });
+
+            moviesService.getNavigator().resetTo({index: 1, title: 'home'});
+
+          });
+
         });
+
       } else {
         this.setState({showWelcome: true});
       }

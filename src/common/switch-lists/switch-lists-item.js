@@ -5,9 +5,11 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  Vibration,
   TouchableOpacity
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as themoviedb from '../../services/movies-service';
 import * as userService from '../../services/user-service';
 import * as colors from '../colors';
@@ -22,46 +24,46 @@ export default class SwitchListsItem extends Component {
     super(props);
 
     this.state = {
-      added: false,
-      color: '#555'
+      added: this.props.checked || false,
+      color: this.props.checked ? colors.getList().app : '#555'
     };
   }
 
-  componentDidMount() {
-    // let currentUser = userService.getCurrentUser();
-    setTimeout(() => {
-      this.setState({color: this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type] ? colors.getList().app : '#555'});
-    }, 250);
-  }
-
   _changeState() {
+    let user = firebase.auth().currentUser;
+    let movie = themoviedb.getCurrentMovie();
+    let type = this.props.type;
 
-    // let currentUser = userService.getCurrentUser();
-
-    // console.log(this.state.added);
-    // console.log(this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type]);
-
-    // this.setState({
-    //   added: this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type]
-    // });
-
-    if (this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type]) {
-      this.setState({
-        added: false,
-        color: '#555'
-      });
-      this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type] = false;
-    } else {
+    if (!this.state.added) {
       this.setState({
         added: true,
         color: colors.getList().app
       });
-      this.props.user.movies[themoviedb.getCurrentMovie().id][this.props.type] = true;
+    } else {
+      this.setState({
+        added: false,
+        color: '#555'
+      });
     }
 
-    userService.updateUser(this.props.user);
+    // change state of switch-lists-item
+    firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/' + this.props.type).set(
+      !this.state.added
+    );
 
-    // console.log(this.props.user);
+    // Add o remove from 'favorites list'
+    if (!this.state.added) {
+      themoviedb.setFavoriteList(themoviedb.getCurrentMovie(), this.props.type, 'movie');
+    } else {
+      themoviedb.removeFavoriteList(themoviedb.getCurrentMovie(), this.props.type);
+    }
+
+    Vibration.vibrate([0, 30]);
+
+    // Sync list to Firebase
+    firebase.database().ref('users/' + user.uid + '/list/' + this.props.type).set(
+      themoviedb.getFavoriteList(this.props.type)
+    );
 
   }
 

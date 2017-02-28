@@ -44,7 +44,7 @@ export default class App extends Component {
       animating: true,
       routes: [
         { key: '1', title: 'Filmist', icon: 'menu' },
-        // { key: '2', title: 'Favoritos', icon: 'star' },
+        { key: '2', title: 'Favoritos', icon: 'star' },
         { key: '3', title: 'Perfil', icon: 'person' },
         { key: '4', title: 'Settings', icon: 'settings' },
       ]
@@ -60,13 +60,13 @@ export default class App extends Component {
       case 0:
         title = 'Filmist';
         break;
-      // case 1:
-      //   title = 'Favoritos';
-      //   break;
       case 1:
-        title = 'Perfil';
+        title = 'Favoritos';
         break;
       case 2:
+        title = 'Perfil';
+        break;
+      case 3:
         title = 'Configuración';
         break;
     }
@@ -99,8 +99,8 @@ export default class App extends Component {
     switch (route.key) {
       case '1':
         return <Home />
-      // case '2':
-      //   return <Favorites />
+      case '2':
+        return <Favorites />
       case '3':
         return <Profile />
       case '4':
