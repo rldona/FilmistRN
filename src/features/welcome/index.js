@@ -63,6 +63,10 @@ export default class Welcome extends Component {
 
             // Get lists: saved, viewed, favorite (arrays)
 
+            firebase.database().ref('users/' + user.uid + '/list/init').set({
+              nulo: 'nulo'
+            });
+
             firebase.database().ref('users/' + user.uid + '/list/favorite').once('value', (snapshot) => {
               if (snapshot.val()) {
                 moviesService.setFavoriteList(snapshot.val(), 'favorite', 'array');
@@ -80,6 +84,7 @@ export default class Welcome extends Component {
                 moviesService.setFavoriteList(snapshot.val(), 'viewed', 'array');
               }
             });
+
 
             moviesService.getNavigator().resetTo({index: 1, title: 'home'});
 

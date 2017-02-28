@@ -36,8 +36,16 @@ export default class Favorites extends Component {
 
     firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
       if (snapshot.val()) {
+        let favoritesListLimit = [];
+
+        for (let i = 0; i < snapshot.val().length; i++) {
+          if (i < 5) {
+            favoritesListLimit.unshift(snapshot.val()[i]);
+          }
+        }
+
         this.setState({
-          favorite: snapshot.val().reverse()
+          favorite: favoritesListLimit
         });
       } else {
         this.setState({
@@ -87,7 +95,7 @@ export default class Favorites extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15
+    paddingHorizontal: 10
   },
   centering: {
     alignItems: 'center',

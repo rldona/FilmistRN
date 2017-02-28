@@ -49,6 +49,28 @@ export default class MoviesList extends Component {
 
   loadMovies() {
 
+    if (this.props.collection === 'favorite') {
+      this.setState({
+        dataMovies: ds.cloneWithRows(themoviedb.getFavoriteList('favorite'))
+      });
+    }
+
+    if (this.props.collection === 'saved') {
+      this.setState({
+        dataMovies: ds.cloneWithRows(themoviedb.getFavoriteList('saved'))
+      });
+    }
+
+    if (this.props.collection === 'viewed') {
+      this.setState({
+        dataMovies: ds.cloneWithRows(themoviedb.getFavoriteList('viewed'))
+      });
+    }
+
+
+
+
+
     if (this.props.collection === 'historial') {
       this.setState({
         dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
@@ -93,6 +115,17 @@ export default class MoviesList extends Component {
     // });
 
     let user = firebase.auth().currentUser;
+
+    if (themoviedb.findFavorite(movie.id) === -1) {
+      // init favorites default movies types to Firebase
+      firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/').set({
+        saved: false,
+        viewed: false,
+        favorite: false
+      });
+
+      themoviedb.setFavorite(movie.id, 'movie');
+    }
 
     themoviedb.setCurrentMovie(movie);
     themoviedb.setHistorialList(movie);
@@ -171,7 +204,7 @@ export default class MoviesList extends Component {
   }
 
   infiniteScroll = () => {
-    if (this.props.collection !== 'historial') {
+    if (this.props.collection !== 'historial' && this.props.collection !== 'saved' && this.props.collection !== 'viewed' && this.props.collection !== 'favorite') {
 
       if (this.props.collection === 'similar') {
         themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id, page).then((data) => {

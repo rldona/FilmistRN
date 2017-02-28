@@ -42,6 +42,7 @@ export default class FavoriteList extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
+        style={{marginBottom: 10}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -51,7 +52,7 @@ export default class FavoriteList extends Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 35, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}></View>
         </Image>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
-          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 17}}>{movie.title}</Text>
+          <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 14}}>{movie.title}</Text>
           <Icon name="chevron-right" size={25} color={colors.getList().white} />
         </View>
       </TouchableOpacity>
@@ -69,7 +70,7 @@ export default class FavoriteList extends Component {
     }
 
     return (
-      <View style={{marginBottom: 10, borderColor: colors.getList().secondary, borderWidth: 1}}>
+      <View style={{marginBottom: 10, borderColor: colors.getList().secondary, borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -98,7 +99,7 @@ export default class FavoriteList extends Component {
     return (
       <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0, marginTop: 0, marginLeft: 0, marginRight: 0}}>
 
-        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: 10}}>
+        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, marginTop: 10}}>
           <View style={styles.row}>
             <Icon name={this.renderIcon()} size={25} color={colors.getList().white} />
             <Text style={styles.title}>
@@ -107,9 +108,14 @@ export default class FavoriteList extends Component {
           </View>
 
           <TouchableOpacity
-            activeOpacity={0.9}>
+            activeOpacity={0.9}
+            onPress={() => {
+              themoviedb.setCurrentTitle(this.props.title);
+              themoviedb.setCurrentCollection(this.props.type);
+              themoviedb.getNavigator().push({index: 4, route: 'top-list'});
+            }}>
             {
-              themoviedb.list[this.props.type].length >= 5 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
+              themoviedb.list[this.props.type].length >= 5 ? <Text style={styles.viewAll}>VER TODAS</Text> : null
             }
           </TouchableOpacity>
         </View>
@@ -136,7 +142,7 @@ const styles = StyleSheet.create({
     borderColor: '#444'
   },
   title: {
-    fontWeight: '400',
+    fontWeight: '600',
     paddingLeft: 10,
     fontSize: 16,
     textAlign: 'left',

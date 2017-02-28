@@ -172,7 +172,7 @@ export default class Profile extends Component {
     return (
       <ScrollView>
 
-        <View style={{paddingHorizontal: 15, paddingVertical: 30}}>
+        <View style={{paddingHorizontal: 10, paddingVertical: 30}}>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             {this.renderAvatar()}
             <View>

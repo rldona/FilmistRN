@@ -268,6 +268,8 @@ export default class MovieDetailTv extends Component {
 
         </View>
 
+        <SwitchLists movie={this.state.movie} />
+
         <MoviesListHorizontal
           title="Descubre del mismo género"
           type="tv"

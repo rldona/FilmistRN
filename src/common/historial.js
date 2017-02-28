@@ -15,7 +15,7 @@ import {
 import * as themoviedb from '../services/movies-service';
 import * as colors from './colors';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width, height } = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -72,7 +72,7 @@ export default class Historial extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 0}}
+        style={{marginBottom: 10}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -83,7 +83,7 @@ export default class Historial extends Component {
         </Image>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
           <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 14}}>{movie.title || movie.name}</Text>
-          <Icon name="keyboard-arrow-right" size={27} color={colors.getList().white} />
+          <Icon name="chevron-right" size={27} color={colors.getList().white} />
         </View>
       </TouchableOpacity>
     );
@@ -99,7 +99,7 @@ export default class Historial extends Component {
     }
 
     return (
-      <View style={{margin: 15, borderColor: colors.getList().secondary, borderWidth: 1}}>
+      <View style={{margin: 10, borderColor: colors.getList().secondary, borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -117,8 +117,12 @@ export default class Historial extends Component {
       <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0}}>
 
         <View style={styles.row}>
+        <View style={[styles.row, styles.marginLeft]}>
 
+          <Icon name="history" size={25} color={colors.getList().white} />
           <Text style={styles.optionTitle}>{title}</Text>
+
+          </View>
 
           <TouchableOpacity
             activeOpacity={0.9}
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginRight: 0,
     color: '#444',
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingVertical: 20,
     borderStyle: 'dashed',
     borderWidth: 2,
@@ -156,10 +160,14 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     padding: 15,
-    color: '#FFF',
-    fontSize: 15,
+    fontWeight: '600',
+    color: colors.getList().white,
+    fontSize: 16,
     marginBottom: 0,
     // backgroundColor: colors.getList().secondary,
+  },
+  marginLeft: {
+    marginLeft: 15
   },
   row: {
     flexDirection: 'row',
@@ -174,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'left',
     marginBottom: 15,
-    color: colors.getList().white,
+    color: colors.getList().app,
   },
   viewAll: {
     color: colors.getList().app,
