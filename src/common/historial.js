@@ -98,7 +98,7 @@ export default class Historial extends Component {
     }
 
     return (
-      <View style={{margin: 10, borderColor: colors.getList().secondary, borderWidth: 0}}>
+      <View style={{margin: 10, borderColor: '#444', borderWidth: 1}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     color: colors.getList().white,
     fontSize: 16,
     marginBottom: 0,
-    // backgroundColor: colors.getList().secondary,
   },
   marginLeft: {
     marginLeft: 15
@@ -172,7 +171,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: colors.getList().secondary,
   },
   titlel: {
     fontWeight: '600',

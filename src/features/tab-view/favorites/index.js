@@ -11,7 +11,6 @@ import {
 
 import * as firebase from 'firebase';
 import * as colors from '../../../common/colors';
-
 import * as themoviedb from '../../../services/movies-service';
 import * as userService from '../../../services/user-service';
 
