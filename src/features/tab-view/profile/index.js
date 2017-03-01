@@ -141,7 +141,7 @@ export default class Profile extends Component {
   renderAvatar() {
     if (this.state.avatarSource) {
       return (
-        <TouchableOpacity onPress={this.imageChange.bind(this)}>
+        <TouchableOpacity onPress={this.imageChange.bind(this)} activeOpacity={0.8}>
           <Image
             resizeMode={'cover'}
             style={{width: 100, height: 100, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
@@ -150,10 +150,10 @@ export default class Profile extends Component {
       )
     } else {
       return (
-        <TouchableOpacity onPress={this.imageChange.bind(this)}>
+        <TouchableOpacity onPress={this.imageChange.bind(this)} activeOpacity={0.8}>
           <View style={{flexDirection: 'column', alignItems: 'center', backgroundColor: colors.getList().secondary, width: 100, height: 100, borderRadius: 50, marginBottom: 20}}>
-            <Text style={{marginTop: 25}}>
-              <Icon name="face" color="#CCC" size={50} />
+            <Text style={{marginTop: 30}}>
+              <Icon name="camera" color="#999" size={40} />
             </Text>
           </View>
         </TouchableOpacity>
@@ -177,16 +177,16 @@ export default class Profile extends Component {
 
         <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, marginBottom: 20, paddingVertical: 25}}>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center', marginRight: 10}}><Icon name="bookmark" size={27} color={colors.getList().white} /></Text>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.saved}</Text>
+            <Text style={{color: colors.getList().gray, textAlign: 'center', marginRight: 10}}><Icon name="bookmark" size={27} color='#999' /></Text>
+            <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.saved}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center',  marginRight: 10}}><Icon name="eye" size={27} color={colors.getList().white} /></Text>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.viewed}</Text>
+            <Text style={{color: colors.getList().gray, textAlign: 'center',  marginRight: 10}}><Icon name="eye" size={27} color='#999' /></Text>
+            <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.viewed}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#FFF', textAlign: 'center',  marginRight: 10}}><Icon name="star" size={27} color={colors.getList().white} /></Text>
-            <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.favorite}</Text>
+            <Text style={{color: colors.getList().gray, textAlign: 'center',  marginRight: 10}}><Icon name="star" size={27} color='#999' /></Text>
+            <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.favorite}</Text>
           </View>
         </View>
 

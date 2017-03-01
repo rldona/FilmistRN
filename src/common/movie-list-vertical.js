@@ -174,7 +174,7 @@ export default class MoviesList extends Component {
     return (
       <View style={{borderRadius: 3}}>
         <TouchableOpacity
-          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderBottomWidth: 15, borderRadius: 3, borderColor: colors.getList().primary}}
+          style={{marginHorizontal: 0, marginTop: 0, borderTopWidth: 15, borderBottomWidth: 0, borderRadius: 3, borderColor: colors.getList().primary}}
           onPress={this._onSelectMovie.bind(this, movie)}
           activeOpacity={0.9}>
           <View style={{flexDirection: 'row', alignItems: 'flex-start', backgroundColor: colors.getList().secondary, borderRadius: 3}}>

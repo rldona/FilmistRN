@@ -116,7 +116,7 @@ export default class Settings extends Component {
               </TouchableOpacity>
           </View>
 
-          <View>
+          {/*<View>
             <Text style={styles.optionTitle}>Eliminar todos los favoritos</Text>
               <TouchableOpacity
                 style={{minWidth: 300}}
@@ -141,7 +141,7 @@ export default class Settings extends Component {
                   </View>
                 </View>
               </TouchableOpacity>
-          </View>
+          </View>*/}
 
           <View>
             <Text style={styles.optionTitle}>Salir de Filmist</Text>

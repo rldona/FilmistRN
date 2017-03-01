@@ -70,14 +70,14 @@ export default class FavoriteList extends Component {
 
     if (!this.state.dataMovies) {
       return (
-        <View>
+        <View style={{marginBottom: 30}}>
           <Text style={styles.grid}>VACÍO</Text>
         </View>
       )
     }
 
     return (
-      <View style={{marginBottom: 0, borderColor: '#444', borderWidth: 1}}>
+      <View style={{marginBottom: 10, borderColor: '#222326', borderWidth: 1}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}

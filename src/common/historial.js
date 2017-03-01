@@ -71,14 +71,14 @@ export default class Historial extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 10}}
+        style={{marginBottom: 0}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
           resizeMode={'cover'}
           style={{minWidth: 300, borderRadius: 3, marginHorizontal: 0, backfaceVisibility: 'hidden'}}
           source={{uri: 'https://image.tmdb.org/t/p/w300/' + movie.backdrop_path}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 35, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 1, borderBottomColor: colors.getList().primary}}></View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 35, paddingLeft: 30, paddingRight: 15, borderBottomWidth: 0, borderBottomColor: colors.getList().primary}}></View>
         </Image>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 0, left: 0, paddingLeft: 15, paddingRight: 15, paddingVertical: 25, minWidth: width-20, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999}}>
           <Text style={{color: colors.getList().white, textAlign: 'center', fontSize: 14}}>{movie.title || movie.name}</Text>
@@ -98,7 +98,7 @@ export default class Historial extends Component {
     }
 
     return (
-      <View style={{margin: 10, borderColor: '#444', borderWidth: 1}}>
+      <View style={{margin: 10, borderColor: '#222326', borderWidth: 1}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
