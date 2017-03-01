@@ -47,7 +47,6 @@ export default class SwitchLists extends Component {
 
     return (
       <View>
-        {/*<Text style={{color: '#FFF', paddingHorizontal: 15, paddingVertical: 10}}>Añade la película con tus listas</Text>*/}
         <View style={styles.container}>
           <SwitchListsItem icon="turned-in-not" title="La quiero ver" type="saved" checked={this.state.data.saved} />
           <SwitchListsItem icon="remove-red-eye" title="Ya la he visto" type="viewed" checked={this.state.data.viewed} />

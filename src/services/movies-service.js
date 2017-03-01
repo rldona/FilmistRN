@@ -158,8 +158,13 @@ export const removeFavoriteList = (movie, type) => {
   }
 }
 
-
-
+export const clearFavoriteList = () => {
+  list = {
+    favorite: [],
+    saved: [],
+    viewed: []
+  };
+}
 
 export const setFavorite = (data, type) => {
   if (type === 'list') {
@@ -176,8 +181,6 @@ export const getFavorites = () => {
 export const findFavorite = (id) => {
   return favorites.indexOf(id);
 }
-
-
 
 export const setCurrentCollection = (collection) => {
   currentCollection = collection;

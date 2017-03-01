@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   },
   column: {
     flexDirection: 'column',
-    // paddingHorizontal: 10
   },
   row: {
     flexDirection: 'row',

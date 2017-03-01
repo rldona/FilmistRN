@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import * as colors from '../common/colors';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');

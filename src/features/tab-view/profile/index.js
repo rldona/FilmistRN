@@ -41,13 +41,6 @@ export default class Profile extends Component {
   }
 
   componentWillMount() {
-
-    //
-    //
-    // TODO: peta la primera al guardar en 'list'
-    //
-    //
-
     let user = firebase.auth().currentUser;
 
     firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
@@ -113,8 +106,8 @@ export default class Profile extends Component {
 
   cameraOption() {
     ImagePicker.openCamera({
-      width: 120,
-      height: 120,
+      width: 300,
+      height: 300,
       cropping: true,
       includeBase64: true
     }).then(image => {
@@ -124,8 +117,8 @@ export default class Profile extends Component {
 
   galeryOption() {
     ImagePicker.openPicker({
-      width: 120,
-      height: 120,
+      width: 300,
+      height: 300,
       cropping: true,
       includeBase64: true
     }).then(image => {
@@ -172,7 +165,7 @@ export default class Profile extends Component {
     return (
       <ScrollView>
 
-        <View style={{paddingHorizontal: 10, paddingVertical: 30}}>
+        <View style={{paddingHorizontal: 10, paddingVertical: 20}}>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             {this.renderAvatar()}
             <View>
@@ -182,7 +175,7 @@ export default class Profile extends Component {
           </View>
         </View>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, marginBottom: 15, paddingVertical: 20}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, marginBottom: 20, paddingVertical: 25}}>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
             <Text style={{color: '#FFF', textAlign: 'center', marginRight: 10}}><Icon name="bookmark" size={27} color={colors.getList().white} /></Text>
             <Text style={{color: '#FFF', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.saved}</Text>
@@ -209,24 +202,20 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   column: {
     flexDirection: 'column',
-    // paddingHorizontal: 10
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-    // marginBottom: 15
   },
   optionTitle: {
     padding: 15,
     color: '#FFF',
     fontSize: 15,
     backgroundColor: colors.getList().secondary,
-    // marginBottom: 10
   },
   optionText: {
     color: '#CCC',
-    // paddingLeft: 20
   },
   userName: {
     color: '#FFF',
@@ -240,4 +229,3 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
-

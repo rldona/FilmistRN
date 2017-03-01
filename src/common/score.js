@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import * as colors from './colors';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Score extends Component {

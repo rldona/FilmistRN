@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
@@ -14,6 +12,7 @@ import {
   InteractionManager
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
@@ -23,7 +22,6 @@ import Header from '../../common/header';
 import Loading from '../../common/loading';
 import Score from '../../common/score';
 import SwitchLists from '../../common/switch-lists';
-
 import MoviesListHorizontal from '../../common/movie-list-horizontal';
 
 const { width, height } = Dimensions.get('window');

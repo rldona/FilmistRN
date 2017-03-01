@@ -96,8 +96,6 @@ export default class TopList extends Component {
 
         <Animatable.View
           ref="scrollTop"
-          // animation="bounceInUp"
-          // delay={1000}
           iterationCount={1}
           useNativeDriver={true}
           style={styles.button}>

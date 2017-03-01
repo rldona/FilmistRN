@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
@@ -16,6 +14,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as loginService from '../../../services/login-service';
 import * as settingsService from '../../../services/settings-service';
 import * as themoviedb from '../../../services/movies-service';
@@ -112,6 +111,33 @@ export default class Settings extends Component {
                 <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Eliminar historial</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+          </View>
+
+          <View>
+            <Text style={styles.optionTitle}>Eliminar todos los favoritos</Text>
+              <TouchableOpacity
+                style={{minWidth: 300}}
+                activeOpacity={0.9}
+                onPress={() => {
+                  let user = firebase.auth().currentUser;
+
+                  themoviedb.clearFavoriteList();
+
+                  firebase.database().ref('users/' + user.uid + '/favorites').set(null);
+                  firebase.database().ref('users/' + user.uid + '/list').set(null);
+
+                  firebase.database().ref('users/' + user.uid + '/list/init').set({
+                    nulo: 'nulo'
+                  });
+
+                  ToastAndroid.show('Favoritos eliminados', ToastAndroid.SHORT);
+                }}>
+                <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Eliminar favoritos</Text>
                   </View>
                 </View>
               </TouchableOpacity>

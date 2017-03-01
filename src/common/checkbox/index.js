@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import * as colors from '../../common/colors';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Checkbox extends Component {

@@ -1,4 +1,3 @@
-import * as firebase from 'firebase';
 
 import React, { Component } from 'react';
 
@@ -6,6 +5,7 @@ import {
   View
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as settingsService from '../../services/settings-service';
 import * as moviesService from '../../services/movies-service';
 

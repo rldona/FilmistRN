@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
@@ -14,6 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as loginService from '../../services/login-service';
 import * as settingsService from '../../services/settings-service';
 import * as userService from '../../services/user-service';

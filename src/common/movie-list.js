@@ -45,7 +45,6 @@ export default class MoviesList extends Component {
   }
 
   loadMovies() {
-    // TODO: crear un switch
     if (this.props.collection === 'now_playing' ||
         this.props.collection === 'upcoming' ||
         this.props.collection === 'popular' ||
@@ -56,9 +55,7 @@ export default class MoviesList extends Component {
         movies = data;
         page   = 2;
 
-        // setTimeout(() => {
         this.setState({ 'dataMovies': ds.cloneWithRows(data) });
-        // }, 500);
       });
     }
 
@@ -69,9 +66,7 @@ export default class MoviesList extends Component {
         movies = data;
         page   = 2;
 
-        // setTimeout(() => {
         this.setState({ 'dataMovies': ds.cloneWithRows(data) });
-        // }, 500);
       });
     }
 
@@ -82,9 +77,7 @@ export default class MoviesList extends Component {
         movies = data;
         page   = 2;
 
-        // setTimeout(() => {
         this.setState({ 'dataMovies': ds.cloneWithRows(data) });
-        // }, 500);
       });
     }
   }
@@ -177,7 +170,6 @@ export default class MoviesList extends Component {
     }
 
     if (this.props.position === 'horizontal') {
-      // Horizontal
       return(
         <View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10}}>
@@ -187,13 +179,10 @@ export default class MoviesList extends Component {
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => {
-
                 themoviedb.setCurrentTitle(this.props.title);
                 themoviedb.setCurrentType(this.props.type);
                 themoviedb.setCurrentCollection(this.props.collection);
-
                 themoviedb.getNavigator().push({index: 4, route: 'top-list'});
-
               }}>
               <Text style={styles.viewAll}>VER TODAS</Text>
             </TouchableOpacity>
@@ -209,10 +198,8 @@ export default class MoviesList extends Component {
         </View>
       )
     } else {
-      // Vertical
       return (
         <View style={{paddingBottom: 80, paddingHorizontal: 10}}>
-
           <ListView
             ref={(scrollView) => { _scrollView = scrollView; }}
             initialListSize={1}
@@ -223,7 +210,6 @@ export default class MoviesList extends Component {
             onEndReached={this.infiniteScroll}
             showsVerticalScrollIndicator={false}
             horizontal={false} />
-
         </View>
       )
     }
@@ -250,7 +236,6 @@ var styles = StyleSheet.create({
   },
   titleVertical: {
     color: '#FFF',
-    // backgroundColor: '#171717',
     fontWeight: '300',
     paddingTop: 5,
     paddingLeft: 15,

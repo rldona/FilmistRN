@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
@@ -13,6 +11,7 @@ import {
   InteractionManager
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as themoviedb from '../services/movies-service.js';
 import * as colors from './colors';
 
@@ -24,7 +23,7 @@ const { width, height } = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 var movies = [];
-var page = 2;
+var page   = 2;
 
 export default class MoviesList extends Component {
 
@@ -67,10 +66,6 @@ export default class MoviesList extends Component {
       });
     }
 
-
-
-
-
     if (this.props.collection === 'historial') {
       this.setState({
         dataMovies: ds.cloneWithRows(themoviedb.getHistorialList())
@@ -103,7 +98,6 @@ export default class MoviesList extends Component {
         this.setState({ 'dataMovies': ds.cloneWithRows(data) });
       });
     }
-
 
   }
 
@@ -234,15 +228,10 @@ export default class MoviesList extends Component {
   }
 
   _onScroll(event) {
-    // console.log(event.nativeEvent);
-
     var currentOffset = event.nativeEvent.contentOffset.y;
     var direction = currentOffset > this.state.offset ? 'down' : 'up';
 
     this.state.offset = currentOffset;
-
-    // console.log(direction);
-
     this.props.onScrollList(direction, currentOffset);
   }
 
@@ -291,7 +280,6 @@ var styles = StyleSheet.create({
   },
   titleVertical: {
     color: '#FFF',
-    // backgroundColor: colors.getList().primary,
     paddingTop: 5,
     paddingLeft: 15,
     fontSize: 16,

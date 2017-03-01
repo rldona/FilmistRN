@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
@@ -12,6 +10,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as themoviedb from '../services/movies-service';
 import * as colors from './colors';
 

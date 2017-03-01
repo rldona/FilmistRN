@@ -1,4 +1,3 @@
-import * as firebase from 'firebase';
 
 import React, { Component } from 'react';
 
@@ -12,6 +11,7 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as loginService from '../../services/login-service';
 import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';

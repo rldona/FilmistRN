@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
@@ -14,8 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
-
+import * as firebase from 'firebase';
 import * as loginService from './services/login-service';
 import * as settingsService from './services/settings-service';
 import * as moviesService from './services/movies-service';
@@ -30,9 +27,10 @@ import MovieDetail from './features/movie-detail';
 import MovieDetailTv from './features/movie-detail-tv';
 import TopList from './features/top-list';
 import Search from './features/search';
-
 import CustomTransitions from './common/custom-transitions';
 import SplashScreen from 'react-native-smart-splash-screen';
+
+const { width, height } = Dimensions.get('window');
 
 export default class App extends Component {
 

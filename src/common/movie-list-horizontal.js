@@ -71,11 +71,7 @@ export default class MoviesListHorizontal extends Component {
 
     let user = firebase.auth().currentUser;
 
-    // console.log(themoviedb.getFavorites());
-    // console.log(themoviedb.findFavorite(movie.id));
-
     if (themoviedb.findFavorite(movie.id) === -1) {
-      // init favorites default movies types to Firebase
       firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/').set({
         saved: false,
         viewed: false,
@@ -90,11 +86,6 @@ export default class MoviesListHorizontal extends Component {
 
     // save movie to historial list
     themoviedb.setHistorialList(movie);
-
-    // set historial list to Firebase
-    // firebase.database().ref('users/' + user.uid + '/favoritesIndex/').set(
-    //   themoviedb.getFavorites()
-    // );
 
     // set historial list to Firebase
     firebase.database().ref('users/' + user.uid + '/historial').set(
