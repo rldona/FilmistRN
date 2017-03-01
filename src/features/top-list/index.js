@@ -63,7 +63,6 @@ export default class TopList extends Component {
         themoviedb.getNavigator().pop();
         break;
       case 'right':
-        alert('right');
         break;
     }
   }

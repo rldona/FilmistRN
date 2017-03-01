@@ -48,7 +48,6 @@ export default class Settings extends Component {
         themoviedb.getNavigator().pop();
         break;
       case 'right':
-        alert('right');
         break;
     }
   }
@@ -61,7 +60,7 @@ export default class Settings extends Component {
       // redirect to Login
       themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
     }, (error) => {
-      alert(error.message);
+      consoe.log(error.message);
     });
   }
 

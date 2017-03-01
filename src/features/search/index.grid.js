@@ -102,7 +102,6 @@ export default class Search extends Component {
         themoviedb.getNavigator().pop();
         break;
       case 'right':
-        alert('right');
         break;
     }
   }

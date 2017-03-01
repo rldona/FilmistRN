@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   Modal,
+  Alert,
   TextInput,
   Keyboard,
   TouchableHighlight,
@@ -47,10 +48,24 @@ export default class Remember extends Component {
 
         }, (error) => {
           if (error.code === 'auth/invalid-email') {
-            alert('El formato de email introducido no es correcto');
+            Alert.alert(
+              'Email no válido',
+              'El formato de email introducido no es correcto',
+              [
+                {text: 'OK'},
+              ],
+              { cancelable: true }
+            );
           }
           if (error.code === 'auth/user-not-found') {
-            alert('El email no pertenece a ningún usuario');
+            Alert.alert(
+              'Usuario no registrado',
+              'El email que has introducido no pertenece a ningún usuario',
+              [
+                {text: 'OK'},
+              ],
+              { cancelable: true }
+            );
           }
           this.setState({showLoading: false});
         });
@@ -58,11 +73,25 @@ export default class Remember extends Component {
       this.setState({showLoading: false});
 
       if (this.state.email === '') {
-        alert('Tienes que introducir un email');
+        Alert.alert(
+          'Campo obligatorio',
+          'Tienes que introducir un email',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
         return true;
       }
       if (this.state.email.length < 4) {
-        alert('El formato de email introducido no es correcto');
+        Alert.alert(
+          'Email no válido',
+          'El formato de email introducido no es correcto',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
       }
     }
   }

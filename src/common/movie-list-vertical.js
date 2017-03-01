@@ -20,6 +20,7 @@ import Loading from './loading';
 import Score from './score';
 
 const { width, height } = Dimensions.get('window');
+
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 var movies = [];

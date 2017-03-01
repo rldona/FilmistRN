@@ -5,6 +5,7 @@ import {
   View,
   Image,
   Text,
+  Alert,
   TextInput,
   TouchableOpacity,
   Keyboard,
@@ -44,6 +45,11 @@ export default class Register extends Component {
         this.setState({showLoading: false});
 
         firebase.database().ref('users/' + user.uid).set({
+          info: {
+            id: updateUser.uid,
+            name: this.state.name,
+            email: updateUser.email
+          },
           settings: {
             lang: 'es',
             allowExitApp: false
@@ -62,38 +68,94 @@ export default class Register extends Component {
       }).catch((error) => {
         this.setState({showLoading: false});
         if (error.code === 'auth/invalid-email') {
-          alert('El formato de email introducido no es correcto');
+          Alert.alert(
+            'Email no válido',
+            'El formato de email introducido no es correcto',
+            [
+              {text: 'OK'},
+            ],
+            { cancelable: true }
+          );
           return true;
         }
         if (error.code === 'auth/email-already-in-use') {
-          alert('El email ya está registrado. ¿Has olvidado la contraseña?');
+          Alert.alert(
+            'Email en uso',
+            'El email ya está registrado. ¿Has olvidado la contraseña?',
+            [
+              {text: 'OK'},
+            ],
+            { cancelable: true }
+          );
         }
       });
     } else {
       this.setState({showLoading: false});
 
       if (this.state.name === '') {
-        alert('Tienes que introducir un nombre');
+        Alert.alert(
+          'Campo obligatorio',
+          'Tienes que introducir un nombre',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
         return true;
       }
       if (this.state.email === '') {
-        alert('Tienes que introducir un email');
+        Alert.alert(
+          'Campo obligatorio',
+          'Tienes que introducir un email',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
         return true;
       }
       if (this.state.password === '') {
-        alert('Tienes que introducir una contraseña');
+        Alert.alert(
+          'Campo obligatorio',
+          'Tienes que introducir una contraseña',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
         return true;
       }
       if (this.state.password.length < 6) {
-        alert('La contraseña debe tener al menos 6 caractéres alfanuméricos');
+        Alert.alert(
+          'Error de validación',
+          'La contraseña debe tener al menos 6 caractéres alfanuméricos',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
         return true;
       }
       if (this.state.passwordRepeat === '') {
-        alert('Tienes que repetir la contraseña');
+        Alert.alert(
+          'Campo obligatorio',
+          'Tienes que repetir la contraseña',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
         return true;
       }
       if (this.state.password !== this.state.passwordRepeat) {
-        alert('La contraseña y la confirmación no coinciden');
+        Alert.alert(
+          'Error de validación',
+          'La contraseña y la confirmación no coinciden',
+          [
+            {text: 'OK'},
+          ],
+          { cancelable: true }
+        );
       }
     }
   }

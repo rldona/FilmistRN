@@ -67,15 +67,12 @@ export default class CategoriesList extends Component {
         break;
       case 1:
         // themoviedb.getNavigator().push({ index: 3, route: 'favorites' });
-        alert('favorites');
         break;
       case 2:
         // themoviedb.getNavigator().push({ index: 3, route: 'favorites' });
-        alert('favorites');
         break;
       case 3:
         // themoviedb.getNavigator().push({ index: 3, route: 'favorites' });
-        alert('favorites');
         break;
       case 4:
         themoviedb.setCurrentTitle('Estrenos de cartelera');

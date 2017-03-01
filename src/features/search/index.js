@@ -12,6 +12,7 @@ import {
   Keyboard
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as themoviedb from '../../services/movies-service';
 import * as Animatable from 'react-native-animatable';
 import * as colors from '../../common/colors';
@@ -20,8 +21,11 @@ import Header from '../../common/header';
 import MoviesListVertical from '../../common/movie-list-vertical';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconEvil from 'react-native-vector-icons/EvilIcons';
 
 const { width, height } = Dimensions.get('window');
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class Search extends Component {
 
@@ -34,7 +38,8 @@ export default class Search extends Component {
       keyboardTransition: 0,
       heightCompAdd: 0,
       up: false,
-      down: false
+      down: false,
+      termHistorial: null
     };
 
     const scrollTopActive = {
@@ -61,6 +66,10 @@ export default class Search extends Component {
   }
 
   componentWillMount() {
+    this.setState({
+      termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
+    });
+
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
@@ -79,14 +88,25 @@ export default class Search extends Component {
         themoviedb.getNavigator().pop();
         break;
       case 'right':
-        alert('right');
         break;
     }
   }
 
   _searchMovie = () => {
+    let user = firebase.auth().currentUser;
+
+    themoviedb.setTermHistorial({
+      id: themoviedb.getTermHistorial().length,
+      term: this.state.query
+    }, 'term');
+
+    firebase.database().ref('users/' + user.uid + '/search/terms/').set(
+      themoviedb.getTermHistorial()
+    );
+
     this.setState({
-      search: this.state.query
+      search: this.state.query,
+      termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
     });
   }
 
@@ -112,6 +132,38 @@ export default class Search extends Component {
     }
   }
 
+  renderMovieList(obj) {
+    return (
+      <View style={styles.row}>
+
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              this.setState({
+                query: obj.term,
+                search: obj.term
+              });
+            }}>
+            <Text style={{color: '#FFF', fontSize: 15}}>{obj.term}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              {/*themoviedb.removeTermHistorial(obj.id);
+
+              firebase.database().ref('users/' + user.uid + '/search/terms/' + obj.id).set(null);
+
+              this.setState({
+                termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
+              });*/}
+            }}>
+            <IconEvil name="close" size={25} color='#999' />
+          </TouchableOpacity>
+      </View>
+    )
+  }
+
   renderResult() {
     if (this.state.search !== '') {
       return(
@@ -122,6 +174,58 @@ export default class Search extends Component {
           onScrollList={this._onScrollList.bind(this)}
           query={this.state.search} />
       );
+    } else {
+
+      // para general el id del termino de búsqueda, searchHistorial.length + 1
+
+      if (themoviedb.getTermHistorial().length > 0) {
+
+        return (
+          <View style={{paddingLeft: 20, paddingRight: 15, marginTop: 10}}>
+
+            <ListView
+              //ref={(scrollView) => { _scrollView = scrollView; }}
+              //initialListSize={1}
+              //style={{backgroundColor: colors.getList().primary }}
+              dataSource={this.state.termHistorial}
+              renderRow={(rowData) => this.renderMovieList(rowData)}
+              //enableEmptySections={true}
+              //onScroll={this._onScroll.bind(this)}
+              //onEndReached={this.infiniteScroll}
+              showsVerticalScrollIndicator={false}
+              horizontal={false} />
+
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                let user = firebase.auth().currentUser;
+
+                themoviedb.clearTermHistorial();
+
+                firebase.database().ref('users/' + user.uid + '/search/terms/').set(null);
+
+                this.setState({
+                  termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
+                });
+              }}>
+              <Text style={{color: '#777', fontSize: 14, marginTop: 10}}>Limpiar historial de búsqueda</Text>
+            </TouchableOpacity>
+
+          </View>
+        )
+
+      } else {
+
+        return (
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start', marginTop: 30}}>
+              <IconEvil name="search" size={80} color='#777' />
+              <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 20, fontWeight: '600'}}>Busca en Filmist.</Text>
+              <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 5, fontWeight: '300'}}>Encuentra tu series y películas favoritas.</Text>
+          </View>
+        )
+
+      }
+
     }
   }
 
@@ -150,7 +254,7 @@ export default class Search extends Component {
             onSubmitEditing={(search) => this._searchMovie()}
             value={this.state.query}
             placeholder="Busca películas o series"
-            autoFocus={true}
+            autoFocus={false}
             underlineColorAndroid='#FFF'
             selectionColor='#000'
             clearButtonMode={'while-editing'}
@@ -170,8 +274,6 @@ export default class Search extends Component {
 
             <Animatable.View
               ref="scrollTop"
-              // animation="bounceInUp"
-              // delay={1000}
               iterationCount={1}
               useNativeDriver={true}
               style={styles.button}>
@@ -195,6 +297,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height,
     backgroundColor: '#222',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 10,
   },
   group: {
     flexDirection: 'row',

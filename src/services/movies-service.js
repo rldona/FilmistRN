@@ -21,6 +21,8 @@ let currentTab = {
 let favorites = [];
 let historialList = [];
 
+let termHistorial = [];
+
 export let list = {
   favorite: [],
   saved: [],
@@ -87,6 +89,30 @@ export const clearHitorialList = () => {
   historialList = [];
 }
 
+
+
+export const setTermHistorial = (obj, type) => {
+  if (type === 'array') {
+    termHistorial = obj;
+  } else {
+    if (!findTerm(obj)) {
+      termHistorial.unshift(obj);
+    }
+  }
+}
+export const getTermHistorial = () => {
+  return termHistorial;
+}
+export const removeTermHistorial = (id) => {
+  termHistorial.splice(id, 1);
+}
+
+export const clearTermHistorial = () => {
+  termHistorial = [];
+}
+
+
+
 function found(movie) {
   for (let i = 0; i < historialList.length; i++) {
     if (movie.id === historialList[i].id) {
@@ -95,6 +121,18 @@ function found(movie) {
   }
   return false;
 }
+
+
+function findTerm(obj) {
+  for (let i = 0; i < termHistorial.length; i++) {
+    if (obj.term === termHistorial[i].term) {
+      return true
+    }
+  }
+  return false;
+}
+
+
 
 export const setNavigator = (navigator) => {
   currentNavigator = navigator;

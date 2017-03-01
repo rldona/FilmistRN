@@ -63,7 +63,17 @@ export default class Welcome extends Component {
             // Get lists: saved, viewed, favorite (arrays)
 
             firebase.database().ref('users/' + user.uid + '/list/init').set({
-              nulo: 'nulo'
+              init: 'init'
+            });
+
+            firebase.database().ref('users/' + user.uid + '/search/init').set({
+              init: 'init'
+            });
+
+            firebase.database().ref('users/' + user.uid + '/search/terms').once('value', (snapshot) => {
+              if (snapshot.val()) {
+                moviesService.setTermHistorial(snapshot.val(), 'array');
+              }
             });
 
             firebase.database().ref('users/' + user.uid + '/list/favorite').once('value', (snapshot) => {
