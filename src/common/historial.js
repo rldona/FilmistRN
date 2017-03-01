@@ -132,7 +132,7 @@ export default class Historial extends Component {
               themoviedb.getNavigator().push({index: 4, route: 'top-list'});
             }}>
             {
-              themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER MÁS</Text> : null
+              themoviedb.getHistorialList().length > 4 ? <Text style={styles.viewAll}>VER TODAS</Text> : null
             }
           </TouchableOpacity>
         </View>
