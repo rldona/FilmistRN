@@ -157,7 +157,7 @@ export default class Settings extends Component {
           </View>
 
           <View>
-            <Text style={{textAlign: 'center', color: '#CCC', paddingVertical: 40, paddingHorizontal: 20, fontSize: 14}}>Beta 1.0.0</Text>
+            <Text style={{textAlign: 'center', color: '#CCC', paddingVertical: 40, paddingHorizontal: 20, fontSize: 14}}>Beta 4.0.0</Text>
           </View>
 
         </View>
