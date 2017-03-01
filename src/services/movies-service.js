@@ -34,6 +34,32 @@ export const init = () => {
   currentCollection= 'upcoming';
 }
 
+export const reset = () => {
+  options = {
+    lang: 'es'
+  };
+
+  navigator = null;
+
+  currentMovie = null;
+  currentTitle = null;
+  currentType = null;
+  currentCollection = null;
+
+  currentTab = {
+    title: 'Inicio'
+  };
+
+  favorites = [];
+  historialList = [];
+
+  list = {
+    favorite: [],
+    saved: [],
+    viewed: []
+  };
+}
+
 export const setOptions = (option, value) => {
   options[option] = value;
 }

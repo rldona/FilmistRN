@@ -8,6 +8,10 @@ export const init = () => {
   options.avatar = null;
 }
 
+export const reset = () => {
+  options = {};
+}
+
 export const getOptions = () => {
   return options;
 }

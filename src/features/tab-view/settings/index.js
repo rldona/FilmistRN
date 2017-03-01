@@ -56,7 +56,10 @@ export default class Settings extends Component {
 
   _loggout() {
     loginService.logout().then(() => {
-      themoviedb.clearHitorialList();
+      // Clear states
+      themoviedb.reset();
+      settingsService.reset();
+      // redirect to Login
       themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
     }, (error) => {
       alert(error.message);
