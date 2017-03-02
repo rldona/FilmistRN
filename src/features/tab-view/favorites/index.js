@@ -38,7 +38,7 @@ export default class Favorites extends Component {
         let favoritesListLimit = [];
 
         for (let i = 0; i < snapshot.val().length; i++) {
-          if (i < 5) {
+          if (i < 2) {
             favoritesListLimit.unshift(snapshot.val()[i]);
           }
         }
@@ -55,8 +55,16 @@ export default class Favorites extends Component {
 
     firebase.database().ref('users/' + user.uid + '/list/saved').on('value', (snapshot) => {
       if (snapshot.val()) {
+        let favoritesListLimit = [];
+
+        for (let i = 0; i < snapshot.val().length; i++) {
+          if (i < 2) {
+            favoritesListLimit.unshift(snapshot.val()[i]);
+          }
+        }
+
         this.setState({
-          saved: snapshot.val().reverse()
+          saved: favoritesListLimit
         });
       } else {
         this.setState({
@@ -67,8 +75,16 @@ export default class Favorites extends Component {
 
     firebase.database().ref('users/' + user.uid + '/list/viewed').on('value', (snapshot) => {
       if (snapshot.val()) {
+        let favoritesListLimit = [];
+
+        for (let i = 0; i < snapshot.val().length; i++) {
+          if (i < 2) {
+            favoritesListLimit.unshift(snapshot.val()[i]);
+          }
+        }
+
         this.setState({
-          viewed: snapshot.val().reverse()
+          viewed: favoritesListLimit
         });
       } else {
         this.setState({

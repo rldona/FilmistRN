@@ -71,7 +71,7 @@ export default class Historial extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 0}}
+        style={{marginBottom: 10}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -98,7 +98,7 @@ export default class Historial extends Component {
     }
 
     return (
-      <View style={{margin: 10, borderColor: '#222326', borderWidth: 1}}>
+      <View style={{margin: 10, borderColor: '#222326', borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
@@ -118,7 +118,7 @@ export default class Historial extends Component {
         <View style={styles.row}>
         <View style={[styles.row, styles.marginLeft]}>
 
-          <Icon name="history" size={25} color={colors.getList().white} />
+          {/*<Icon name="history" size={25} color={colors.getList().white} />*/}
           <Text style={styles.optionTitle}>{title}</Text>
 
           </View>
@@ -158,10 +158,10 @@ const styles = StyleSheet.create({
     borderColor: '#444'
   },
   optionTitle: {
-    padding: 15,
-    fontWeight: '600',
+    paddingVertical: 15,
+    fontWeight: '300',
     color: colors.getList().white,
-    fontSize: 16,
+    fontSize: 17,
     marginBottom: 0,
   },
   marginLeft: {

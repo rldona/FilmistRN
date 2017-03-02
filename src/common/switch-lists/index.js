@@ -63,12 +63,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 15,
     margin: 0,
     marginBottom: 0,
     borderTopWidth: 1,
     borderTopColor: '#444',
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     borderBottomColor: '#444'
   },
 });

@@ -187,7 +187,7 @@ export default class MovieDetail extends Component {
             resizeMode={'cover'}
             style={{height: 200, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.25)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.5)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -206,13 +206,15 @@ export default class MovieDetail extends Component {
 
         <View style={{padding: 0, marginTop: 0}}>
 
-          <View style={{padding: 15, paddingBottom: 10}}>
-            <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
-              {this.state.movie.title}
-            </Text>
+          <View style={{paddingHorizontal: 15, paddingBottom: 10}}>
+            <View style={{position: 'absolute', top: -70, left: 15}}>
+              <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
+                {this.state.movie.title}
+              </Text>
 
-            <View style={{marginTop: 5}}>
-              <Score score={this.state.movie.vote_average} />
+              <View style={{marginTop: 5, paddingBottom: 20}}>
+                <Score score={this.state.movie.vote_average} />
+              </View>
             </View>
 
             <Text
