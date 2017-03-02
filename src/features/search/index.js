@@ -96,7 +96,7 @@ export default class Search extends Component {
     let user = firebase.auth().currentUser;
 
     themoviedb.setTermHistorial({
-      id: themoviedb.getTermHistorial().length,
+      id: Math.random().toString(22).substr(2),
       term: this.state.query
     }, 'term');
 
@@ -126,42 +126,54 @@ export default class Search extends Component {
 
   renderClearInputIcon() {
     if(this.state.query) {
-      return <Icon name='close' size={25} color="#E91E63" onPress={this._clearInput.bind(this)} />
+      return <IconEvil name='close-o' size={30} color="#444" onPress={this._clearInput.bind(this)} />
     } else {
-      return <Icon name='close' size={25} color='#FFF' />
+      return <IconEvil name='close-o' size={30} color='#FFF' />
     }
   }
 
   renderMovieList(obj) {
-    return (
-      <View style={styles.row}>
 
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => {
-              this.setState({
-                query: obj.term,
-                search: obj.term
-              });
-            }}>
-            <Text style={{color: '#FFF', fontSize: 15}}>{obj.term}</Text>
-          </TouchableOpacity>
+    if(typeof obj !== 'undefined') {
 
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => {
-              {/*themoviedb.removeTermHistorial(obj.id);
+      return (
+        <View style={styles.row}>
 
-              firebase.database().ref('users/' + user.uid + '/search/terms/' + obj.id).set(null);
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                this.setState({
+                  query: obj.term,
+                  search: obj.term
+                });
+              }}>
+              <Text style={{color: '#FFF', fontSize: 15}}>{obj.term}</Text>
+            </TouchableOpacity>
 
-              this.setState({
-                termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
-              });*/}
-            }}>
-            <IconEvil name="close" size={25} color='#999' />
-          </TouchableOpacity>
-      </View>
-    )
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                let user = firebase.auth().currentUser;
+
+                themoviedb.removeTermHistorial(obj.id);
+
+                firebase.database().ref('users/' + user.uid + '/search/terms/').set(
+                  themoviedb.getTermHistorial()
+                );
+
+                this.setState({
+                  termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
+                });
+              }}>
+              <IconEvil name="close" size={25} color='#CCC' />
+            </TouchableOpacity>
+        </View>
+      )
+
+    } else {
+      return (null)
+    }
+
   }
 
   renderResult() {
@@ -181,7 +193,7 @@ export default class Search extends Component {
       if (themoviedb.getTermHistorial().length > 0) {
 
         return (
-          <View style={{paddingLeft: 20, paddingRight: 15, marginTop: 10}}>
+          <ScrollView style={{paddingLeft: 20, paddingRight: 15, marginTop: 10}}>
 
             <ListView
               //ref={(scrollView) => { _scrollView = scrollView; }}
@@ -208,19 +220,21 @@ export default class Search extends Component {
                   termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
                 });
               }}>
-              <Text style={{color: '#777', fontSize: 14, marginTop: 10}}>Limpiar historial de búsqueda</Text>
+              <Text style={{color: '#999', fontSize: 14, marginTop: 20, marginBottom: 50}}>Limpiar historial de búsqueda</Text>
             </TouchableOpacity>
 
-          </View>
+          </ScrollView>
         )
 
       } else {
 
         return (
-          <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start', marginTop: 30}}>
-              <IconEvil name="search" size={80} color='#777' />
-              <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 20, fontWeight: '600'}}>Busca en Filmist.</Text>
-              <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 5, fontWeight: '300'}}>Encuentra tu series y películas favoritas.</Text>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{alignItems: 'center', justifyContent: 'flex-start', marginTop: 30, width: 250}}>
+                <IconEvil name="search" size={80} color='#777' />
+                <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 20, fontWeight: '600'}}>Busca en Filmist.</Text>
+                <Text style={{color: colors.getList().white, fontSize: 12, marginTop: 5, fontWeight: '300'}}>Encuentra tu series y películas favoritas.</Text>
+            </View>
           </View>
         )
 

@@ -89,8 +89,6 @@ export const clearHitorialList = () => {
   historialList = [];
 }
 
-
-
 export const setTermHistorial = (obj, type) => {
   if (type === 'array') {
     termHistorial = obj;
@@ -104,13 +102,20 @@ export const getTermHistorial = () => {
   return termHistorial;
 }
 export const removeTermHistorial = (id) => {
-  termHistorial.splice(id, 1);
+  for (let i = 0; i < termHistorial.length; i++) {
+    if (termHistorial[i].id === id) {
+      termHistorial.splice(i, 1);
+    }
+  }
 }
 
 export const clearTermHistorial = () => {
   termHistorial = [];
 }
 
+export const removeLastTerm = () => {
+  termHistorial.splice(0, 1);
+}
 
 
 function found(movie) {

@@ -16,6 +16,7 @@ import * as themoviedb from '../services/movies-service.js';
 import * as colors from './colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconSimpleIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Loading from './loading';
 import Score from './score';
 
@@ -245,11 +246,31 @@ export default class MoviesList extends Component {
       )
     }
 
+    if (this.state.dataMovies._cachedRowCount === 0) {
+      let user = firebase.auth().currentUser;
+
+      // Eliminar el último term buscado
+      themoviedb.removeLastTerm();
+
+      firebase.database().ref('users/' + user.uid + '/search/terms/').set(
+        themoviedb.getTermHistorial()
+      );
+
+      return (
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{alignItems: 'center', justifyContent: 'flex-start', marginTop: 40, width: 250}}>
+            <IconSimpleIcons name="flag" size={60} color='#777' />
+            <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 20, fontWeight: '600'}}>No se han encontrado resultados.</Text>
+            <Text style={{color: colors.getList().white, fontSize: 12, marginTop: 5, fontWeight: '300'}}>Comprueba si está bien escrito o prueba con otras palabras.</Text>
+          </View>
+        </View>
+      )
+    }
+
     return (
       <View style={{paddingBottom: 80, paddingHorizontal: 15, backgroundColor: colors.getList().primary}}>
         <ListView
           ref={(scrollView) => { _scrollView = scrollView; }}
-          initialListSize={1}
           style={{backgroundColor: colors.getList().primary }}
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}
