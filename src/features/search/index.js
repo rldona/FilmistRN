@@ -93,6 +93,8 @@ export default class Search extends Component {
   }
 
   _searchMovie = () => {
+    Keyboard.dismiss;
+
     let user = firebase.auth().currentUser;
 
     themoviedb.setTermHistorial({
@@ -231,9 +233,9 @@ export default class Search extends Component {
         return (
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <View style={{alignItems: 'center', justifyContent: 'flex-start', marginTop: 30, width: 250}}>
-                <IconEvil name="search" size={80} color='#777' />
-                <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 20, fontWeight: '600'}}>Busca en Filmist.</Text>
-                <Text style={{color: colors.getList().white, fontSize: 12, marginTop: 5, fontWeight: '300'}}>Encuentra tu series y películas favoritas.</Text>
+                <IconEvil name="search" size={80} color='#999' />
+                <Text style={{color: colors.getList().white, fontSize: 16, marginTop: 20, fontWeight: '600'}}>Busca en Filmist.</Text>
+                <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 5, fontWeight: '300', textAlign: 'center'}}>Encuentra series y películas.</Text>
             </View>
           </View>
         )
@@ -272,7 +274,6 @@ export default class Search extends Component {
             underlineColorAndroid='#FFF'
             selectionColor='#000'
             clearButtonMode={'while-editing'}
-            clearTextOnFocus={false}
             keyboardAppearance={'dark'}
             placeholderTextColor="#CCC"
             defaultValue=""

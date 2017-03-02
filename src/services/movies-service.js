@@ -9,6 +9,7 @@ let options = {
 
 let navigator;
 
+let currentIndex = [];
 let currentMovie;
 let currentTitle;
 let currentType;
@@ -153,6 +154,14 @@ export const setCurrentMovie = (movie) => {
 
 export const getCurrentMovie = () => {
   return currentMovie;
+}
+
+export const setCurrentIndex = (index) => {
+  currentIndex.push(index);
+}
+
+export const getCurrentIndex = () => {
+  return currentIndex;
 }
 
 export const setCurrentTab = (tab) => {

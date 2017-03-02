@@ -258,10 +258,10 @@ export default class MoviesList extends Component {
 
       return (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <View style={{alignItems: 'center', justifyContent: 'flex-start', marginTop: 40, width: 250}}>
-            <IconSimpleIcons name="flag" size={60} color='#777' />
-            <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 20, fontWeight: '600'}}>No se han encontrado resultados.</Text>
-            <Text style={{color: colors.getList().white, fontSize: 12, marginTop: 5, fontWeight: '300'}}>Comprueba si está bien escrito o prueba con otras palabras.</Text>
+          <View style={{alignItems: 'center', justifyContent: 'flex-start', marginTop: 40, width: 300}}>
+            <IconSimpleIcons name="flag" size={60} color='#999' />
+            <Text style={{color: colors.getList().white, fontSize: 16, marginTop: 20, fontWeight: '600'}}>No se han encontrado resultados.</Text>
+            <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 5, fontWeight: '300', textAlign: 'center'}}>Comprueba si está bien escrito o prueba con otras palabras.</Text>
           </View>
         </View>
       )

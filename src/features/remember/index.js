@@ -128,8 +128,8 @@ export default class Remember extends Component {
         paddingBottom: 17,
         borderRadius: 3,
         borderWidth: 2,
-        borderColor: '#222',
-        backgroundColor: '#222',
+        borderColor: '#333',
+        backgroundColor: '#333',
         marginBottom: 20,
         minWidth: 300
       }

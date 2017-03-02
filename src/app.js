@@ -8,6 +8,7 @@ import {
   View,
   AsyncStorage,
   Alert,
+  NetInfo,
   StyleSheet,
   Dimensions
 } from 'react-native';
@@ -28,6 +29,8 @@ import MovieDetailTv from './features/movie-detail-tv';
 import TopList from './features/top-list';
 import Search from './features/search';
 import CustomTransitions from './common/custom-transitions';
+import Offline from './common/offline';
+
 import SplashScreen from 'react-native-smart-splash-screen';
 
 const { width, height } = Dimensions.get('window');
@@ -46,7 +49,19 @@ export default class App extends Component {
     moviesService.init();
 
     this.options = settingsService.getOptions();
+
+    // NetInfo.isConnected.addEventListener(
+    //   'change',
+    //   this.handleFirstConnectivityChange
+    // );
+
   }
+
+  // handleFirstConnectivityChange(isConnected) {
+  //   if(!isConnected) {
+  //     moviesService.getNavigator().push({index: 0.5, title: 'offline'});
+  //   }
+  // }
 
   componentDidMount () {
     SplashScreen.close({
@@ -99,6 +114,8 @@ export default class App extends Component {
 
   navigatorRenderScene(route, navigator) {
     this.state.currentIndex = route.index;
+
+    moviesService.setCurrentIndex(route.index);
     moviesService.setNavigator(navigator);
 
     switch (route.index) {
@@ -113,6 +130,9 @@ export default class App extends Component {
       // case 0.4:
       //   // se muestra solo la primera vez !!
       //   return <Onboarding />
+      case 0.5:
+        // se muestra solo la primera vez !!
+        return <Offline />
       case 1:
         return <TabView />
       case 2:
