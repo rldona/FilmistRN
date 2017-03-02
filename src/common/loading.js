@@ -21,8 +21,8 @@ export default class Loading extends Component {
     if (this.props.position == 'center') {
       return {
         position: 'absolute',
-        top: height/2  - 15,
-        left: width/2  - 15
+        top: height/2 - 15,
+        left: width/2 - 15
       }
     } else {
       return {
@@ -36,7 +36,7 @@ export default class Loading extends Component {
       <View style={this.dynamicStyle()}>
         <ActivityIndicator
           animating={true}
-          color={this.props.color || colors.getList().app}
+          color={this.props.color || colors.getList().white}
           size={this.props.size || 'large'}
         />
       </View>

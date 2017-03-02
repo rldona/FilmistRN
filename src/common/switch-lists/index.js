@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     margin: 0,
     marginBottom: 0,
     borderTopWidth: 1,
-    borderTopColor: colors.getList().secondary,
+    borderTopColor: '#444',
     borderBottomWidth: 1,
-    borderBottomColor: '#333',
+    borderBottomColor: '#444'
   },
 });

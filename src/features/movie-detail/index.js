@@ -240,6 +240,8 @@ export default class MovieDetail extends Component {
 
         </View>
 
+        <SwitchLists movie={this.state.movie} />
+
         <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
 
           <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
@@ -267,8 +269,6 @@ export default class MovieDetail extends Component {
           </View>
 
         </View>
-
-        <SwitchLists movie={this.state.movie} />
 
         <MoviesListHorizontal
           title="Descubre del mismo género"

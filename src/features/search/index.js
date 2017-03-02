@@ -143,6 +143,7 @@ export default class Search extends Component {
 
             <TouchableOpacity
               activeOpacity={0.9}
+              style={{width: width}}
               onPress={() => {
                 this.setState({
                   query: obj.term,
@@ -154,6 +155,7 @@ export default class Search extends Component {
 
             <TouchableOpacity
               activeOpacity={0.9}
+              style={{position: 'absolute', top: 0, right: 0}}
               onPress={() => {
                 let user = firebase.auth().currentUser;
 

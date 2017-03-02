@@ -155,10 +155,10 @@ export default class Welcome extends Component {
     } else {
       return (
         <View style={{elevation: 10, backgroundColor: colors.getList().primary, height: height, alignItems: 'center', justifyContent: 'center'}}>
-          <View style={{borderColor: colors.getList().white, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
-            <Loading color="#FFF" />
+          <View style={{borderColor: colors.getList().app, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
+            <Loading color={colors.getList().app} />
             {/*<Icon name="account-check" size={40} color={colors.getList().white} />*/}
-            <Text style={{fontSize: 16, color: colors.getList().white, fontWeight: '400', marginTop: 10}}>Validando credenciales</Text>
+            <Text style={{fontSize: 16, color: colors.getList().app, fontWeight: '400', marginTop: 10}}>Validando credenciales</Text>
           </View>
         </View>
       )

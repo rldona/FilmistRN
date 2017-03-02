@@ -87,9 +87,10 @@ export default class App extends Component {
               [
                 {text: 'No', onPress: () => { return false }, style: 'cancel' },
                 {text: 'Sí', onPress: () => {
-                  loginService.logout().then(() => {
-                    themoviedb.getNavigator().resetTo({index: 0.1, title: 'login'});
-                  })
+                  // loginService.logout().then(() => {
+                  //   themoviedb.getNavigator().resetTo({index: 0.1, title: 'login'});
+                  // })
+                  BackAndroid.exitApp();
                 }}
               ]
             );

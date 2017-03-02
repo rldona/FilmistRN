@@ -66,7 +66,7 @@ export default class Home extends Component {
     if (!this.state.allLoaded) {
       return (
         <View style={{marginTop: 20}}>
-          <Loading />
+          <Loading color="#FFF" />
         </View>
       )
     }
