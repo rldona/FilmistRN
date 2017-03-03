@@ -126,6 +126,60 @@ export default class MovieDetail extends Component {
     }
   }
 
+  renderInfoPlus() {
+    if (this.state.cast.actors.length === 0) {
+      return (
+        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
+
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 30}}>
+
+            <View>
+              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 10, fontWeight: '400', backgroundColor: '#444', paddingVertical: 5, width: 150}}></Text>
+              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400', backgroundColor: '#444', paddingVertical: 5, width: width - 50}}></Text>
+            </View>
+
+          </View>
+
+          <View>
+            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 10, fontWeight: '400', backgroundColor: '#444', paddingVertical: 5, width: 150}}></Text>
+            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400', backgroundColor: '#444', paddingVertical: 5, width: width - 50}}></Text>
+          </View>
+
+        </View>
+      )
+    }
+
+    return (
+        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
+
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
+
+            <View>
+              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Director</Text>
+              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 8, fontWeight: '400', textAlign: 'center'}}>{this.state.cast.director}</Text>
+            </View>
+
+            <View style={{minWidth: 40}}>
+              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Año</Text>
+              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.release_date.split('-')[0]}</Text>
+            </View>
+
+            <View style={{minWidth: 80}}>
+              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400', textAlign: 'center'}}>Duración</Text>
+              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 8, fontWeight: '400', textAlign: 'center'}}>{this.state.movie.runtime} min</Text>
+            </View>
+
+          </View>
+
+          <View>
+            <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
+            <Text style={{fontSize: 14, color: "#FFF", marginBottom: 0, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+          </View>
+
+        </View>
+    )
+  }
+
   render() {
 
     if (!this.state.loaded) {
@@ -171,8 +225,6 @@ export default class MovieDetail extends Component {
             </View>
           </View>
 
-          {/* <Loading position="center" /> */}
-
         </View>
       )
     }
@@ -199,25 +251,16 @@ export default class MovieDetail extends Component {
 
         </View>
 
-        {/*<View style={{position: 'absolute', top: 120, left: 15, width: 110, height: 150}}>
-          <Image
-            resizeMode={'cover'}
-            style={{width: 110, height: 160, borderRadius: 3, borderWidth: 1, borderColor: colors.getList().primary, backfaceVisibility: 'hidden'}}
-            source={{uri: 'http://image.tmdb.org/t/p/w150' + this.state.movie.poster_path}} />
-        </View>*/}
-
         <View style={{padding: 0, marginTop: 0}}>
 
           <View style={{paddingHorizontal: 15, paddingBottom: 10, marginTop: 10}}>
-            {/*<View style={{position: 'absolute', top: -80, left: 0, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: 'rgba(0,0,0,0.2)', width: width}}>*/}
-              <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
-                {this.state.movie.title}
-              </Text>
+            <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
+              {this.state.movie.title}
+            </Text>
 
-              <View style={{marginTop: 5, paddingBottom: 0}}>
-                <Score score={this.state.movie.vote_average} />
-              </View>
-            {/*</View>*/}
+            <View style={{marginTop: 5, paddingBottom: 0}}>
+              <Score score={this.state.movie.vote_average} />
+            </View>
 
             <Text
               numberOfLines={this.state.overviewNumberLines}
@@ -230,7 +273,7 @@ export default class MovieDetail extends Component {
             {
               this.state.movie.overview.length > 0 ?
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
+                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 10}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
                   <Text style={{textAlign: 'center', color: colors.getList().app, fontSize: 12}}>
@@ -246,33 +289,7 @@ export default class MovieDetail extends Component {
 
         <SwitchLists movie={this.state.movie} />
 
-        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
-
-          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
-
-            <View>
-              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Director</Text>
-              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 8, fontWeight: '400', textAlign: 'center'}}>{this.state.cast.director}</Text>
-            </View>
-
-            <View style={{minWidth: 40}}>
-              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Año</Text>
-              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.release_date.split('-')[0]}</Text>
-            </View>
-
-            <View style={{minWidth: 80}}>
-              <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400', textAlign: 'center'}}>Duración</Text>
-              <Text style={{fontSize: 14, color: "#FFF", marginBottom: 8, fontWeight: '400', textAlign: 'center'}}>{this.state.movie.runtime} min</Text>
-            </View>
-
-          </View>
-
-          <View>
-            <Text style={{fontSize: 12, color: "#AAA", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
-            <Text style={{fontSize: 14, color: "#FFF", marginBottom: 0, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
-          </View>
-
-        </View>
+        {this.renderInfoPlus()}
 
         <MoviesListHorizontal
           title="Descubre del mismo género"

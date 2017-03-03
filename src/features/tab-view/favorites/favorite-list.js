@@ -55,7 +55,7 @@ export default class FavoriteList extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 10}}
+        style={{marginBottom: 0}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -83,7 +83,7 @@ export default class FavoriteList extends Component {
     }
 
     return (
-      <View style={{marginBottom: 0, borderColor: '#222326', borderWidth: 0}}>
+      <View style={{marginBottom: 20, borderColor: '#222326', borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}

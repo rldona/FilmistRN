@@ -130,6 +130,60 @@ export default class MovieDetailTv extends Component {
     )
   }
 
+  renderInfoPlus() {
+    if (this.state.cast.actors.length === 0) {
+      return (
+        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
+
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 30}}>
+
+            <View>
+              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 10, fontWeight: '400', backgroundColor: '#333', paddingVertical: 5, width: 150}}></Text>
+              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400', backgroundColor: '#333', paddingVertical: 5, width: width - 50}}></Text>
+            </View>
+
+          </View>
+
+          <View>
+            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 10, fontWeight: '400', backgroundColor: '#333', paddingVertical: 5, width: 150}}></Text>
+            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400', backgroundColor: '#333', paddingVertical: 5, width: width - 50}}></Text>
+          </View>
+
+        </View>
+      )
+    }
+
+    return (
+        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
+
+          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
+
+            <View>
+              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Temporadas</Text>
+              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_seasons}</Text>
+            </View>
+
+            <View style={{minWidth: 100}}>
+              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Capítulos</Text>
+              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_episodes}</Text>
+            </View>
+
+            <View style={{minWidth: 60}}>
+              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año</Text>
+              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.first_air_date.split('-')[0]}</Text>
+            </View>
+
+          </View>
+
+          <View>
+            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
+            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+          </View>
+
+        </View>
+    )
+  }
+
   render() {
 
     if (!this.state.loaded) {
@@ -175,8 +229,6 @@ export default class MovieDetailTv extends Component {
             </View>
           </View>
 
-          {/* <Loading position="center" /> */}
-
         </View>
       )
     }
@@ -193,7 +245,7 @@ export default class MovieDetailTv extends Component {
             resizeMode={'cover'}
             style={{height: 200, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.5)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.25)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -206,14 +258,12 @@ export default class MovieDetailTv extends Component {
         <View style={{padding: 0, marginTop: 0}}>
 
           <View style={{padding: 15, paddingBottom: 10}}>
-            <View style={{position: 'absolute', top: -70, left: 15}}>
-              <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
-                {this.state.movie.name}
-              </Text>
+            <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
+              {this.state.movie.name}
+            </Text>
 
-              <View style={{marginTop: 5}}>
-                <Score score={this.state.movie.vote_average} />
-              </View>
+            <View style={{marginTop: 5}}>
+              <Score score={this.state.movie.vote_average} />
             </View>
 
             <Text
@@ -228,7 +278,7 @@ export default class MovieDetailTv extends Component {
               this.state.movie.overview.length > 0 ?
 
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}
+                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 10}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
                   <Text style={{textAlign: 'center', color: colors.getList().app, fontSize: 12}}>
@@ -244,33 +294,7 @@ export default class MovieDetailTv extends Component {
 
         <SwitchLists movie={this.state.movie} />
 
-        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
-
-          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
-
-            <View>
-              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Temporadas</Text>
-              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_seasons}</Text>
-            </View>
-
-            <View style={{minWidth: 100}}>
-              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Capítulos</Text>
-              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_episodes}</Text>
-            </View>
-
-            <View style={{minWidth: 60}}>
-              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año</Text>
-              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.first_air_date.split('-')[0]}</Text>
-            </View>
-
-          </View>
-
-          <View>
-            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
-            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
-          </View>
-
-        </View>
+        {this.renderInfoPlus()}
 
         <MoviesListHorizontal
           title="Descubre del mismo género"
