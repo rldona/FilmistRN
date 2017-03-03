@@ -53,8 +53,9 @@ export const reset = () => {
     title: 'Inicio'
   };
 
-  favorites = [];
+  favorites     = [];
   historialList = [];
+  termHistorial = [];
 
   list = {
     favorite: [],
