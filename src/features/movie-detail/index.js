@@ -273,13 +273,13 @@ export default class MovieDetail extends Component {
             {
               this.state.movie.overview.length > 0 ?
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 10}}
+                  style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 0}}
                   onPress={this._onExtendOverview}
                   activeOpacity={0.9}>
-                  <Text style={{textAlign: 'center', color: colors.getList().app, fontSize: 12}}>
+                  <Text style={{textAlign: 'center', color: '#666', fontSize: 12}}>
                     {this._renderMoreLinesText()}
                   </Text>
-                  <Icon color={colors.getList().app} name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
+                  <Icon color="#666" name={this._renderMoreLinesIcon()} style={{fontSize: 25}} />
                 </TouchableOpacity> : null
             }
 

@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     alignSelf: 'center',
-    paddingVertical: 15,
+    padding: 0,
     paddingHorizontal: 15,
   },
 });

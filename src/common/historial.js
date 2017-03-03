@@ -98,7 +98,7 @@ export default class Historial extends Component {
     }
 
     return (
-      <View style={{margin: 10, borderColor: '#222326', borderWidth: 0}}>
+      <View style={{marginHorizontal: 15, marginBottom: 20, borderColor: '#222326', borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}

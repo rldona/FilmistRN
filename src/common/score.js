@@ -16,7 +16,7 @@ export default class Score extends Component {
     super(props);
 
     this.state = {
-      starSize: 25
+      starSize: 30
     };
   }
 
@@ -44,7 +44,7 @@ export default class Score extends Component {
     return (
       <View style={[styles.row, styles.score]}>
         {stars}
-        <Text style={{color: '#999', marginTop: 5, marginLeft: 10, fontSize: 12}}>{this.props.score} / 10</Text>
+        <Text style={{color: '#CCC', marginTop: 0, marginLeft: 10, fontSize: 15}}>{this.props.score} / 10</Text>
       </View>
     );
 
@@ -62,6 +62,7 @@ export default class Score extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
   }
 });
