@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  ListView,
-  TouchableOpacity,
-  Text,
   View,
-  AsyncStorage,
   StyleSheet,
   Dimensions
 } from 'react-native';
@@ -14,10 +10,10 @@ import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { TabViewAnimated, TabBarTop } from 'react-native-tab-view';
 
 import Header from '../../common/header';
-
 import Home from './home';
 import Favorites from './favorites';
 import Profile from './profile';
@@ -36,8 +32,6 @@ export default class App extends Component {
     initTab = 0;
 
     themoviedb.setCurrentTab({title: 'Filmist'});
-
-    AsyncStorage.setItem('login', 'true');
 
     this.state = {
       index: initTab,

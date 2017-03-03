@@ -38,13 +38,13 @@ export default class Score extends Component {
     plus = 5 - stars.length;
 
     for (let i = 0; i < plus; i++) {
-      stars.push(<Icon name="star-border" key={i+5000} color="#777" size={this.state.starSize} />)
+      stars.push(<Icon name="star-border" key={i+5000} color="#333" size={this.state.starSize} />)
     }
 
     return (
       <View style={[styles.row, styles.score]}>
         {stars}
-        <Text style={{color: '#EEE', marginTop: 5, marginLeft: 10, fontSize: 14}}>{this.props.score} / 10</Text>
+        <Text style={{color: '#999', marginTop: 5, marginLeft: 10, fontSize: 12}}>{this.props.score} / 10</Text>
       </View>
     );
 

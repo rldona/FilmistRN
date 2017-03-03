@@ -99,9 +99,11 @@ export const setTermHistorial = (obj, type) => {
     }
   }
 }
+
 export const getTermHistorial = () => {
   return termHistorial;
 }
+
 export const removeTermHistorial = (id) => {
   for (let i = 0; i < termHistorial.length; i++) {
     if (termHistorial[i].id === id) {
@@ -118,7 +120,6 @@ export const removeLastTerm = () => {
   termHistorial.splice(0, 1);
 }
 
-
 function found(movie) {
   for (let i = 0; i < historialList.length; i++) {
     if (movie.id === historialList[i].id) {
@@ -128,7 +129,6 @@ function found(movie) {
   return false;
 }
 
-
 function findTerm(obj) {
   for (let i = 0; i < termHistorial.length; i++) {
     if (obj.term === termHistorial[i].term) {
@@ -137,8 +137,6 @@ function findTerm(obj) {
   }
   return false;
 }
-
-
 
 export const setNavigator = (navigator) => {
   currentNavigator = navigator;

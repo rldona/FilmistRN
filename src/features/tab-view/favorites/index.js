@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 import {
-  ListView,
-  TouchableOpacity,
-  Text,
-  View,
   ScrollView,
   StyleSheet
 } from 'react-native';

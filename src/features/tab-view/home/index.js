@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import {
   ListView,
-  TouchableOpacity,
-  Text,
   View,
   StyleSheet,
   ScrollView,
@@ -38,27 +36,21 @@ export default class Home extends Component {
     let featuredRef = firebase.database().ref('featured');
 
     // InteractionManager.runAfterInteractions(() => {
-      themoviedb.getAllPopular().then((data) => {
-
-        featuredRef.on('value', (snapshot) => {
-          this.setState({
-            featureData: {
-              title: snapshot.val().title,
-              subtitle: snapshot.val().subtitle,
-              background: snapshot.val().background,
-              visible: snapshot.val().visible,
-            },
-            allData: data,
-            allLoaded: true,
-          });
+    themoviedb.getAllPopular().then((data) => {
+      featuredRef.on('value', (snapshot) => {
+        this.setState({
+          featureData: {
+            title: snapshot.val().title,
+            subtitle: snapshot.val().subtitle,
+            background: snapshot.val().background,
+            visible: snapshot.val().visible,
+          },
+          allData: data,
+          allLoaded: true,
         });
-
-        // this.setState({
-        //   allData: data,
-        //   allLoaded: true,
-        // });
-
       });
+    });
+
     // });
   }
 

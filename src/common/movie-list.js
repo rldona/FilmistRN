@@ -29,7 +29,6 @@ export default class MoviesList extends Component {
     super(props);
 
     if (typeof this.props.list !== 'undefined') {
-      // movies = this.props.list._dataBlob.s1;
       movies = this.props.list;
     }
 

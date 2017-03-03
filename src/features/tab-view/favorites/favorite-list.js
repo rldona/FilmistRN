@@ -16,6 +16,7 @@ import * as colors from '../../../common/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width, height } = Dimensions.get('window');
+
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class FavoriteList extends Component {
@@ -75,14 +76,14 @@ export default class FavoriteList extends Component {
 
     if (!this.state.dataMovies) {
       return (
-        <View style={{marginBottom: 30}}>
+        <View style={{marginBottom: 10}}>
           <Text style={styles.grid}>VACÍO</Text>
         </View>
       )
     }
 
     return (
-      <View style={{marginBottom: 10, borderColor: '#222326', borderWidth: 0}}>
+      <View style={{marginBottom: 0, borderColor: '#222326', borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}

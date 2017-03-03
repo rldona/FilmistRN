@@ -4,7 +4,6 @@ import {
   View,
   ListView,
   Text,
-  Image,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
@@ -16,18 +15,6 @@ var categories = [
     id: 0,
     name: 'Buscar'
   },
-  // {
-  //   id: 1,
-  //   name: 'Favoritas'
-  // },
-  // {
-  //   id: 2,
-  //   name: 'Guardadas'
-  // },
-  // {
-  //   id: 3,
-  //   name: 'Vistas'
-  // },
   {
     id: 4,
     name: 'Estrenos'
@@ -64,15 +51,6 @@ export default class CategoriesList extends Component {
     switch (categorie.id) {
       case 0:
         themoviedb.getNavigator().push({ index: 3, route: 'search' });
-        break;
-      case 1:
-        // themoviedb.getNavigator().push({ index: 3, route: 'favorites' });
-        break;
-      case 2:
-        // themoviedb.getNavigator().push({ index: 3, route: 'favorites' });
-        break;
-      case 3:
-        // themoviedb.getNavigator().push({ index: 3, route: 'favorites' });
         break;
       case 4:
         themoviedb.setCurrentTitle('Estrenos de cartelera');

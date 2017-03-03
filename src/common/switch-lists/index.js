@@ -62,13 +62,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+    // paddingHorizontal: 20,
+    // paddingVertical: 15,
     margin: 0,
     marginBottom: 0,
-    borderTopWidth: 1,
-    borderTopColor: '#444',
-    borderBottomWidth: 0,
-    borderBottomColor: '#444'
+    borderTopWidth: 0,
+    borderTopColor: colors.getList().primary,
+    borderBottomWidth: 10,
+    borderBottomColor: colors.getList().primary,
+    backgroundColor: colors.getList().secondary
   },
 });

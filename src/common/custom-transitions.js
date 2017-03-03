@@ -1,4 +1,4 @@
-import React, { Navigator, } from 'react-native';
+import React, { Navigator } from 'react-native';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
 var PixelRatio = require('PixelRatio');

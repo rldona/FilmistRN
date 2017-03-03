@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 
 import * as firebase from 'firebase';
-
 import * as themoviedb from '../services/movies-service.js';
 import * as colors from './colors';
 

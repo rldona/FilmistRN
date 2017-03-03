@@ -25,7 +25,7 @@ export default class SwitchListsItem extends Component {
 
     this.state = {
       added: this.props.checked || false,
-      color: this.props.checked ? colors.getList().app : '#555'
+      color: this.props.checked ? colors.getList().app : '#666'
     };
   }
 
@@ -46,24 +46,26 @@ export default class SwitchListsItem extends Component {
       });
     }
 
+    Vibration.vibrate([0, 20]);
+
     // change state of switch-lists-item
-    firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/' + this.props.type).set(
-      !this.state.added
-    );
+    setTimeout(() => {
+      firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/' + this.props.type).set(
+        this.state.added
+      );
 
-    // Add o remove from 'favorites list'
-    if (!this.state.added) {
-      themoviedb.setFavoriteList(themoviedb.getCurrentMovie(), this.props.type, 'movie');
-    } else {
-      themoviedb.removeFavoriteList(themoviedb.getCurrentMovie(), this.props.type);
-    }
+      // Add o remove from 'favorites list'
+      if (this.state.added) {
+        themoviedb.setFavoriteList(themoviedb.getCurrentMovie(), this.props.type, 'movie');
+      } else {
+        themoviedb.removeFavoriteList(themoviedb.getCurrentMovie(), this.props.type);
+      }
 
-    Vibration.vibrate([0, 30]);
-
-    // Sync list to Firebase
-    firebase.database().ref('users/' + user.uid + '/list/' + this.props.type).set(
-      themoviedb.getFavoriteList(this.props.type)
-    );
+      // Sync list to Firebase
+      firebase.database().ref('users/' + user.uid + '/list/' + this.props.type).set(
+        themoviedb.getFavoriteList(this.props.type)
+      );
+    }, 50);
 
   }
 
@@ -85,6 +87,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 15,
   },
 });

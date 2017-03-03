@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   Dimensions,
   Image
 } from 'react-native';
@@ -44,7 +43,3 @@ export default class Header extends Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-
-});

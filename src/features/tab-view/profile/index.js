@@ -1,20 +1,16 @@
-import * as firebase from 'firebase';
-
 import React, { Component } from 'react';
 
 import {
-  ListView,
   TouchableOpacity,
   Text,
   Image,
-  Platform,
   Alert,
-  AsyncStorage,
   ScrollView,
   View,
   StyleSheet
 } from 'react-native';
 
+import * as firebase from 'firebase';
 import * as settingsService from '../../../services/settings-service';
 import * as themoviedb from '../../../services/movies-service';
 import * as userService from '../../../services/user-service';
@@ -38,6 +34,15 @@ export default class Profile extends Component {
       viewed: 0,
       favorite: 0
     }
+
+    let user = firebase.auth().currentUser;
+
+    firebase.database().ref('users/' + user.uid + '/settings/avatar').once('value', (snapshot) => {
+      if (snapshot.val()) {
+        this.setState({ avatarSource: { uri: snapshot.val().uri }});
+      }
+    });
+
   }
 
   componentWillMount() {

@@ -10,7 +10,6 @@ const colors = {
   statusBar: 'rgba(0, 0, 0, 0)',
 };
 
-
 export const getList = () => {
   return colors;
 }

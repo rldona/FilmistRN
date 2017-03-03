@@ -6,7 +6,6 @@ import {
   BackAndroid,
   Platform,
   View,
-  AsyncStorage,
   Alert,
   NetInfo,
   StyleSheet,

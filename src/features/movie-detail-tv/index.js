@@ -46,33 +46,35 @@ export default class MovieDetailTv extends Component {
   }
 
   componentDidMount() {
-    // InteractionManager.runAfterInteractions(() => {
-    themoviedb.getMovie('tv', themoviedb.getCurrentMovie().id).then((data) => {
-      this.setState({
-        movie: data,
-        loaded: true
+    InteractionManager.runAfterInteractions(() => {
+
+      themoviedb.getMovie('tv', themoviedb.getCurrentMovie().id).then((data) => {
+        this.setState({
+          movie: data,
+          loaded: true
+        });
       });
-    });
-    // });
 
-    themoviedb.getCredits('tv', themoviedb.getCurrentMovie().id).then((data) => {
+      themoviedb.getCredits('tv', themoviedb.getCurrentMovie().id).then((data) => {
 
-      console.log(data.cast[0]);
+        console.log(data.cast[0]);
 
-      let cast = {
-        actors: [
-          data.cast[0].name,
-          data.cast[1].name,
-          data.cast[2].name,
-          data.cast[3].name,
-          data.cast[4].name
-        ]
-      };
+        let cast = {
+          actors: [
+            data.cast[0].name,
+            data.cast[1].name,
+            data.cast[2].name,
+            data.cast[3].name,
+            data.cast[4].name
+          ]
+        };
 
-      this.setState({cast: cast});
+        this.setState({cast: cast});
 
-    }).catch((error) => {
-      console.log(error);
+      }).catch((error) => {
+        console.log(error);
+      });
+
     });
   }
 

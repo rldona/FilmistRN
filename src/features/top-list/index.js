@@ -5,8 +5,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-  InteractionManager
+  TouchableOpacity
 } from 'react-native';
 
 import * as themoviedb from '../../services/movies-service';

@@ -150,7 +150,7 @@ export default class Search extends Component {
                   search: obj.term
                 });
               }}>
-              <Text style={{color: '#FFF', fontSize: 15}}>{obj.term}</Text>
+              <Text style={{color: '#FFF', fontSize: 16}}>{obj.term}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -169,7 +169,7 @@ export default class Search extends Component {
                   termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
                 });
               }}>
-              <IconEvil name="close" size={25} color='#CCC' />
+              <IconEvil name="close" size={30} color='#CCC' />
             </TouchableOpacity>
         </View>
       )
@@ -191,23 +191,15 @@ export default class Search extends Component {
           query={this.state.search} />
       );
     } else {
-
-      // para general el id del termino de búsqueda, searchHistorial.length + 1
-
       if (themoviedb.getTermHistorial().length > 0) {
 
         return (
           <ScrollView style={{paddingLeft: 20, paddingRight: 15, marginTop: 10}}>
 
             <ListView
-              //ref={(scrollView) => { _scrollView = scrollView; }}
-              //initialListSize={1}
-              //style={{backgroundColor: colors.getList().primary }}
               dataSource={this.state.termHistorial}
               renderRow={(rowData) => this.renderMovieList(rowData)}
-              //enableEmptySections={true}
-              //onScroll={this._onScroll.bind(this)}
-              //onEndReached={this.infiniteScroll}
+              enableEmptySections={true}
               showsVerticalScrollIndicator={false}
               horizontal={false} />
 
@@ -224,7 +216,7 @@ export default class Search extends Component {
                   termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
                 });
               }}>
-              <Text style={{color: '#999', fontSize: 14, marginTop: 20, marginBottom: 50}}>Limpiar historial de búsqueda</Text>
+              <Text style={{color: '#999', fontSize: 15, marginTop: 20, marginBottom: 50}}>Limpiar historial de búsqueda</Text>
             </TouchableOpacity>
 
           </ScrollView>

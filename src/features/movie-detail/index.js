@@ -47,36 +47,38 @@ export default class MovieDetail extends Component {
   }
 
   componentWillMount() {
-    // InteractionManager.runAfterInteractions(() => {
-    themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
-      data.runtime = data.runtime === 0 ? 90 : data.runtime;
-      this.setState({
-        movie: data,
-        loaded: true
+    InteractionManager.runAfterInteractions(() => {
+
+      themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
+        data.runtime = data.runtime === 0 ? 90 : data.runtime;
+        this.setState({
+          movie: data,
+          loaded: true
+        });
       });
-    });
-    // });
 
-    themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
-      let cast = {
-        director: data.crew[0].name,
-        writer: data.crew[1].name,
-        actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
-      };
+      themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
+        let cast = {
+          director: data.crew[0].name,
+          writer: data.crew[1].name,
+          actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
+        };
 
-      for (let i = 0; i < data.crew.length; i++) {
-        if (data.crew[i].job === 'Director') {
-          cast.director = data.crew[i].name;
+        for (let i = 0; i < data.crew.length; i++) {
+          if (data.crew[i].job === 'Director') {
+            cast.director = data.crew[i].name;
+          }
+          if (data.crew[i].job === 'Novel') {
+            cast.writer= data.crew[i].name;
+          }
         }
-        if (data.crew[i].job === 'Novel') {
-          cast.writer= data.crew[i].name;
-        }
-      }
 
-      this.setState({cast: cast});
+        this.setState({cast: cast});
 
-    }).catch((error) => {
-      console.log(error);
+      }).catch((error) => {
+        console.log(error);
+      });
+
     });
   }
 
@@ -185,9 +187,9 @@ export default class MovieDetail extends Component {
 
           <Image
             resizeMode={'cover'}
-            style={{height: 200, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
+            style={{height: 190, backfaceVisibility: 'hidden', borderBottomWidth: 0, borderColor: colors.getList().app}}
             source={{uri: 'http://image.tmdb.org/t/p/w500' + this.state.movie.backdrop_path}}>
-            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 200, backgroundColor: 'rgba(0, 0, 0, 0.5)'}}></View>
+            <View style={{position: 'absolute', top: 0, left:0 , width: width, height: 190, backgroundColor: 'rgba(0, 0, 0, 0.25)'}}></View>
             <Header
               isTransparent={true}
               title=""
@@ -206,20 +208,20 @@ export default class MovieDetail extends Component {
 
         <View style={{padding: 0, marginTop: 0}}>
 
-          <View style={{paddingHorizontal: 15, paddingBottom: 10}}>
-            <View style={{position: 'absolute', top: -70, left: 15}}>
+          <View style={{paddingHorizontal: 15, paddingBottom: 10, marginTop: 10}}>
+            {/*<View style={{position: 'absolute', top: -80, left: 0, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: 'rgba(0,0,0,0.2)', width: width}}>*/}
               <Text style={{fontSize: 18, fontWeight: '600', color: '#FFF', marginBottom: 2}}>
                 {this.state.movie.title}
               </Text>
 
-              <View style={{marginTop: 5, paddingBottom: 20}}>
+              <View style={{marginTop: 5, paddingBottom: 0}}>
                 <Score score={this.state.movie.vote_average} />
               </View>
-            </View>
+            {/*</View>*/}
 
             <Text
               numberOfLines={this.state.overviewNumberLines}
-              style={{fontSize: 15, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 10, marginBottom: 0, textAlign: 'auto' }}>
+              style={{fontSize: 15, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 0, marginBottom: 0, textAlign: 'auto' }}>
               {this.state.movie.overview.length > 0 ? this.state.movie.overview : 'Sinopsis no disponible'}
             </Text>
 

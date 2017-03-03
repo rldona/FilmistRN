@@ -3,12 +3,9 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image,
-  Modal,
   Alert,
   TextInput,
   Keyboard,
-  TouchableHighlight,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
