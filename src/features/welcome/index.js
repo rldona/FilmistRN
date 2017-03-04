@@ -90,10 +90,10 @@ export default class Welcome extends Component {
               if (snapshot.val()) {
                 moviesService.setFavoriteList(snapshot.val(), 'viewed', 'array');
               }
+
+              moviesService.getNavigator().resetTo({index: 1, title: 'home'});
+
             });
-
-
-            moviesService.getNavigator().resetTo({index: 1, title: 'home'});
 
           });
 

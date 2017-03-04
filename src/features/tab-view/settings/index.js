@@ -66,12 +66,12 @@ export default class Settings extends Component {
 
         <View style={{padding: 0}}>
 
-          <View>
+          {/*<View>
             <Text style={styles.optionTitle}>Cambia el idioma del contenido de la app</Text>
             <View style={{padding: 15}}>
               <RadioButtons options={this.state.radioButtons} />
             </View>
-          </View>
+          </View>*/}
 
           <View>
             <Text style={styles.optionTitle}>Evitar cerrar la app con el botón físico atrás</Text>
@@ -123,10 +123,6 @@ export default class Settings extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-          </View>
-
-          <View>
-            <Text style={{textAlign: 'center', color: '#CCC', paddingVertical: 40, paddingHorizontal: 20, fontSize: 14}}>Beta 13.0.0</Text>
           </View>
 
         </View>
