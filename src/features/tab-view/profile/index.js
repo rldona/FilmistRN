@@ -34,19 +34,18 @@ export default class Profile extends Component {
       viewed: 0,
       favorite: 0
     }
+  }
 
+  componentWillMount() {
     let user = firebase.auth().currentUser;
+
+    // TODO: ¿Esto es necesario? REVISAR
 
     firebase.database().ref('users/' + user.uid + '/settings/avatar').once('value', (snapshot) => {
       if (snapshot.val()) {
         this.setState({ avatarSource: { uri: snapshot.val().uri }});
       }
     });
-
-  }
-
-  componentWillMount() {
-    let user = firebase.auth().currentUser;
 
     firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -166,11 +165,30 @@ export default class Profile extends Component {
     }
   }
 
+  showFavoriteList(type) {
+    if (type === 'saved') {
+      themoviedb.setCurrentTitle('Las quiero ver');
+      themoviedb.setCurrentCollection('saved');
+    }
+
+    if (type === 'viewed') {
+      themoviedb.setCurrentTitle('Las he visto');
+      themoviedb.setCurrentCollection('viewed');
+    }
+
+    if (type === 'favorite') {
+      themoviedb.setCurrentTitle('Mis favoritas');
+      themoviedb.setCurrentCollection('favorite');
+    }
+
+    themoviedb.getNavigator().push({index: 4, route: 'top-list'});
+  }
+
   render() {
     return (
       <ScrollView>
 
-        <View style={{paddingHorizontal: 10, paddingVertical: 20}}>
+        <View style={{paddingHorizontal: 10, paddingVertical: 30}}>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             {this.renderAvatar()}
             <View>
@@ -180,19 +198,28 @@ export default class Profile extends Component {
           </View>
         </View>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, marginBottom: 20, paddingVertical: 25}}>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: colors.getList().gray, textAlign: 'center', marginRight: 10}}><Icon name="bookmark" size={27} color='#999' /></Text>
-            <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.saved}</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: colors.getList().gray, textAlign: 'center',  marginRight: 10}}><Icon name="eye" size={27} color='#999' /></Text>
-            <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.viewed}</Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: colors.getList().gray, textAlign: 'center',  marginRight: 10}}><Icon name="star" size={27} color='#999' /></Text>
-            <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.favorite}</Text>
-          </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.getList().secondary, marginBottom: 20, marginHorizontal: 15, borderRadius: 3, paddingVertical: 20}}>
+
+          <TouchableOpacity onPress={this.showFavoriteList.bind(this, 'saved')} activeOpacity={0.8}>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color: colors.getList().gray, textAlign: 'center', marginRight: 10}}><Icon name="bookmark" size={27} color='#999' /></Text>
+              <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.saved}</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.showFavoriteList.bind(this, 'viewed')} activeOpacity={0.8}>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color: colors.getList().gray, textAlign: 'center',  marginRight: 10}}><Icon name="eye" size={27} color='#999' /></Text>
+              <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.viewed}</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.showFavoriteList.bind(this, 'favorite')} activeOpacity={0.8}>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color: colors.getList().gray, textAlign: 'center',  marginRight: 10}}><Icon name="star" size={27} color='#999' /></Text>
+              <Text style={{color: '#999', textAlign: 'center', marginBottom: 0, fontSize: 18}}>{this.state.favorite}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <Historial title="Lo último que has visto" />

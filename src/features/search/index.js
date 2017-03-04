@@ -134,6 +134,13 @@ export default class Search extends Component {
     }
   }
 
+  showTermsResults(obj) {
+    this.setState({
+      query: obj.term,
+      search: obj.term
+    });
+  }
+
   renderMovieList(obj) {
 
     if(typeof obj !== 'undefined') {
@@ -144,12 +151,7 @@ export default class Search extends Component {
             <TouchableOpacity
               activeOpacity={0.9}
               style={{width: width}}
-              onPress={() => {
-                this.setState({
-                  query: obj.term,
-                  search: obj.term
-                });
-              }}>
+              onPress={this.showTermsResults.bind(this, obj)}>
               <Text style={{color: '#FFF', fontSize: 16}}>{obj.term}</Text>
             </TouchableOpacity>
 

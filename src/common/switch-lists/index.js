@@ -36,7 +36,7 @@ export default class SwitchLists extends Component {
       this.setState({
         data: snapshot.val(),
         show: true
-      })
+      });
     });
   }
 

@@ -29,29 +29,16 @@ export default class Home extends Component {
       allData: null,
       allLoaded: false
     };
+
   }
 
-  componentWillMount() {
-    let user         = firebase.auth().currentUser;
-    let featuredRef = firebase.database().ref('featured');
-
-    // InteractionManager.runAfterInteractions(() => {
+  componentDidMount() {
     themoviedb.getAllPopular().then((data) => {
-      featuredRef.on('value', (snapshot) => {
         this.setState({
-          featureData: {
-            title: snapshot.val().title,
-            subtitle: snapshot.val().subtitle,
-            background: snapshot.val().background,
-            visible: snapshot.val().visible,
-          },
           allData: data,
           allLoaded: true,
         });
-      });
     });
-
-    // });
   }
 
   render() {
@@ -64,13 +51,11 @@ export default class Home extends Component {
     }
 
     return (
-      <View renderToHardwareTextureAndroid={true}>
+      <View>
 
         <ScrollView style={styles.containerLists}>
 
-          <CategoriesList {...this.props} />
-
-          <Featured data={this.state.featureData} />
+          <CategoriesList />
 
           <MoviesListHorizontal
             title="Ahora en los cines"
@@ -119,7 +104,6 @@ export default class Home extends Component {
             collection="top_rated"
             position="horizontal"
             {...this.props} />
-
 
           <View style={{paddingVertical: 15}}></View>
 

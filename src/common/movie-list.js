@@ -38,9 +38,9 @@ export default class MoviesList extends Component {
   }
 
   componentWillMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.loadMovies();
-    });
+    // InteractionManager.runAfterInteractions(() => {
+    this.loadMovies();
+    // });
   }
 
   loadMovies() {

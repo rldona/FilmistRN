@@ -44,9 +44,9 @@ export default class RadioButtons extends Component {
 
     firebase.database().ref('users/' + user.uid).set({
       settings: {
-        lang: this.state.options[id].language || 'es',
-        allowExitApp: settingsService.getOptions().allowExitApp || true,
-        avatar: settingsService.getOptions().avatar || null
+        lang: this.state.options[id].language,
+        allowExitApp: settingsService.getOptions().allowExitApp,
+        avatar: settingsService.getOptions().avatar
       }
     });
   }
