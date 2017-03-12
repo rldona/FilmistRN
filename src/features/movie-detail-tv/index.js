@@ -49,7 +49,7 @@ class MovieDetailTv extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // InteractionManager.runAfterInteractions(() => {
 
     themoviedb.getMovie('tv', themoviedb.getCurrentMovie().id).then((data) => {

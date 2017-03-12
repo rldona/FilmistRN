@@ -35,9 +35,6 @@ export const init = () => {
   currentMovie = null;
   currentType= 'movie';
   currentCollection= 'upcoming';
-
-  console.log(options);
-
 }
 
 export const reset = () => {

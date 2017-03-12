@@ -37,10 +37,10 @@ export default class MoviesListHorizontal extends Component {
     };
   }
 
-  componentWillMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.loadMovies();
-    });
+  componentDidMount() {
+    // InteractionManager.runAfterInteractions(() => {
+    this.loadMovies();
+    // });
   }
 
   loadMovies() {

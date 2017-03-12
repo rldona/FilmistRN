@@ -50,40 +50,40 @@ class MovieDetail extends Component {
     }
   }
 
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
+  componentWillMount() {
+    // InteractionManager.runAfterInteractions(() => {
 
-      themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
-        data.runtime = data.runtime === 0 ? 90 : data.runtime;
-        this.setState({
-          movie: data,
-          loaded: true
-        });
+    themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
+      data.runtime = data.runtime === 0 ? 90 : data.runtime;
+      this.setState({
+        movie: data,
+        loaded: true
       });
-
-      themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
-        let cast = {
-          director: data.crew[0].name,
-          writer: data.crew[1].name,
-          actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
-        };
-
-        for (let i = 0; i < data.crew.length; i++) {
-          if (data.crew[i].job === 'Director') {
-            cast.director = data.crew[i].name;
-          }
-          if (data.crew[i].job === 'Novel') {
-            cast.writer= data.crew[i].name;
-          }
-        }
-
-        this.setState({cast: cast});
-
-      }).catch((error) => {
-        console.log(error);
-      });
-
     });
+
+    themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
+      let cast = {
+        director: data.crew[0].name,
+        writer: data.crew[1].name,
+        actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
+      };
+
+      for (let i = 0; i < data.crew.length; i++) {
+        if (data.crew[i].job === 'Director') {
+          cast.director = data.crew[i].name;
+        }
+        if (data.crew[i].job === 'Novel') {
+          cast.writer= data.crew[i].name;
+        }
+      }
+
+      this.setState({cast: cast});
+
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    // });
   }
 
   _onActionSelected = (action) => {
