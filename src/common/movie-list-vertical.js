@@ -43,9 +43,9 @@ export default class MoviesList extends Component {
   }
 
   componentWillMount() {
-    // InteractionManager.runAfterInteractions(() => {
-    this.loadMovies();
-    // });
+    InteractionManager.runAfterInteractions(() => {
+      this.loadMovies();
+    });
   }
 
   loadMovies() {
@@ -126,9 +126,14 @@ export default class MoviesList extends Component {
     themoviedb.setCurrentMovie(movie);
     themoviedb.setHistorialList(movie);
 
-    firebase.database().ref('users/' + user.uid + '/historial').set(
-      themoviedb.getHistorialList()
-    );
+    //
+    // Save movie to historial with Redux
+    //
+    this.props.actions.addHistorial(movie);
+
+    // firebase.database().ref('users/' + user.uid + '/historial').set(
+    //   themoviedb.getHistorialList()
+    // );
 
     if (movie.first_air_date) {
       themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});

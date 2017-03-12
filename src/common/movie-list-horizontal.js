@@ -38,9 +38,9 @@ export default class MoviesListHorizontal extends Component {
   }
 
   componentWillMount() {
-    // InteractionManager.runAfterInteractions(() => {
-    this.loadMovies();
-    // });
+    InteractionManager.runAfterInteractions(() => {
+      this.loadMovies();
+    });
   }
 
   loadMovies() {
@@ -86,10 +86,15 @@ export default class MoviesListHorizontal extends Component {
     // save movie to historial list
     themoviedb.setHistorialList(movie);
 
+    //
+    // Save movie to historial with Redux
+    //
+    this.props.actions.addHistorial(movie);
+
     // set historial list to Firebase
-    firebase.database().ref('users/' + user.uid + '/historial').set(
-      themoviedb.getHistorialList()
-    );
+    // firebase.database().ref('users/' + user.uid + '/historial').set(
+    //   themoviedb.getHistorialList()
+    // );
 
     if (movie.first_air_date) {
       themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});

@@ -16,7 +16,7 @@ export default class Score extends Component {
     super(props);
 
     this.state = {
-      starSize: 30
+      starSize: 25
     };
   }
 

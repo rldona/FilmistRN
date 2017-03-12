@@ -4,7 +4,7 @@ const END_POINT = 'http://api.themoviedb.org/3/';
 const API_KEY   = 'd29e0f4d164566ae95cfb5022b6ef0c0';
 
 let options = {
-  lang: 'es'
+  lang: settingsService.getOptions().lang
 };
 
 let navigator;
@@ -35,6 +35,9 @@ export const init = () => {
   currentMovie = null;
   currentType= 'movie';
   currentCollection= 'upcoming';
+
+  console.log(options);
+
 }
 
 export const reset = () => {
@@ -263,7 +266,7 @@ export const search = (query, currentPage) => {
 export const getPopular = (type, collection, currentPage) => {
   let page = currentPage || 1;
 
-  let filmlistAPI = END_POINT + type + '/' + collection + '?' + 'api_key=' + API_KEY + '&page=' + page + '&language=' + options.lang;
+  let filmlistAPI = END_POINT + type + '/' + collection + '?' + 'api_key=' + API_KEY + '&page=' + page + '&include_adult=false&language=' + options.lang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -282,7 +285,7 @@ export const getPopular = (type, collection, currentPage) => {
 export const getSimilar = (type, id, currentPage) => {
   let page = currentPage || 1;
 
-  let filmlistAPI = END_POINT + type + '/' + id + '/similar' + '?' + 'api_key=' + API_KEY + '&page=' + page + '&language=' + options.lang;
+  let filmlistAPI = END_POINT + type + '/' + id + '/similar' + '?' + 'api_key=' + API_KEY + '&page=' + page + '&include_adult=false&language=' + options.lang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -299,7 +302,7 @@ export const getSimilar = (type, id, currentPage) => {
 }
 
 export const getMovie = (type, id) => {
-  let filmlistAPI = END_POINT + type + '/' + id + '?' + 'api_key=' + API_KEY + '&language=' + options.lang;
+  let filmlistAPI = END_POINT + type + '/' + id + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -320,7 +323,7 @@ export const getCredits = (type, id) => {
     type = 'movie';
   }
 
-  let filmlistAPI = END_POINT + type + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&language=' + options.lang;
+  let filmlistAPI = END_POINT + type + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -338,10 +341,10 @@ export const getCredits = (type, id) => {
 
 export const getAllPopular = () => {
   var urls = [
-    END_POINT + 'movie' + '/' + 'now_playing' + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'upcoming'    + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&page=' + '&language=' + options.lang
+    END_POINT + 'movie' + '/' + 'now_playing' + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'movie' + '/' + 'upcoming'    + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang
   ];
 
   return Promise.all(

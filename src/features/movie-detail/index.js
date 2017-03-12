@@ -12,6 +12,10 @@ import {
   InteractionManager
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../redux/actions/historialActions';
+
 import * as firebase from 'firebase';
 import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';
@@ -27,7 +31,7 @@ import MoviesListHorizontal from '../../common/movie-list-horizontal';
 
 const { width, height } = Dimensions.get('window');
 
-export default class MovieDetail extends Component {
+class MovieDetail extends Component {
 
   constructor(props) {
     super(props);
@@ -36,50 +40,50 @@ export default class MovieDetail extends Component {
       // movie: null,
       // loaded: false,
       movie: themoviedb.getCurrentMovie(),
+      loaded: true,
       cast: {
         director: '-',
         writer: '-',
         actors: []
       },
-      loaded: true,
       overviewNumberLines: 2
     }
   }
 
-  componentWillMount() {
-    // InteractionManager.runAfterInteractions(() => {
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
 
-    themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
-      data.runtime = data.runtime === 0 ? 90 : data.runtime;
-      this.setState({
-        movie: data,
-        loaded: true
+      themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
+        data.runtime = data.runtime === 0 ? 90 : data.runtime;
+        this.setState({
+          movie: data,
+          loaded: true
+        });
       });
-    });
 
-    themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
-      let cast = {
-        director: data.crew[0].name,
-        writer: data.crew[1].name,
-        actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
-      };
+      themoviedb.getCredits('movie', themoviedb.getCurrentMovie().id).then((data) => {
+        let cast = {
+          director: data.crew[0].name,
+          writer: data.crew[1].name,
+          actors: [data.cast[0].name, data.cast[1].name, data.cast[2].name, data.cast[3].name, data.cast[4].name]
+        };
 
-      for (let i = 0; i < data.crew.length; i++) {
-        if (data.crew[i].job === 'Director') {
-          cast.director = data.crew[i].name;
+        for (let i = 0; i < data.crew.length; i++) {
+          if (data.crew[i].job === 'Director') {
+            cast.director = data.crew[i].name;
+          }
+          if (data.crew[i].job === 'Novel') {
+            cast.writer= data.crew[i].name;
+          }
         }
-        if (data.crew[i].job === 'Novel') {
-          cast.writer= data.crew[i].name;
-        }
-      }
 
-      this.setState({cast: cast});
+        this.setState({cast: cast});
 
-    }).catch((error) => {
-      console.log(error);
+      }).catch((error) => {
+        console.log(error);
+      });
+
     });
-
-    // });
   }
 
   _onActionSelected = (action) => {
@@ -371,3 +375,17 @@ const styles = StyleSheet.create({
     color: '#FFF'
   },
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetail);

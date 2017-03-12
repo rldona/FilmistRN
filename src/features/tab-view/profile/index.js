@@ -10,6 +10,10 @@ import {
   StyleSheet
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../../redux/actions/historialActions';
+
 import * as firebase from 'firebase';
 import * as settingsService from '../../../services/settings-service';
 import * as themoviedb from '../../../services/movies-service';
@@ -21,7 +25,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Historial from '../../../common/historial';
 
-export default class Profile extends Component {
+class Profile extends Component {
 
   constructor(props) {
     super(props);
@@ -222,7 +226,7 @@ export default class Profile extends Component {
           </TouchableOpacity>
         </View>
 
-        <Historial title="Lo último que has visto" />
+        <Historial title="Lo último que has visto" data={this.props.historial} />
 
       </ScrollView>
 
@@ -261,3 +265,17 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

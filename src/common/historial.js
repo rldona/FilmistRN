@@ -29,33 +29,54 @@ export default class Historial extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    let historialListLimit = [];
+
+    for (let i = 0; i < nextProps.data.length; i++) {
+      if (i < 5) {
+        historialListLimit.push(nextProps.data[i]);
+      }
+    }
+
+    if (nextProps.data.length === 0) {
+      this.setState({
+        dataMovies: null
+      });
+    } else {
+      this.setState({
+        dataMovies: ds.cloneWithRows(historialListLimit.reverse())
+      });
+    }
+
+  }
+
   componentWillMount() {
-    let user         = firebase.auth().currentUser;
-    let historialRef = firebase.database().ref('users/' + user.uid);
+    // let user         = firebase.auth().currentUser;
+    // let historialRef = firebase.database().ref('users/' + user.uid);
 
-    historialRef.on('value', (snapshot) => {
-      if (typeof snapshot.val().historial !== 'undefined') {
-        let historialListLimit = [];
+    // historialRef.on('value', (snapshot) => {
+    //   if (typeof snapshot.val().historial !== 'undefined') {
+    //     let historialListLimit = [];
 
-        for (let i = 0; i < snapshot.val().historial.length; i++) {
-          if (i < 5) {
-            historialListLimit.push(snapshot.val().historial[i]);
-          }
-        }
+    //     for (let i = 0; i < snapshot.val().historial.length; i++) {
+    //       if (i < 5) {
+    //         historialListLimit.push(snapshot.val().historial[i]);
+    //       }
+    //     }
 
-        this.setState({
-          dataMovies: ds.cloneWithRows(historialListLimit)
-        });
-      } else {
-        this.setState({
-          dataMovies: null
-        });
-      }
+    //     this.setState({
+    //       dataMovies: ds.cloneWithRows(historialListLimit)
+    //     });
+    //   } else {
+    //     this.setState({
+    //       dataMovies: null
+    //     });
+    //   }
 
-      if (snapshot.val().historial) {
-        themoviedb.setHistorialList(snapshot.val().historial, 'array');
-      }
-    });
+    //   if (snapshot.val().historial) {
+    //     themoviedb.setHistorialList(snapshot.val().historial, 'array');
+    //   }
+    // });
   }
 
   _onSelectMovie(movie) {
@@ -94,7 +115,7 @@ export default class Historial extends Component {
         <View style={{marginHorizontal: 15, marginTop: 15}}>
           <Text style={styles.grid}>VACÍO</Text>
         </View>
-      )
+      );
     }
 
     return (
@@ -139,7 +160,8 @@ export default class Historial extends Component {
         {this.renderHistorialList()}
 
       </View>
-    )
+    );
+
   }
 
 }

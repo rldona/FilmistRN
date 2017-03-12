@@ -5,6 +5,7 @@ let options = {};
 export const init = () => {
   options.lang = 'es';
   options.allowExitApp = false;
+  options.avatar = null;
 }
 
 export const reset = () => {
