@@ -8,6 +8,10 @@ import {
   InteractionManager
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../../redux/actions/historialActions';
+
 import * as firebase from 'firebase';
 import * as settingsService from '../../../services/settings-service';
 import * as userService from '../../../services/user-service';
@@ -20,7 +24,7 @@ import Featured from '../../../common/featured';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class Home extends Component {
+class Home extends Component {
 
   constructor(props) {
     super(props);
@@ -29,7 +33,6 @@ export default class Home extends Component {
       allData: null,
       allLoaded: false
     };
-
   }
 
   componentDidMount() {
@@ -130,3 +133,17 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -10,6 +10,10 @@ import {
   Dimensions
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../../redux/actions/historialActions';
+
 import * as firebase from 'firebase';
 import * as loginService from '../../../services/login-service';
 import * as settingsService from '../../../services/settings-service';
@@ -23,7 +27,7 @@ import RadioButtons from '../../../common/radio-buttons';
 
 const { width, height } = Dimensions.get('window');
 
-export default class Settings extends Component {
+class Settings extends Component {
 
   constructor(props) {
     super(props);
@@ -52,7 +56,9 @@ export default class Settings extends Component {
     loginService.logout().then(() => {
       // Clear states
       themoviedb.reset();
-      settingsService.reset();
+
+      // settingsService.reset(); // ????
+
       // redirect to Login
       themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
     }, (error) => {
@@ -66,12 +72,12 @@ export default class Settings extends Component {
 
         <View style={{padding: 0}}>
 
-          {/*<View>
+          <View>
             <Text style={styles.optionTitle}>Cambia el idioma del contenido de la app</Text>
             <View style={{padding: 15}}>
               <RadioButtons options={this.state.radioButtons} />
             </View>
-          </View>*/}
+          </View>
 
           <View>
             <Text style={styles.optionTitle}>Evitar cerrar la app con el botón físico atrás</Text>
@@ -99,7 +105,9 @@ export default class Settings extends Component {
 
                   themoviedb.clearHitorialList();
 
-                  firebase.database().ref('users/' + user.uid + '/historial').set(null);
+                  this.props.actions.removeHistorial();
+
+                  {/*firebase.database().ref('users/' + user.uid + '/historial').set(null);*/}
 
                   ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
                 }}>
@@ -164,3 +172,17 @@ const styles = StyleSheet.create({
     fontSize: 12
   }
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -12,6 +12,10 @@ import {
   Keyboard
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../redux/actions/historialActions';
+
 import * as firebase from 'firebase';
 import * as themoviedb from '../../services/movies-service';
 import * as Animatable from 'react-native-animatable';
@@ -27,7 +31,7 @@ const { width, height } = Dimensions.get('window');
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class Search extends Component {
+class Search extends Component {
 
   constructor(props) {
     super(props);
@@ -190,7 +194,8 @@ export default class Search extends Component {
           type="movie"
           collection="search"
           onScrollList={this._onScrollList.bind(this)}
-          query={this.state.search} />
+          query={this.state.search}
+          {...this.props} />
       );
     } else {
       if (themoviedb.getTermHistorial().length > 0) {
@@ -358,3 +363,17 @@ const styles = StyleSheet.create({
     borderRadius: 50
   }
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -45,6 +45,8 @@ export default class Welcome extends Component {
             settingsService.setOption('avatar', data.val().avatar);
           }
 
+          moviesService.init();
+
           firebase.database().ref('users/' + user.uid + '/favorites').once('value', (snapshot) => {
             let arr = [];
 

@@ -12,6 +12,10 @@ import {
   InteractionManager
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../redux/actions/historialActions';
+
 import * as firebase from 'firebase';
 import * as userService from '../../services/user-service';
 import * as themoviedb from '../../services/movies-service';
@@ -27,7 +31,7 @@ import MoviesListHorizontal from '../../common/movie-list-horizontal';
 
 const { width, height } = Dimensions.get('window');
 
-export default class MovieDetail extends Component {
+class MovieDetail extends Component {
 
   constructor(props) {
     super(props);
@@ -36,12 +40,12 @@ export default class MovieDetail extends Component {
       // movie: null,
       // loaded: false,
       movie: themoviedb.getCurrentMovie(),
+      loaded: true,
       cast: {
         director: '-',
         writer: '-',
         actors: []
       },
-      loaded: true,
       overviewNumberLines: 2
     }
   }
@@ -371,3 +375,17 @@ const styles = StyleSheet.create({
     color: '#FFF'
   },
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetail);

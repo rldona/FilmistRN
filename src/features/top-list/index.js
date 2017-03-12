@@ -8,6 +8,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as historialActions from '../../redux/actions/historialActions';
+
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 import * as Animatable from 'react-native-animatable';
@@ -19,7 +23,7 @@ import MoviesListVertical from '../../common/movie-list-vertical';
 
 const { width, height } = Dimensions.get('window');
 
-export default class TopList extends Component {
+class TopList extends Component {
 
   constructor(props) {
     super(props);
@@ -53,7 +57,6 @@ export default class TopList extends Component {
     Animatable.initializeRegistryWithDefinitions({
       scrollTopActive, scrollTopDesactive
     });
-
   }
 
   _onActionSelected = (action) => {
@@ -129,3 +132,17 @@ const styles = StyleSheet.create({
     borderRadius: 50
   }
 });
+
+function mapStateToProps(state, ownProps) {
+  return {
+     historial: state.historial
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(historialActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopList);

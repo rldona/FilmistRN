@@ -12,6 +12,11 @@ import {
   Dimensions
 } from 'react-native';
 
+import configureStore from './redux/store/configureStore';
+import {Provider} from 'react-redux';
+
+const store = configureStore();
+
 import * as firebase from 'firebase';
 import * as loginService from './services/login-service';
 import * as settingsService from './services/settings-service';
@@ -45,7 +50,6 @@ export default class App extends Component {
 
     settingsService.init();
     loginService.init();
-    moviesService.init();
 
     this.options = settingsService.getOptions();
 
@@ -53,6 +57,8 @@ export default class App extends Component {
     //   'change',
     //   this.handleFirstConnectivityChange
     // );
+
+    this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
 
   }
 
@@ -152,19 +158,21 @@ export default class App extends Component {
 
         <StatusBar hidden={false} backgroundColor={colors.getList().statusBar} translucent={true} />
 
-        <Navigator
-          ref="navigator"
-          initialRoute={{ index: 0 }}
-          renderScene={this.navigatorRenderScene.bind(this)}
-          configureScene={(route) => {
-            // return CustomTransitions.NONE;
-            if (route.index === 0 || route.index === 1) {
-              return CustomTransitions.NONE;
-            } else {
-              return Navigator.SceneConfigs.FloatFromBottomAndroid;
-              // return CustomTransitions.FloatFromBottomAndroidCustom;
-            }
-          }}/>
+        <Provider store={store}>
+          <Navigator
+            ref="navigator"
+            initialRoute={{ index: 0 }}
+            renderScene={this.navigatorRenderScene}
+            configureScene={(route) => {
+              // return CustomTransitions.NONE;
+              if (route.index === 0 || route.index === 1) {
+                return CustomTransitions.NONE;
+              } else {
+                return Navigator.SceneConfigs.FloatFromBottomAndroid;
+                // return CustomTransitions.FloatFromBottomAndroidCustom;
+              }
+            }}/>
+        </Provider>
 
       </View>
     );

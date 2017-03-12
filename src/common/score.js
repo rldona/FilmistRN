@@ -16,7 +16,7 @@ export default class Score extends Component {
     super(props);
 
     this.state = {
-      starSize: 30
+      starSize: 25
     };
   }
 
@@ -64,5 +64,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
   }
 });
