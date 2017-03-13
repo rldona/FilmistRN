@@ -129,7 +129,7 @@ export default class MoviesList extends Component {
     //
     // Save movie to historial with Redux
     //
-    this.props.actions.addHistorial(movie);
+    this.props.actions.historial.add(movie);
 
     // firebase.database().ref('users/' + user.uid + '/historial').set(
     //   themoviedb.getHistorialList()

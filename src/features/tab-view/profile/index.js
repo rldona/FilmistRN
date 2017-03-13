@@ -274,7 +274,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(historialActions, dispatch)
+    actions: {
+      historial: bindActionCreators(historialActions, dispatch)
+    }
   };
 }
 

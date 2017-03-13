@@ -35,6 +35,8 @@ export default class MoviesListHorizontal extends Component {
     this.state = {
       dataMovies: typeof this.props.list === 'undefined' ? [] : this.props.list,
     };
+
+    console.log(props);
   }
 
   componentDidMount() {
@@ -89,7 +91,7 @@ export default class MoviesListHorizontal extends Component {
     //
     // Save movie to historial with Redux
     //
-    this.props.actions.addHistorial(movie);
+    this.props.actions.historial.add(movie);
 
     // set historial list to Firebase
     // firebase.database().ref('users/' + user.uid + '/historial').set(

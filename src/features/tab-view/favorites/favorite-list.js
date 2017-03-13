@@ -30,7 +30,6 @@ export default class FavoriteList extends Component {
   }
 
   componentWillReceiveProps() {
-
     if (themoviedb.getFavoriteList(this.props.type).length > 0) {
       this.setState({
         dataMovies: ds.cloneWithRows(this.props.list)
@@ -55,7 +54,7 @@ export default class FavoriteList extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 0}}
+        style={{marginBottom: 5}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image
@@ -83,7 +82,7 @@ export default class FavoriteList extends Component {
     }
 
     return (
-      <View style={{marginBottom: 20, borderColor: '#222326', borderWidth: 0}}>
+      <View style={{marginBottom: 5, borderColor: '#222326', borderWidth: 0}}>
         <ListView
           dataSource={this.state.dataMovies}
           renderRow={(rowData) => this.renderMovieList(rowData)}

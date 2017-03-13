@@ -105,7 +105,7 @@ class Settings extends Component {
 
                   themoviedb.clearHitorialList();
 
-                  this.props.actions.removeHistorial();
+                  this.props.actions.historial.clear();
 
                   {/*firebase.database().ref('users/' + user.uid + '/historial').set(null);*/}
 
@@ -181,7 +181,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(historialActions, dispatch)
+    actions: {
+      historial: bindActionCreators(historialActions, dispatch)
+    }
   };
 }
 

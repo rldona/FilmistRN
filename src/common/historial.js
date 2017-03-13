@@ -92,7 +92,7 @@ export default class Historial extends Component {
   renderMovieList(movie) {
     return (
       <TouchableOpacity
-        style={{marginBottom: 0}}
+        style={{marginBottom: 5}}
         activeOpacity={0.9}
         onPress={this._onSelectMovie.bind(this, movie)}>
         <Image

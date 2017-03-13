@@ -1,5 +1,6 @@
-import * as types from './actionsTypes';
+import * as types from './types/historial';
 
-// historial
-export const addHistorial = historial => ({ type: types.ADD_HISTORIAL, historial });
-export const removeHistorial = (historial) => ({ type: types.REMOVE_HISTORIAL, historial });
+// HISTORIAL ACTIONS
+
+export const add   = movie => ({ type: types.ADD, movie });
+export const clear = list  => ({ type: types.CLEAR, list });
