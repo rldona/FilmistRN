@@ -269,13 +269,13 @@ class MovieDetail extends Component {
             <Text
               numberOfLines={this.state.overviewNumberLines}
               style={{fontSize: 15, lineHeight: 26, fontWeight: '300', color: '#FFF', marginTop: 0, marginBottom: 0, textAlign: 'auto' }}>
-              {this.state.movie.overview.length > 0 ? this.state.movie.overview : 'Sinopsis no disponible'}
+              {this.state.movie.overview ? this.state.movie.overview : 'Sinopsis no disponible'}
             </Text>
 
             <View style={{paddingVertical: 5}}></View>
 
             {
-              this.state.movie.overview.length > 0 ?
+              this.state.movie.overview ?
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 0}}
                   onPress={this._onExtendOverview}

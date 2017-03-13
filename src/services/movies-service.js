@@ -320,7 +320,7 @@ export const getCredits = (type, id) => {
     type = 'movie';
   }
 
-  let filmlistAPI = END_POINT + type + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang;
+  let filmlistAPI = END_POINT + type + '/' + id + '/credits?' + 'api_key=' + API_KEY + '&language=' + options.lang;
 
   return fetch(filmlistAPI, {
       headers: {
@@ -338,10 +338,10 @@ export const getCredits = (type, id) => {
 
 export const getAllPopular = () => {
   var urls = [
-    END_POINT + 'movie' + '/' + 'now_playing' + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'upcoming'    + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&page=' + '&include_adult=false&language=' + options.lang
+    END_POINT + 'movie' + '/' + 'now_playing' + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'movie' + '/' + 'upcoming'    + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang
   ];
 
   return Promise.all(
