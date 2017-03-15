@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
 import * as themoviedb from '../../services/movies-service';
