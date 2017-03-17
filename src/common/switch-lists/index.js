@@ -53,7 +53,7 @@ export default class SwitchLists extends Component {
           <SwitchListsItem icon="star" title="Mis favoritas" type="favorite" checked={this.state.data.favorite} />
         </View>
       </View>
-    )
+    );
   }
 
 }
@@ -62,8 +62,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // paddingHorizontal: 20,
-    // paddingVertical: 15,
     borderRadius: 3,
     marginHorizontal: 15,
     marginBottom: 20,
@@ -72,5 +70,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 10,
     borderBottomColor: colors.getList().primary,
     backgroundColor: colors.getList().secondary
-  },
+  }
 });

@@ -146,9 +146,7 @@ class Search extends Component {
   }
 
   renderMovieList(obj) {
-
     if(typeof obj !== 'undefined') {
-
       return (
         <View style={styles.row}>
 
@@ -178,12 +176,10 @@ class Search extends Component {
               <IconEvil name="close" size={30} color='#CCC' />
             </TouchableOpacity>
         </View>
-      )
-
+      );
     } else {
-      return (null)
+      return null;
     }
-
   }
 
   renderResult() {
@@ -199,7 +195,6 @@ class Search extends Component {
       );
     } else {
       if (themoviedb.getTermHistorial().length > 0) {
-
         return (
           <ScrollView style={{paddingLeft: 20, paddingRight: 15, marginTop: 10}}>
 
@@ -227,10 +222,8 @@ class Search extends Component {
             </TouchableOpacity>
 
           </ScrollView>
-        )
-
+        );
       } else {
-
         return (
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <View style={{alignItems: 'center', justifyContent: 'flex-start', marginTop: 30, width: 250}}>
@@ -239,10 +232,8 @@ class Search extends Component {
                 <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 5, fontWeight: '300', textAlign: 'center'}}>Encuentra series y películas.</Text>
             </View>
           </View>
-        )
-
+        );
       }
-
     }
   }
 
@@ -252,12 +243,11 @@ class Search extends Component {
     } else {
       this.refs.scrollTop.scrollTopDesactive(500);
     }
-
   }
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: colors.getList().primary}}>
+      <View style={{flex: 1, backgroundColor: colors.getList().primary}} renderToHardwareTextureAndroid={true}>
 
         <Header
           isTransparent={false}
@@ -303,7 +293,7 @@ class Search extends Component {
             </Animatable.View>
 
       </View>
-    )
+    );
   }
 
 }

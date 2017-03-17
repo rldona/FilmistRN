@@ -35,8 +35,6 @@ export default class MoviesListHorizontal extends Component {
     this.state = {
       dataMovies: typeof this.props.list === 'undefined' ? [] : this.props.list,
     };
-
-    console.log(props);
   }
 
   componentDidMount() {
@@ -48,13 +46,6 @@ export default class MoviesListHorizontal extends Component {
   loadMovies() {
     if (this.props.collection === 'similar') {
       themoviedb.getSimilar(this.props.type, themoviedb.getCurrentMovie().id).then((data) => {
-        movies = [];
-        movies = data;
-        page   = 2;
-        this.setState({ 'dataMovies': ds.cloneWithRows(data) });
-      });
-    } else {
-      themoviedb.getPopular(this.props.type, this.props.collection).then((data) => {
         movies = [];
         movies = data;
         page   = 2;
@@ -88,15 +79,8 @@ export default class MoviesListHorizontal extends Component {
     // save movie to historial list
     themoviedb.setHistorialList(movie);
 
-    //
     // Save movie to historial with Redux
-    //
     this.props.actions.historial.add(movie);
-
-    // set historial list to Firebase
-    // firebase.database().ref('users/' + user.uid + '/historial').set(
-    //   themoviedb.getHistorialList()
-    // );
 
     if (movie.first_air_date) {
       themoviedb.getNavigator().push({index: 2.1, route: 'movie-detail-tv'});
@@ -123,8 +107,7 @@ export default class MoviesListHorizontal extends Component {
 
   renderScrollMovieList() {
     if (this.state.dataMovies.length === 0 && typeof this.props.showLoading === 'undefined') {
-      // <Loading />
-      return null
+      return null;
     }
 
     return (
@@ -147,8 +130,7 @@ export default class MoviesListHorizontal extends Component {
         <ListView
           style={{ marginBottom: 0}}
           dataSource={this.state.dataMovies}
-          // pagingEnabled={true}
-          initialListSize={1}
+          pagingEnabled={false}
           renderRow={(rowData) => this.renderMovie(rowData)}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -161,7 +143,7 @@ export default class MoviesListHorizontal extends Component {
 
   render() {
     return (
-      <View>
+      <View renderToHardwareTextureAndroid={true}>
         {this.renderScrollMovieList()}
       </View>
     );
@@ -196,5 +178,5 @@ var styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderTopWidth: 2,
     borderBottomWidth: 2,
-  },
+  }
 });

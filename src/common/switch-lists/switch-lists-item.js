@@ -78,7 +78,7 @@ export default class SwitchListsItem extends Component {
         <Icon name={this.props.icon} size={25} color={this.state.color} />
         <Text style={{color: this.state.color, fontSize: 14, marginTop: 5}}>{this.props.title}</Text>
       </TouchableOpacity>
-    )
+    );
   }
 
 }

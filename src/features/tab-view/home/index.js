@@ -13,6 +13,7 @@ import {bindActionCreators} from 'redux';
 import * as historialActions from '../../../redux/actions/historialActions';
 
 import * as firebase from 'firebase';
+import * as colors from '../../../common/colors';
 import * as settingsService from '../../../services/settings-service';
 import * as userService from '../../../services/user-service';
 import * as themoviedb from '../../../services/movies-service';
@@ -35,12 +36,15 @@ class Home extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     themoviedb.getAllPopular().then((data) => {
-        this.setState({
-          allData: data,
-          allLoaded: true,
-        });
+
+      console.log(data);
+
+      this.setState({
+        allData: data,
+        allLoaded: true,
+      });
     });
   }
 
@@ -48,13 +52,13 @@ class Home extends Component {
     if (!this.state.allLoaded) {
       return (
         <View style={{marginTop: 20}}>
-          <Loading color="#FFF" />
+          <Loading color={colors.getList().app} />
         </View>
-      )
+      );
     }
 
     return (
-      <View>
+      <View renderToHardwareTextureAndroid={true} renderToHardwareTextureAndroid={true}>
 
         <ScrollView style={styles.containerLists}>
 
@@ -79,18 +83,18 @@ class Home extends Component {
           <MoviesListHorizontal
             title="Películas top en Filmist"
             type="movie"
-            list={ds.cloneWithRows(this.state.allData[3].results)}
+            list={ds.cloneWithRows(this.state.allData[2].results)}
             collection="top_rated"
             position="horizontal"
             {...this.props} />
 
-          <MoviesListHorizontal
+          {/*<MoviesListHorizontal
             title="Películas recomendadas"
             type="movie"
             list={ds.cloneWithRows(this.state.allData[2].results)}
             collection="popular"
             position="horizontal"
-            {...this.props} />
+            {...this.props} />*/}
 
           <MoviesListHorizontal
             title="Series top en Filmist"
@@ -100,13 +104,13 @@ class Home extends Component {
             position="horizontal"
             {...this.props} />
 
-          <MoviesListHorizontal
+          {/*<MoviesListHorizontal
             title="Descubre más series"
             type="tv"
-            list={ds.cloneWithRows(this.state.allData[3].results)}
+            list={ds.cloneWithRows(this.state.allData[4].results)}
             collection="top_rated"
             position="horizontal"
-            {...this.props} />
+            {...this.props} />*/}
 
           <View style={{paddingVertical: 15}}></View>
 

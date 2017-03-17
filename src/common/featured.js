@@ -12,8 +12,6 @@ import * as colors from '../common/colors';
 
 import Loading from './loading';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
 const { width, height } = Dimensions.get('window');
 
 export default class Header extends Component {
@@ -24,7 +22,7 @@ export default class Header extends Component {
 
   render() {
     if (!this.props.data.visible) {
-      return null
+      return null;
     }
 
     return (
@@ -39,7 +37,8 @@ export default class Header extends Component {
             <Text style={{color: '#FFF', textAlign: 'right', fontSize: 16}}>{this.props.data.subtitle}</Text>
           </View>
       </View>
-    )
+    );
+
   }
 
 }

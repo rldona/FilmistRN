@@ -12,4 +12,4 @@ const colors = {
 
 export const getList = () => {
   return colors;
-}
+};

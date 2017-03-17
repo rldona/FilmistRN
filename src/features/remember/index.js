@@ -95,9 +95,13 @@ export default class Remember extends Component {
 
   showButtonLoading() {
     if (!this.state.showLoading) {
-      return <Text style={styles.buttonTextClear}>CAMBIAR LA CONTRASEÑA</Text>;
+      return (
+        <Text style={styles.buttonTextClear}>CAMBIAR LA CONTRASEÑA</Text>
+      );
     } else {
-      return <Loading color="#FFF" size={19} />;
+      return (
+        <Loading color="#FFF" size={19} />
+      );
     }
   }
 
@@ -168,7 +172,7 @@ export default class Remember extends Component {
         </TouchableOpacity>
 
       </View>
-    )
+    );
   }
 
 }

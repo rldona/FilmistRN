@@ -105,7 +105,7 @@ export default class MoviesList extends Component {
             source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 
   renderMovieList(movie) {
@@ -129,7 +129,7 @@ export default class MoviesList extends Component {
           </View>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 
   infiniteScroll = () => {
@@ -164,12 +164,12 @@ export default class MoviesList extends Component {
   renderScrollMovieList() {
     if (this.state.dataMovies.length === 0) {
       return (
-        <Loading />
-      )
+        <Loading color={colors.getList().app} />
+      );
     }
 
     if (this.props.position === 'horizontal') {
-      return(
+      return (
         <View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10}}>
             <Text style={styles.title}>
@@ -195,7 +195,7 @@ export default class MoviesList extends Component {
             removeClippedSubviews={false}
             enableEmptySections={true} />
         </View>
-      )
+      );
     } else {
       return (
         <View style={{paddingBottom: 80, paddingHorizontal: 10}}>
@@ -210,7 +210,7 @@ export default class MoviesList extends Component {
             showsVerticalScrollIndicator={false}
             horizontal={false} />
         </View>
-      )
+      );
     }
 
   }
@@ -260,5 +260,5 @@ var styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderTopWidth: 2,
     borderBottomWidth: 2,
-  },
+  }
 });

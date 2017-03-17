@@ -10,8 +10,11 @@ import {
   StyleSheet
 } from 'react-native';
 
+import * as firebase from 'firebase';
+
 import * as loginService from '../../services/login-service';
 import * as userService from '../../services/user-service';
+import * as settingsService from '../../services/settings-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
@@ -39,14 +42,99 @@ export default class Login extends Component {
     Keyboard.dismiss();
 
     if (this.state.email !== '' && this.state.password !== '' && this.state.password.length > 5) {
+
       this.setState({showLoading: true});
 
       loginService.login(this.state.email, this.state.password)
         .then((user) => {
-          userService.setCurrentUser(user);
-          themoviedb.getNavigator().push({index: 1, title: 'home'});
+
+
+
+          // userService.setCurrentUser(user);
+          // themoviedb.getNavigator().push({index: 1, title: 'home'});
+
+
+          if (user) {
+
+            userService.setCurrentUser(user);
+
+            firebase.database().ref('users/' + user.uid).on('child_added', (data) => {
+              if (data.val() && typeof data.val() !== 'undefined' && data.val() !== '') {
+                settingsService.setOption('lang', data.val().lang);
+                settingsService.setOption('allowExitApp', data.val().allowExitApp);
+                settingsService.setOption('avatar', data.val().avatar);
+              }
+
+              firebase.database().ref('users/' + user.uid + '/favorites').once('value', (snapshot) => {
+                let arr = [];
+
+                if (snapshot.val()) {
+                  themoviedb.setFavorite(Object.keys(snapshot.val()), 'list');
+                }
+
+                for (let i = 0; i < themoviedb.getFavorites().length; i++) {
+                  arr.push(parseInt(themoviedb.getFavorites()[i]));
+                }
+
+                themoviedb.setFavorite(arr, 'list');
+
+                firebase.database().ref('users/' + user.uid + '/list/init').set({
+                  init: 'init'
+                });
+
+                firebase.database().ref('users/' + user.uid + '/search/init').set({
+                  init: 'init'
+                });
+
+                firebase.database().ref('users/' + user.uid + '/search/terms').once('value', (snapshot) => {
+                  if (snapshot.val()) {
+                    themoviedb.setTermHistorial(snapshot.val(), 'array');
+                  }
+                });
+
+                firebase.database().ref('users/' + user.uid + '/list/favorite').once('value', (snapshot) => {
+                  if (snapshot.val()) {
+                    themoviedb.setFavoriteList(snapshot.val(), 'favorite', 'array');
+                  }
+                });
+
+                firebase.database().ref('users/' + user.uid + '/list/saved').once('value', (snapshot) => {
+                  if (snapshot.val()) {
+                    themoviedb.setFavoriteList(snapshot.val(), 'saved', 'array');
+                  }
+                });
+
+                firebase.database().ref('users/' + user.uid + '/list/viewed').once('value', (snapshot) => {
+                  if (snapshot.val()) {
+                    themoviedb.setFavoriteList(snapshot.val(), 'viewed', 'array');
+                  }
+
+                  themoviedb.init();
+                  themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
+
+                });
+
+              });
+
+            });
+
+          } else {
+            themoviedb.getNavigator().resetTo({index: 0, title: 'welcome'});
+          }
+
+
+
+
+
+
+
+
+
         }).catch((error) => {
-          this.setState({showLoading: false});
+
+          alert(error);
+
+          // this.setState({showLoading: false});
           if (error.code === 'auth/invalid-email') {
             Alert.alert(
               'Email no válido',
@@ -81,7 +169,7 @@ export default class Login extends Component {
           }
         });
     } else {
-      this.setState({showLoading: false});
+      // this.setState({showLoading: false});
 
       if (this.state.email === '') {
         Alert.alert(
@@ -126,9 +214,13 @@ export default class Login extends Component {
 
   showButtonLoading() {
     if (!this.state.showLoading) {
-      return <Text style={styles.buttonTextClear}>INICIA SESIÓN</Text>;
+      return (
+        <Text style={styles.buttonTextClear}>INICIA SESIÓN</Text>
+      );
     } else {
-      return <Loading color="#FFF" size={19} />;
+      return (
+        <Loading color="#FFF" size={19} />
+      );
     }
   }
 
@@ -173,8 +265,7 @@ export default class Login extends Component {
   }
 
   render() {
-    return(
-
+    return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
@@ -213,8 +304,7 @@ export default class Login extends Component {
         </TouchableOpacity>
 
       </View>
-
-    )
+    );
   }
 
 }

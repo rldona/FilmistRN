@@ -127,7 +127,7 @@ class MovieDetailTv extends Component {
 
     return (
       <SwitchLists user={currentUser} />
-    )
+    );
   }
 
   renderInfoPlus() {
@@ -150,38 +150,38 @@ class MovieDetailTv extends Component {
           </View>
 
         </View>
-      )
+      );
     }
 
     return (
-        <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
+      <View style={{paddingHorizontal: 15, paddingVertical: 15, backgroundColor: colors.getList().secondary}}>
 
-          <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
-
-            <View>
-              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Temporadas</Text>
-              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_seasons}</Text>
-            </View>
-
-            <View style={{minWidth: 100}}>
-              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Capítulos</Text>
-              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_episodes}</Text>
-            </View>
-
-            <View style={{minWidth: 60}}>
-              <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año</Text>
-              <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.first_air_date.split('-')[0]}</Text>
-            </View>
-
-          </View>
+        <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10}}>
 
           <View>
-            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
-            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Temporadas</Text>
+            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_seasons}</Text>
+          </View>
+
+          <View style={{minWidth: 100}}>
+            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Capítulos</Text>
+            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.movie.number_of_episodes}</Text>
+          </View>
+
+          <View style={{minWidth: 60}}>
+            <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Año</Text>
+            <Text style={{fontSize: 12, color: "#CCC", marginBottom: 0, fontWeight: '400'}}>{this.state.movie.first_air_date.split('-')[0]}</Text>
           </View>
 
         </View>
-    )
+
+        <View>
+          <Text style={{fontSize: 15, color: "#FFF", marginBottom: 3, fontWeight: '400'}}>Reparto</Text>
+          <Text style={{fontSize: 12, color: "#CCC", marginBottom: 8, fontWeight: '400'}}>{this.state.cast.actors[0]}, {this.state.cast.actors[1]}, {this.state.cast.actors[2]}, {this.state.cast.actors[3]}, {this.state.cast.actors[4]}</Text>
+        </View>
+
+      </View>
+    );
   }
 
   render() {
@@ -230,12 +230,13 @@ class MovieDetailTv extends Component {
           </View>
 
         </View>
-      )
+      );
     }
 
     return (
 
       <ScrollView
+        renderToHardwareTextureAndroid={true}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: colors.getList().primary, height: height }}>
 
@@ -307,7 +308,7 @@ class MovieDetailTv extends Component {
 
       </ScrollView>
 
-    )
+    );
 
   }
 
@@ -374,7 +375,7 @@ const styles = StyleSheet.create({
   },
   extendInfoText: {
     color: '#FFF'
-  },
+  }
 });
 
 function mapStateToProps(state, ownProps) {

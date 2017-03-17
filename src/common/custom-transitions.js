@@ -9,7 +9,7 @@ var FromTheFrontAndroid = {
   opacity: {
     from: 0,
     to: 1,
-    min: 0.3,
+    min: 0.6,
     max: 1,
     type: 'linear',
     extrapolate: false,
@@ -27,6 +27,44 @@ var FromTheFrontAndroid = {
 };
 
 var ToTheBackAndroid = {
+  opacity: {
+    value: 1,
+    type: 'constant',
+  },
+};
+
+var OpacityTransitionIn = {
+  opacity: {
+    from: 0,
+    to: 1,
+    min: 0.3,
+    max: 1,
+    type: 'linear',
+    extrapolate: false,
+    round: 1000,
+  }
+}
+
+var OpacityTransitionOut = {
+  opacity: {
+    from: 0,
+    to: 1,
+    min: 0.3,
+    max: 1,
+    type: 'linear',
+    extrapolate: false,
+    round: 1000,
+  }
+}
+
+var OpacityNull = {
+  opacity: {
+    value: 0,
+    type: 'constant',
+  },
+};
+
+var OpacityFull = {
   opacity: {
     value: 1,
     type: 'constant',
@@ -59,9 +97,20 @@ const FloatFromBottomAndroidCustom = Object.assign({}, Navigator.SceneConfigs.Fa
     }
 });
 
+const OpacityAndroidCustom = Object.assign({}, Navigator.SceneConfigs.FadeAndroid, {
+    gestures: null,
+    defaultTransitionVelocity: 20,
+    springFriction: 2,
+    animationInterpolators: {
+      into: buildStyleInterpolator(OpacityTransitionIn),
+      out: buildStyleInterpolator(OpacityTransitionOut),
+    }
+});
+
 const Transitions = {
     NONE,
-    FloatFromBottomAndroidCustom
+    FloatFromBottomAndroidCustom,
+    OpacityAndroidCustom
 };
 
 export default Transitions;

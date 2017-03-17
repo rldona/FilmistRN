@@ -175,7 +175,7 @@ export default class MoviesList extends Component {
             </View>
           </TouchableOpacity>
         </View>
-      )
+      );
     }
 
     return (
@@ -200,7 +200,7 @@ export default class MoviesList extends Component {
           </View>
         </TouchableOpacity>
       </View>
-    )
+    );
 
   }
 
@@ -246,9 +246,9 @@ export default class MoviesList extends Component {
     if (this.state.dataMovies.length === 0) {
       return (
         <View style={{marginTop: 20}}>
-          <Loading />
+          <Loading color={colors.getList().app} />
         </View>
-      )
+      );
     }
 
     if (this.state.dataMovies._cachedRowCount === 0) {
@@ -269,7 +269,7 @@ export default class MoviesList extends Component {
             <Text style={{color: colors.getList().white, fontSize: 14, marginTop: 5, fontWeight: '300', textAlign: 'center'}}>Comprueba si está bien escrito o prueba con otras palabras.</Text>
           </View>
         </View>
-      )
+      );
     }
 
     return (
@@ -285,7 +285,7 @@ export default class MoviesList extends Component {
           showsVerticalScrollIndicator={false}
           horizontal={false} />
       </View>
-    )
+    );
   }
 
   render() {
@@ -331,5 +331,5 @@ var styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderTopWidth: 2,
     borderBottomWidth: 2,
-  },
+  }
 });

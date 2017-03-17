@@ -38,7 +38,7 @@ export default class Score extends Component {
     plus = 5 - stars.length;
 
     for (let i = 0; i < plus; i++) {
-      stars.push(<Icon name="star-border" key={i+5000} color="#333" size={this.state.starSize} />)
+      stars.push(<Icon name="star-border" key={i+5000} color="#333" size={this.state.starSize} />);
     }
 
     return (
@@ -55,7 +55,7 @@ export default class Score extends Component {
       <View style={styles.row}>
         {this.renderStars()}
       </View>
-    )
+    );
   }
 
 }

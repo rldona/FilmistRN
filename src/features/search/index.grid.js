@@ -153,7 +153,7 @@ export default class Search extends Component {
             actions={{ left: { icon: 'arrow-back' }, right: { icon: 'more-vert' } }}
             onActionSelected={this._onActionSelected.bind(this)} />
 
-          <Loading />
+          <Loading color={colors.getList().app} />
 
         </View>
       )

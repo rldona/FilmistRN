@@ -19,9 +19,13 @@ export default class Checkbox extends Component {
 
   renderIconCheck(checked) {
     if (checked) {
-      return <Icon name='check-box' color={colors.getList().app} size={23} />
+      return (
+        <Icon name='check-box' color={colors.getList().app} size={23} />
+      );
     } else {
-      return <Icon name='check-box-outline-blank' color="#FFF" size={23} />
+      return (
+        <Icon name='check-box-outline-blank' color="#FFF" size={23} />
+      );
     }
   }
 

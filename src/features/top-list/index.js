@@ -75,12 +75,11 @@ class TopList extends Component {
     } else {
       this.refs.scrollTop.scrollTopDesactive(500);
     }
-
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <Header
           isTransparent={false}
@@ -110,7 +109,7 @@ class TopList extends Component {
         </Animatable.View>
 
       </View>
-    )
+    );
   }
 
 }

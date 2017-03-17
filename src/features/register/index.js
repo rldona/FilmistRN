@@ -13,6 +13,7 @@ import {
 import * as firebase from 'firebase';
 import * as loginService from '../../services/login-service';
 import * as userService from '../../services/user-service';
+import * as settingsService from '../../services/settings-service';
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
 
@@ -58,10 +59,14 @@ export default class Register extends Component {
           displayName: this.state.name,
           photoURL: null
         }).then(() => {
+          settingsService.init();
+          themoviedb.init();
           themoviedb.getNavigator().resetTo({index: 1, title: 'home'});
         }, (error) => {
           alert(error);
         });
+
+
 
       }).catch((error) => {
         this.setState({showLoading: false});
@@ -164,9 +169,13 @@ export default class Register extends Component {
 
   showButtonLoading() {
     if (!this.state.showLoading) {
-      return <Text style={styles.buttonTextClear}>REGÍSTRO</Text>
+      return (
+        <Text style={styles.buttonTextClear}>REGÍSTRO</Text>
+      );
     } else {
-      return <Loading color="#FFF" size={19} />
+      return (
+        <Loading color="#FFF" size={19} />
+      );
     }
   }
 
@@ -211,7 +220,7 @@ export default class Register extends Component {
   }
 
   render() {
-    return(
+    return (
 
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
@@ -267,7 +276,7 @@ export default class Register extends Component {
 
       </View>
 
-    )
+    );
   }
 
 }

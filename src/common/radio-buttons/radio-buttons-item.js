@@ -20,9 +20,13 @@ export default class RadioButtonsItem extends Component {
 
   renderIconName(state) {
     if (state) {
-      return <Icon name='radiobox-marked' color={colors.getList().app} size={20} />
+      return (
+        <Icon name='radiobox-marked' color={colors.getList().app} size={20} />
+      );
     } else {
-      return <Icon name='radiobox-blank' color="#FFF" size={20} />
+      return (
+        <Icon name='radiobox-blank' color="#FFF" size={20} />
+      );
     }
   }
 
@@ -32,26 +36,19 @@ export default class RadioButtonsItem extends Component {
 
     return (
       <View style={styles.column}>
-
         <TouchableOpacity
             onPress={this.props.onSelectOption.bind(this, id)}
             activeOpacity={0.9}
             style={styles.icon}>
-
           <View style={styles.row}>
-
             <Text style={styles.optionText}>
               {title}
             </Text>
-
             {this.renderIconName(state)}
-
           </View>
-
         </TouchableOpacity>
-
       </View>
-    )
+    );
   }
 
 }

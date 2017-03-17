@@ -40,13 +40,13 @@ export default class Loading extends Component {
           size={this.props.size || 'large'}
         />
       </View>
-    )
+    );
   }
 
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   }
 });

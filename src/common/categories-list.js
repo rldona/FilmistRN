@@ -45,8 +45,6 @@ export default class CategoriesList extends Component {
     };
   }
 
-  // themoviedb.getNavigator().push({ index: 4, route: 'top-list', title: this.props.title, type: this.props.type, collection: this.props.collection })}
-
   _loadCategorie(categorie) {
     switch (categorie.id) {
       case 0:
@@ -80,15 +78,13 @@ export default class CategoriesList extends Component {
     return(
       <View
         style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10}}>
-
         <TouchableOpacity
           onPress={() => this._loadCategorie(categorie)}
           activeOpacity={0.9}>
           <Text style={styles.categorie}>{categorie.name.toUpperCase()}</Text>
         </TouchableOpacity>
-
       </View>
-    )
+    );
   }
 
   render() {
@@ -104,7 +100,6 @@ export default class CategoriesList extends Component {
 }
 
 var styles = StyleSheet.create({
-
   categorie: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -121,5 +116,4 @@ var styles = StyleSheet.create({
     minWidth: 120,
     textAlign: 'center'
   }
-
 });

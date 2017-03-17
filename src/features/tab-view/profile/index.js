@@ -44,12 +44,11 @@ class Profile extends Component {
     let user = firebase.auth().currentUser;
 
     // TODO: ¿Esto es necesario? REVISAR
-
-    firebase.database().ref('users/' + user.uid + '/settings/avatar').once('value', (snapshot) => {
-      if (snapshot.val()) {
-        this.setState({ avatarSource: { uri: snapshot.val().uri }});
-      }
-    });
+    // firebase.database().ref('users/' + user.uid + '/settings/avatar').once('value', (snapshot) => {
+    //   if (snapshot.val()) {
+    //     this.setState({ avatarSource: { uri: snapshot.val().uri }});
+    //   }
+    // });
 
     firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -155,7 +154,7 @@ class Profile extends Component {
             style={{width: 100, height: 100, borderRadius: 50, backfaceVisibility: 'hidden', marginBottom: 20}}
             source={this.state.avatarSource} />
         </TouchableOpacity>
-      )
+      );
     } else {
       return (
         <TouchableOpacity onPress={this.imageChange.bind(this)} activeOpacity={0.8}>
@@ -165,7 +164,7 @@ class Profile extends Component {
             </Text>
           </View>
         </TouchableOpacity>
-      )
+      );
     }
   }
 
@@ -230,7 +229,7 @@ class Profile extends Component {
 
       </ScrollView>
 
-    )
+    );
   }
 
 }

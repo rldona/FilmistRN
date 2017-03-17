@@ -25,7 +25,7 @@ export default class Header extends Component {
       width: width,
       paddingTop: 24,
       backgroundColor: this.props.isTransparent ? 'rgba(0, 0, 0, 0)' : colors.getList().app
-    }
+    };
   }
 
   renderHeader() {
@@ -48,7 +48,7 @@ export default class Header extends Component {
 
           </View>
         </View>
-      )
+      );
 
     } else if(this.props.actions.left && !this.props.actions.right) {
 
@@ -68,7 +68,7 @@ export default class Header extends Component {
 
           </View>
         </View>
-      )
+      );
 
     } else if(!this.props.actions.left && this.props.actions.right) {
 
@@ -84,7 +84,7 @@ export default class Header extends Component {
 
           </View>
         </View>
-      )
+      );
 
     } else {
 
@@ -96,7 +96,7 @@ export default class Header extends Component {
 
           </View>
         </View>
-      )
+      );
 
     }
 
@@ -107,7 +107,7 @@ export default class Header extends Component {
       <View>
         { this.renderHeader() }
       </View>
-    )
+    );
   }
 
 }
@@ -150,5 +150,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 56,
     width: width
-  },
+  }
 });

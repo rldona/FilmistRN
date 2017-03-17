@@ -78,7 +78,7 @@ export default class FavoriteList extends Component {
         <View style={{marginBottom: 10}}>
           <Text style={styles.grid}>VACÍO</Text>
         </View>
-      )
+      );
     }
 
     return (
@@ -89,7 +89,7 @@ export default class FavoriteList extends Component {
           enableEmptySections={true}
           showsVerticalScrollIndicator={false} />
       </View>
-    )
+    );
   }
 
   renderIcon() {
@@ -135,7 +135,7 @@ export default class FavoriteList extends Component {
         {this.renderHistorialList()}
 
       </View>
-    )
+    );
   }
 
 }
@@ -178,5 +178,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
+  }
 });

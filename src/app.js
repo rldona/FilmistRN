@@ -7,6 +7,7 @@ import {
   Platform,
   View,
   Alert,
+  ToastAndroid,
   NetInfo,
   StyleSheet,
   Dimensions
@@ -34,6 +35,7 @@ import TopList from './features/top-list';
 import Search from './features/search';
 import CustomTransitions from './common/custom-transitions';
 import Offline from './common/offline';
+import Preload from './features/preload';
 
 import SplashScreen from 'react-native-smart-splash-screen';
 
@@ -48,7 +50,6 @@ export default class App extends Component {
       currentIndex: 1,
     };
 
-    settingsService.init();
     loginService.init();
 
     this.options = settingsService.getOptions();
@@ -100,6 +101,7 @@ export default class App extends Component {
               ]
             );
           } else {
+            ToastAndroid.show('Está activo evitar cerrar aplicación', ToastAndroid.SHORT);
             return true;
           }
         }
@@ -139,6 +141,9 @@ export default class App extends Component {
       case 0.5:
         // se muestra solo la primera vez !!
         return <Offline />
+      case 0.6:
+        // se muestra solo la primera vez !!
+        return <Preload />
       case 1:
         return <TabView />
       case 2:
@@ -161,15 +166,16 @@ export default class App extends Component {
         <Provider store={store}>
           <Navigator
             ref="navigator"
-            initialRoute={{ index: 0 }}
+            initialRoute={{ index: 0.6 }}
             renderScene={this.navigatorRenderScene}
             configureScene={(route) => {
-              // return CustomTransitions.NONE;
               if (route.index === 0 || route.index === 1) {
                 return CustomTransitions.NONE;
               } else {
+                {/*return Navigator.SceneConfigs.FadeAndroid;*/}
+                {/*return CustomTransitions.FloatFromBottomAndroidCustom;*/}
+                {/*return CustomTransitions.NONE;*/}
                 return Navigator.SceneConfigs.FloatFromBottomAndroid;
-                // return CustomTransitions.FloatFromBottomAndroidCustom;
               }
             }}/>
         </Provider>

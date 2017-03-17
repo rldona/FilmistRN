@@ -122,7 +122,7 @@ export default class App extends Component {
   render() {
     return (
 
-      <View style={styles.container}>
+      <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <Header
           title={themoviedb.getCurrentTab().title}
@@ -164,5 +164,5 @@ const styles = StyleSheet.create({
   label: {
     color: '#fff',
     fontWeight: '400'
-  },
+  }
 });

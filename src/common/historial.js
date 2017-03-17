@@ -50,35 +50,6 @@ export default class Historial extends Component {
 
   }
 
-  componentWillMount() {
-    // let user         = firebase.auth().currentUser;
-    // let historialRef = firebase.database().ref('users/' + user.uid);
-
-    // historialRef.on('value', (snapshot) => {
-    //   if (typeof snapshot.val().historial !== 'undefined') {
-    //     let historialListLimit = [];
-
-    //     for (let i = 0; i < snapshot.val().historial.length; i++) {
-    //       if (i < 5) {
-    //         historialListLimit.push(snapshot.val().historial[i]);
-    //       }
-    //     }
-
-    //     this.setState({
-    //       dataMovies: ds.cloneWithRows(historialListLimit)
-    //     });
-    //   } else {
-    //     this.setState({
-    //       dataMovies: null
-    //     });
-    //   }
-
-    //   if (snapshot.val().historial) {
-    //     themoviedb.setHistorialList(snapshot.val().historial, 'array');
-    //   }
-    // });
-  }
-
   _onSelectMovie(movie) {
     themoviedb.setCurrentMovie(movie);
 
@@ -126,7 +97,7 @@ export default class Historial extends Component {
           enableEmptySections={true}
           showsVerticalScrollIndicator={false} />
       </View>
-    )
+    );
   }
 
   render() {
@@ -135,19 +106,14 @@ export default class Historial extends Component {
 
     return (
       <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0}}>
-
         <View style={styles.row}>
-        <View style={[styles.row, styles.marginLeft]}>
-
-          {/*<Icon name="history" size={25} color={colors.getList().white} />*/}
-          <Text style={styles.optionTitle}>{title}</Text>
-
+          <View style={[styles.row, styles.marginLeft]}>
+            <Text style={styles.optionTitle}>{title}</Text>
           </View>
-
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
-              themoviedb.setCurrentTitle('Lo último que has visto');
+              themoviedb.setCurrentTitle('Lo último que has visto en la sesión');
               themoviedb.setCurrentCollection('historial');
               themoviedb.getNavigator().push({index: 4, route: 'top-list'});
             }}>
@@ -156,9 +122,7 @@ export default class Historial extends Component {
             }
           </TouchableOpacity>
         </View>
-
         {this.renderHistorialList()}
-
       </View>
     );
 
@@ -215,5 +179,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.getList().app,
     textAlign: 'center'
-  },
+  }
 });

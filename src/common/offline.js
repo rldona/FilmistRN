@@ -13,6 +13,7 @@ import * as colors from './colors';
 import * as moviesService from '../services/movies-service';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 const { width, height } = Dimensions.get('window');
 
 export default class Offline extends Component {
@@ -44,7 +45,7 @@ export default class Offline extends Component {
           </Text>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 
 }
@@ -68,5 +69,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.getList().primary,
     marginBottom: 20,
     minWidth: 300
-  },
+  }
 });

@@ -95,7 +95,7 @@ class Settings extends Component {
             </View>
           </View>
 
-          <View>
+          {/*<View>
             <Text style={styles.optionTitle}>Eliminar últimas búsquedas</Text>
               <TouchableOpacity
                 style={{minWidth: 300}}
@@ -107,7 +107,7 @@ class Settings extends Component {
 
                   this.props.actions.historial.clear();
 
-                  {/*firebase.database().ref('users/' + user.uid + '/historial').set(null);*/}
+                  //firebase.database().ref('users/' + user.uid + '/historial').set(null);
 
                   ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
                 }}>
@@ -117,7 +117,7 @@ class Settings extends Component {
                   </View>
                 </View>
               </TouchableOpacity>
-          </View>
+          </View>*/}
 
           <View>
             <Text style={styles.optionTitle}>Salir de Filmist</Text>
@@ -127,7 +127,7 @@ class Settings extends Component {
               onPress={this._loggout}>
               <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={{color: colors.getList().white, fontWeight: '400', textAlign: 'left', fontSize: 14}}>Cerrar sesión</Text>
+                  <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Cerrar sesión</Text>
                 </View>
               </View>
             </TouchableOpacity>

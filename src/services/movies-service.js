@@ -4,7 +4,7 @@ const END_POINT = 'http://api.themoviedb.org/3/';
 const API_KEY   = 'd29e0f4d164566ae95cfb5022b6ef0c0';
 
 let options = {
-  lang: settingsService.getOptions().lang
+  lang: 'es'
 };
 
 let navigator;
@@ -31,7 +31,8 @@ export let list = {
 };
 
 export const init = () => {
-  options.lang = settingsService.getOptions().lang;
+  options.lang = settingsService.getOptions().lang || 'es';
+  options.allowExitApp = settingsService.getOptions().allowExitApp || false;
   currentMovie = null;
   currentType= 'movie';
   currentCollection= 'upcoming';
@@ -62,6 +63,11 @@ export const reset = () => {
     saved: [],
     viewed: []
   };
+}
+
+
+export const getOptions = () => {
+  return options;
 }
 
 export const setOptions = (option, value) => {
@@ -186,8 +192,6 @@ export const setCurrentType = (type) => {
 export const getCurrentType = () => {
   return currentType;
 }
-
-
 
 export const setFavoriteList = (movie, type, option) => {
   if (option === 'array') {
@@ -337,11 +341,15 @@ export const getCredits = (type, id) => {
 }
 
 export const getAllPopular = () => {
+
+  // END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
+  // END_POINT + 'tv'    + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang
+
   var urls = [
     END_POINT + 'movie' + '/' + 'now_playing' + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
     END_POINT + 'movie' + '/' + 'upcoming'    + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
-    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang
+    END_POINT + 'movie' + '/' + 'top_rated'   + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang,
+    END_POINT + 'tv'    + '/' + 'popular'     + '?' + 'api_key=' + API_KEY + '&include_adult=false&language=' + options.lang
   ];
 
   return Promise.all(
