@@ -38,9 +38,6 @@ class Home extends Component {
 
   componentWillMount() {
     themoviedb.getAllPopular().then((data) => {
-
-      console.log(data);
-
       this.setState({
         allData: data,
         allLoaded: true,

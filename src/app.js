@@ -171,10 +171,11 @@ export default class App extends Component {
             configureScene={(route) => {
               if (route.index === 0 || route.index === 1) {
                 return CustomTransitions.NONE;
-              } else {
-                {/*return Navigator.SceneConfigs.FadeAndroid;*/}
+              } else if (route.index === 0.6) {
                 {/*return CustomTransitions.FloatFromBottomAndroidCustom;*/}
                 {/*return CustomTransitions.NONE;*/}
+                return Navigator.SceneConfigs.FadeAndroid;
+              } else {
                 return Navigator.SceneConfigs.FloatFromBottomAndroid;
               }
             }}/>

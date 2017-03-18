@@ -37,7 +37,7 @@ export default class Welcome extends Component {
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <Image source={require('../../assets/img/logo.png')} style={styles.logo}/>
+        <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
 
         <Text style={styles.welcome1}>
           Bienvenido a Filmist

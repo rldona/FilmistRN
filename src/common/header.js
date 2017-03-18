@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Image,
   StyleSheet,
   Dimensions
 } from 'react-native';
@@ -37,13 +38,13 @@ export default class Header extends Component {
           <View style={styles.navbar}>
 
             <TouchableOpacity onPress={this.props.onActionSelected.bind(this, 'left')} activeOpacity={0.9} style={styles.icon}>
-              <Icon name={this.props.actions.left.icon} size={27} color="#FFF" />
+              <Icon name={this.props.actions.left.icon} size={30} color="#FFF" />
             </TouchableOpacity>
 
             <Text style={styles.title}>{this.props.title}</Text>
 
             <TouchableOpacity onPress={this.props.onActionSelected.bind(this, 'right')} activeOpacity={0.9} style={styles.icon}>
-              <Icon name={this.props.actions.right.icon} size={27} color="#FFF" />
+              <Icon name={this.props.actions.right.icon} size={30} color="#FFF" />
             </TouchableOpacity>
 
           </View>
@@ -57,7 +58,7 @@ export default class Header extends Component {
           <View style={styles.navbar}>
 
             <TouchableOpacity onPress={this.props.onActionSelected.bind(this, 'left')} activeOpacity={0.9} style={styles.icon}>
-              <Icon name={this.props.actions.left.icon} size={27} color="#FFF" />
+              <Icon name={this.props.actions.left.icon} size={30} color="#FFF" />
             </TouchableOpacity>
 
             <Text style={styles.title}>{this.props.title}</Text>
@@ -76,10 +77,13 @@ export default class Header extends Component {
         <View style={this.headerDynamicStyle()}>
           <View style={styles.navbar}>
 
-            <Text style={styles.titleApp}>{this.props.title}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+              {/*<Image source={require('../assets/img/logo.png')} style={styles.logo}/>*/}
+              <Text style={styles.titleApp}>{this.props.title}</Text>
+            </View>
 
             <TouchableOpacity onPress={this.props.onActionSelected.bind(this, 'right')} activeOpacity={0.9} style={[styles.icon, styles.right]}>
-              <Icon name={this.props.actions.right.icon} size={27} color="#FFF" />
+              <Icon name={this.props.actions.right.icon} size={30} color="#FFF" />
             </TouchableOpacity>
 
           </View>
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFF',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     textAlign: 'left',
   },
@@ -126,9 +130,13 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 20,
     letterSpacing: 5,
-    marginLeft: 10,
+    marginLeft: 5,
     fontWeight: '600',
-    textAlign: 'left',
+    textAlign: 'left'
+  },
+  logo: {
+    width: 35,
+    height: 35
   },
   icon: {
     paddingHorizontal: 5,

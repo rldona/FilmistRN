@@ -52,13 +52,12 @@ class MovieDetail extends Component {
   }
 
   componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
+    // InteractionManager.runAfterInteractions(() => {
 
       themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
         data.runtime = data.runtime === 0 ? 90 : data.runtime;
         this.setState({
-          movie: data,
-          loaded: true
+          movie: data
         });
       });
 
@@ -80,11 +79,15 @@ class MovieDetail extends Component {
 
         this.setState({cast: cast});
 
+        this.setState({
+          loaded: true
+        });
+
       }).catch((error) => {
         console.log(error);
       });
 
-    });
+    // });
   }
 
   _onActionSelected = (action) => {

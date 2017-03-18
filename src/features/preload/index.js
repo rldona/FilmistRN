@@ -113,8 +113,8 @@ export default class Preload extends Component {
         renderToHardwareTextureAndroid={true}
         style={{elevation: 10, backgroundColor: colors.getList().primary, height: height, alignItems: 'center', justifyContent: 'center'}}>
         <View style={{borderColor: colors.getList().primary, backgroundColor: colors.getList().primary, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
-          <RippleLoader size={60} color="#4CAF50" frequency={300} />
-          <Text style={{fontSize: 14, color: colors.getList().app, fontWeight: '400', marginTop: 20}}>CONFIGURANDO SESIÓN</Text>
+          <RippleLoader size={60} color={colors.getList().app} frequency={300} />
+          <Text style={{fontSize: 16, color: colors.getList().app, fontWeight: '400', marginTop: 20}}>Configurando sesión...</Text>
         </View>
       </View>
     );

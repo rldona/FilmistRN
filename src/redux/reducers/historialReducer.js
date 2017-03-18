@@ -3,10 +3,7 @@ import * as types from '../actions/types/historial';
 export default function historialReducer(state = [], action) {
 
   filmIsRepeated = (element) => {
-    if (element.name) {
-      return element.name === action.movie.name;
-    }
-    return element.title === action.movie.title;
+    return element.id === action.movie.id;
   }
 
   switch (action.type) {
