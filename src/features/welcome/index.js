@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
     padding: 30
   },
   logo: {
-    width: 80,
-    height: 80,
-    marginBottom: 20
+    width: 100,
+    height: 100,
+    marginLeft: -10
   },
   welcome1: {
     color: colors.getList().white,
@@ -94,8 +94,9 @@ const styles = StyleSheet.create({
   welcome2: {
     color: colors.getList().white,
     textAlign: 'left',
-    fontSize: 20,
-    marginBottom: 40
+    fontSize: 18,
+    width: 300,
+    marginBottom: 30
   },
   button: {
     paddingTop: 17,
