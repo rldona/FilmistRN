@@ -89,6 +89,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     padding: 0,
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
 });

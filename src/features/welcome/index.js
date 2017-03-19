@@ -37,33 +37,42 @@ export default class Welcome extends Component {
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
+        <View style={{height: height, width: width}}>
+          <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg} />
+        </View>
 
-        <Text style={styles.welcome1}>
-          Bienvenido a Filmist
-        </Text>
+        <View style={{position: 'absolute', top: height/2-180, left: width/2-150, width: 300}}>
+          <Image source={require('../../assets/img/logo.png')} style={styles.logo} />
 
-        <Text style={styles.welcome2}>
-          Busca, sincroniza y comparte tus películas y series favoritas
-        </Text>
-
-        <TouchableOpacity
-          onPress={this._goTo.bind(this, 'login')}
-          style={styles.buttonDark}
-          activeOpacity={0.9}>
-          <Text style={styles.textLight}>
-            INICIAR SESIÓN
+          <Text style={styles.welcome1}>
+            Bienvenido a Filmist
           </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={this._goTo.bind(this, 'register')}
-          style={styles.button}
-          activeOpacity={0.9}>
-          <Text style={styles.text}>
-            REGÍSTRATE
+          <Text style={styles.welcome2}>
+            Busca, sincroniza y comparte tus películas y series favoritas
           </Text>
-        </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={this._goTo.bind(this, 'login')}
+            style={styles.buttonDark}
+            activeOpacity={0.9}>
+            <Text style={styles.textLight}>
+              INICIAR SESIÓN
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={this._goTo.bind(this, 'register')}
+            style={styles.button}
+            activeOpacity={0.9}>
+            <Text style={styles.text}>
+              REGÍSTRATE
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+
+
 
       </View>
     );
@@ -77,7 +86,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: colors.getList().primary,
-    padding: 30
+    height: height,
+    width: width
+    // padding: 30
   },
   logo: {
     width: 100,
@@ -88,8 +99,8 @@ const styles = StyleSheet.create({
     color: colors.getList().white,
     textAlign: 'left',
     fontWeight: 'bold',
-    fontSize: 35,
-    marginBottom: 5
+    fontSize: 32,
+    marginBottom: 15
   },
   welcome2: {
     color: colors.getList().white,
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 2,
     borderColor: colors.getList().app,
-    backgroundColor: colors.getList().primary,
+    backgroundColor: colors.getList().transparent,
     marginBottom: 20,
     minWidth: 300
   },

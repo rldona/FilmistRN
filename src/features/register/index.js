@@ -4,10 +4,12 @@ import {
   View,
   Text,
   Alert,
+  Image,
   TextInput,
   TouchableOpacity,
   Keyboard,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 
 import * as firebase from 'firebase';
@@ -19,6 +21,8 @@ import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loading from '../../common/loading';
+
+const { width, height } = Dimensions.get('window');
 
 export default class Register extends Component {
 
@@ -224,55 +228,63 @@ export default class Register extends Component {
 
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
-          <Icon name="arrow-back" size={30} color={colors.getList().white} />
-        </Text>
+        <View style={{height: height, width: width}}>
+          <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg} />
+        </View>
 
-        <Text style={styles.label}>Hola, regístrate en Filmist</Text>
+        <View style={{position: 'absolute', top: 30, left: width/2-150, width: 300}}>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(name) => this.setState({name})}
-          value={this.state.name}
-          placeholder="Name"
-          returnKeyType="next"
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#666"
-          autoFocus={false} />
+          <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
+            <Icon name="arrow-back" size={30} color={colors.getList().white} />
+          </Text>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          returnKeyType="next"
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#666"
-          placeholder="Email" />
+          <Text style={styles.label}>Hola, regístrate en Filmist</Text>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-          placeholder="Contraseña"
-          returnKeyType="next"
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#666"
-          secureTextEntry={true} />
+          <TextInput
+            style={styles.input}
+            onChangeText={(name) => this.setState({name})}
+            value={this.state.name}
+            placeholder="Name"
+            returnKeyType="next"
+            underlineColorAndroid='#FFF'
+            placeholderTextColor="#666"
+            autoFocus={false} />
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(passwordRepeat) => this.setState({passwordRepeat})}
-          value={this.state.passwordRepeat}
-          placeholder="Confirmar contraseña"
-          returnKeyType="done"
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#666"
-          onSubmitEditing={this._register.bind(this)}
-          secureTextEntry={true} />
+          <TextInput
+            style={styles.input}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+            returnKeyType="next"
+            underlineColorAndroid='#FFF'
+            placeholderTextColor="#666"
+            placeholder="Email" />
 
-        <TouchableOpacity onPress={this._register.bind(this)} style={this.renderButtonStyle()} activeOpacity={this.renderButtonOpacity()}>
-          {this.showButtonLoading()}
-        </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            placeholder="Contraseña"
+            returnKeyType="next"
+            underlineColorAndroid='#FFF'
+            placeholderTextColor="#666"
+            secureTextEntry={true} />
+
+          <TextInput
+            style={styles.input}
+            onChangeText={(passwordRepeat) => this.setState({passwordRepeat})}
+            value={this.state.passwordRepeat}
+            placeholder="Confirmar contraseña"
+            returnKeyType="done"
+            underlineColorAndroid='#FFF'
+            placeholderTextColor="#666"
+            onSubmitEditing={this._register.bind(this)}
+            secureTextEntry={true} />
+
+          <TouchableOpacity onPress={this._register.bind(this)} style={this.renderButtonStyle()} activeOpacity={this.renderButtonOpacity()}>
+            {this.showButtonLoading()}
+          </TouchableOpacity>
+
+        </View>
 
       </View>
 
@@ -286,8 +298,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: colors.getList().primary,
-    paddingTop: 10,
-    padding: 30
+    // paddingTop: 10,
+    // padding: 30
   },
   center: {
     alignItems: 'center',

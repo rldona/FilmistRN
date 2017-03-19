@@ -8,6 +8,7 @@ const colors = {
   primary: '#121314',
   secondary: '#222326',
   statusBar: 'rgba(0, 0, 0, 0)',
+  transparent: 'rgba(0, 0, 0, 0)'
 };
 
 export const getList = () => {

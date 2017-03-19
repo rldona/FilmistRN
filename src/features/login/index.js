@@ -4,10 +4,12 @@ import {
   View,
   Text,
   Alert,
+  Image,
   TextInput,
   TouchableOpacity,
   Keyboard,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 
 import * as firebase from 'firebase';
@@ -20,6 +22,8 @@ import * as colors from '../../common/colors';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loading from '../../common/loading';
+
+const { width, height } = Dimensions.get('window');
 
 export default class Login extends Component {
 
@@ -268,40 +272,48 @@ export default class Login extends Component {
     return (
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
-          <Icon name="arrow-back" size={30} color="#FFF" />
-        </Text>
+        <View style={{height: height, width: width}}>
+          <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg} />
+        </View>
 
-        <Text style={styles.label}>Inicia sesión en Filmist</Text>
+        <View style={{position: 'absolute', top: 30, left: width/2-150, width: 300}}>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#666"
-          placeholder="Email"
-          returnKeyType="next"
-          autoFocus={false} />
+          <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
+            <Icon name="arrow-back" size={30} color="#FFF" />
+          </Text>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-          underlineColorAndroid='#FFF'
-          placeholderTextColor="#999"
-          placeholder="Contraseña"
-          returnKeyType="done"
-          onSubmitEditing={this._login.bind(this)}
-          secureTextEntry={true} />
+          <Text style={styles.label}>Inicia sesión en Filmist</Text>
 
-        <TouchableOpacity onPress={this._login.bind(this)} style={this.renderButton()} activeOpacity={this.renderButtonOpacity()}>
-          {this.showButtonLoading()}
-        </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+            underlineColorAndroid='#FFF'
+            placeholderTextColor="#666"
+            placeholder="Email"
+            returnKeyType="next"
+            autoFocus={false} />
 
-        <TouchableOpacity onPress={this._remember.bind(this)} style={styles.buttonClear} activeOpacity={0.9}>
-          <Text style={styles.buttonText}>RECORDAR CONTRASEÑA</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            underlineColorAndroid='#FFF'
+            placeholderTextColor="#999"
+            placeholder="Contraseña"
+            returnKeyType="done"
+            onSubmitEditing={this._login.bind(this)}
+            secureTextEntry={true} />
+
+          <TouchableOpacity onPress={this._login.bind(this)} style={this.renderButton()} activeOpacity={this.renderButtonOpacity()}>
+            {this.showButtonLoading()}
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this._remember.bind(this)} style={styles.buttonClear} activeOpacity={0.9}>
+            <Text style={styles.buttonText}>RECORDAR CONTRASEÑA</Text>
+          </TouchableOpacity>
+
+        </View>
 
       </View>
     );
@@ -314,8 +326,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: colors.getList().primary,
-    paddingTop: 10,
-    padding: 30
+    // paddingTop: 10,
+    // padding: 30
   },
   center: {
     alignItems: 'center',
@@ -370,7 +382,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 2,
     borderColor: colors.getList().app,
-    backgroundColor: colors.getList().primary,
+    backgroundColor: colors.getList().transparent,
     marginBottom: 20,
     minWidth: 300
   },

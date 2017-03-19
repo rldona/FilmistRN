@@ -5,9 +5,11 @@ import {
   Text,
   Alert,
   TextInput,
+  Image,
   Keyboard,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 
 import * as loginService from '../../services/login-service';
@@ -16,6 +18,8 @@ import * as colors from '../../common/colors';
 
 import Loading from '../../common/loading';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const { width, height } = Dimensions.get('window');
 
 export default class Remember extends Component {
 
@@ -149,27 +153,35 @@ export default class Remember extends Component {
     return(
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
-        <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
-          <Icon name="arrow-back" size={30} color="#FFF" />
-        </Text>
+        <View style={{height: height, width: width}}>
+          <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg} />
+        </View>
 
-        <Text style={styles.labelRemember}>Introduce tu email para que te enviemos un formulario de cambio de contraseña</Text>
+        <View style={{position: 'absolute', top: 30, left: width/2-150, width: 300}}>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          autoFocus={true}
-          placeholder="Email"
-          placeholderTextColor="#666"
-          onSubmitEditing={this._remember.bind(this)}
-          returnKeyType="done"
-          autoFocus={false}
-        />
+          <Text onPress={this._goBack.bind(this)} style={styles.textBack}>
+            <Icon name="arrow-back" size={30} color="#FFF" />
+          </Text>
 
-        <TouchableOpacity onPress={this._remember.bind(this)} style={this.renderButtonStyle()} activeOpacity={this.renderButtonOpacityStyle()}>
-          {this.showButtonLoading()}
-        </TouchableOpacity>
+          <Text style={styles.labelRemember}>Introduce tu email para que te enviemos un formulario de cambio de contraseña</Text>
+
+          <TextInput
+            style={styles.input}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+            autoFocus={true}
+            placeholder="Email"
+            placeholderTextColor="#666"
+            onSubmitEditing={this._remember.bind(this)}
+            returnKeyType="done"
+            autoFocus={false}
+          />
+
+          <TouchableOpacity onPress={this._remember.bind(this)} style={this.renderButtonStyle()} activeOpacity={this.renderButtonOpacityStyle()}>
+            {this.showButtonLoading()}
+          </TouchableOpacity>
+
+        </View>
 
       </View>
     );
@@ -182,8 +194,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: colors.getList().primary,
-    paddingTop: 10,
-    padding: 30
+    // paddingTop: 10,
+    // padding: 30
   },
   center: {
     alignItems: 'center',

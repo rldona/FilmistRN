@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -109,14 +110,16 @@ export default class Preload extends Component {
 
   render() {
     return (
-      <View
-        renderToHardwareTextureAndroid={true}
-        style={{elevation: 10, backgroundColor: colors.getList().primary, height: height, alignItems: 'center', justifyContent: 'center'}}>
-        <View style={{borderColor: colors.getList().primary, backgroundColor: colors.getList().primary, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
-          <RippleLoader size={60} color={colors.getList().app} frequency={300} />
-          <Text style={{fontSize: 16, color: colors.getList().app, fontWeight: '400', marginTop: 20}}>Configurando sesión...</Text>
+      <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg}>
+        <View
+          renderToHardwareTextureAndroid={true}
+          style={{elevation: 10, height: height, alignItems: 'center', justifyContent: 'center', position: 'absolute', left: width/2-150, width: 300}}>
+          <View style={{borderColor: colors.getList().transparent, backgroundColor: colors.getList().transparent, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
+            <RippleLoader size={60} color={colors.getList().app} frequency={300} />
+            <Text style={{fontSize: 16, color: colors.getList().app, fontWeight: '400', marginTop: 20}}>Configurando sesión...</Text>
+          </View>
         </View>
-      </View>
+      </Image>
     );
   }
 }
