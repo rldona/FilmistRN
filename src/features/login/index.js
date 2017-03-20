@@ -273,7 +273,7 @@ export default class Login extends Component {
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <View style={{height: height, width: width}}>
-          <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg} />
+          <Image source={require('../../assets/img/bg-welcome-light.png')} style={styles.bg} />
         </View>
 
         <View style={{position: 'absolute', top: 30, left: width/2-150, width: 300}}>

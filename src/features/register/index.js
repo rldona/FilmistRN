@@ -229,7 +229,7 @@ export default class Register extends Component {
       <View style={styles.container} renderToHardwareTextureAndroid={true}>
 
         <View style={{height: height, width: width}}>
-          <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg} />
+          <Image source={require('../../assets/img/bg-welcome-light.png')} style={styles.bg} />
         </View>
 
         <View style={{position: 'absolute', top: 30, left: width/2-150, width: 300}}>
@@ -244,7 +244,7 @@ export default class Register extends Component {
             style={styles.input}
             onChangeText={(name) => this.setState({name})}
             value={this.state.name}
-            placeholder="Name"
+            placeholder="Nombre"
             returnKeyType="next"
             underlineColorAndroid='#FFF'
             placeholderTextColor="#666"

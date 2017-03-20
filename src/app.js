@@ -85,6 +85,8 @@ export default class App extends Component {
 
         if (this.state.currentIndex === 0.1 || this.state.currentIndex === 0.2 || this.state.currentIndex === 0.3 || this.state.currentIndex > 1) {
           moviesService.getNavigator().pop();
+        } else if (this.state.currentIndex === 0) {
+          BackAndroid.exitApp();
         } else {
           if (!this.options.allowExitApp) {
             Alert.alert(

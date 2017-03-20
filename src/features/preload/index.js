@@ -110,10 +110,10 @@ export default class Preload extends Component {
 
   render() {
     return (
-      <Image source={require('../../assets/img/bg-welcome.png')} style={styles.bg}>
+      <Image source={require('../../assets/img/bg-welcome-light.png')} style={styles.bg}>
         <View
           renderToHardwareTextureAndroid={true}
-          style={{elevation: 10, height: height, alignItems: 'center', justifyContent: 'center', position: 'absolute', left: width/2-150, width: 300}}>
+          style={{height: height, alignItems: 'center', justifyContent: 'center', position: 'absolute', left: width/2-150, width: 300}}>
           <View style={{borderColor: colors.getList().transparent, backgroundColor: colors.getList().transparent, borderWidth: 2, padding: 20, borderRadius: 5,  alignItems: 'center'}}>
             <RippleLoader size={60} color={colors.getList().app} frequency={300} />
             <Text style={{fontSize: 16, color: colors.getList().app, fontWeight: '400', marginTop: 20}}>Configurando sesión...</Text>
