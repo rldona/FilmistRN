@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 10,
     borderTopColor: colors.getList().primary,
     borderBottomWidth: 10,
-    borderBottomColor: colors.getList().primary
+    borderBottomColor: colors.getList().primary,
+    backgroundColor: colors.getList().secondary
   }
 });

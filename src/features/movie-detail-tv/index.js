@@ -49,8 +49,8 @@ class MovieDetailTv extends Component {
     }
   }
 
-  componentWillMount() {
-    InteractionManager.runAfterInteractions(() => {
+  componentDidMount() {
+    // InteractionManager.runAfterInteractions(() => {
 
       themoviedb.getMovie('tv', themoviedb.getCurrentMovie().id).then((data) => {
         this.setState({
@@ -75,7 +75,7 @@ class MovieDetailTv extends Component {
         console.log(error);
       });
 
-    });
+    // });
   }
 
   _onActionSelected = (action) => {
