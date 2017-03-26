@@ -49,8 +49,8 @@ class MovieDetailTv extends Component {
     }
   }
 
-  componentDidMount() {
-    // InteractionManager.runAfterInteractions(() => {
+  componentWillMount() {
+    InteractionManager.runAfterInteractions(() => {
 
       themoviedb.getMovie('tv', themoviedb.getCurrentMovie().id).then((data) => {
         this.setState({
@@ -75,7 +75,7 @@ class MovieDetailTv extends Component {
         console.log(error);
       });
 
-    // });
+    });
   }
 
   _onActionSelected = (action) => {
@@ -198,17 +198,7 @@ class MovieDetailTv extends Component {
               onActionSelected={this._onActionSelected.bind(this)} />
           </View>
 
-          <View style={{position: 'absolute', top: 130, left: 15, width: 110, height: 150}}>
-            <View style={{width: 110, height: 150, backgroundColor: '#111', borderRadius: 3, borderWidth: 1, borderColor: '#111', backfaceVisibility: 'hidden'}}></View>
-          </View>
-
-          <View style={{padding: 0, marginTop: 60}}>
-
-            <View style={styles.infoContainer}>
-              <Text style={styles.infoItemFake}><Icon name='thumb-up' /> 0</Text>
-              <Text style={styles.infoItemFake}><Icon name='favorite' /> 0</Text>
-              <Text style={styles.infoItemFake}><Icon name='timelapse' /> 0</Text>
-            </View>
+          <View style={{padding: 0, marginTop: 0}}>
 
             <View style={{padding: 15}}>
               <View style={{marginVertical: 10, marginBottom: 20}}>

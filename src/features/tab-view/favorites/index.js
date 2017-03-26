@@ -106,10 +106,7 @@ export default class Favorites extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15
-  },
-  centering: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 15
   }
 });

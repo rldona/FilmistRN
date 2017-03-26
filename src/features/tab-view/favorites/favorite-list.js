@@ -109,9 +109,9 @@ export default class FavoriteList extends Component {
     const { title } = this.props;
 
     return (
-      <View style={{backgroundColor: colors.getList().primary, paddingBottom: 0, marginTop: 0, marginLeft: 0, marginRight: 0}}>
+      <View style={{elevation: 0, backgroundColor: colors.getList().secondary, paddingLeft: 10, paddingRight: 10, marginBottom: 20}}>
 
-        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, marginTop: 10}}>
+        <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5}}>
           <View style={styles.row}>
             {/*<Icon name={this.renderIcon()} size={25} color={colors.getList().white} />*/}
             <Text style={styles.title}>

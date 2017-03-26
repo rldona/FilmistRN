@@ -41,7 +41,7 @@ class MovieDetail extends Component {
       // movie: null,
       // loaded: false,
       movie: themoviedb.getCurrentMovie(),
-      loaded: true,
+      loaded: false,
       cast: {
         director: '-',
         writer: '-',
@@ -51,8 +51,8 @@ class MovieDetail extends Component {
     }
   }
 
-  componentDidMount() {
-    // InteractionManager.runAfterInteractions(() => {
+  componentWillMount() {
+    InteractionManager.runAfterInteractions(() => {
 
       themoviedb.getMovie('movie', themoviedb.getCurrentMovie().id).then((data) => {
         data.runtime = data.runtime === 0 ? 90 : data.runtime;
@@ -87,7 +87,7 @@ class MovieDetail extends Component {
         console.log(error);
       });
 
-    // });
+    });
   }
 
   _onActionSelected = (action) => {
@@ -202,17 +202,7 @@ class MovieDetail extends Component {
               onActionSelected={this._onActionSelected.bind(this)} />
           </View>
 
-          <View style={{position: 'absolute', top: 130, left: 15, width: 110, height: 150}}>
-            <View style={{width: 110, height: 150, backgroundColor: '#111', borderRadius: 3, borderWidth: 1, borderColor: '#111', backfaceVisibility: 'hidden'}}></View>
-          </View>
-
-          <View style={{padding: 0, marginTop: 60}}>
-
-            <View style={styles.infoContainer}>
-              <Text style={styles.infoItemFake}><Icon name='thumb-up' /> 0</Text>
-              <Text style={styles.infoItemFake}><Icon name='favorite' /> 0</Text>
-              <Text style={styles.infoItemFake}><Icon name='timelapse' /> 0</Text>
-            </View>
+          <View style={{padding: 0, marginTop: 0}}>
 
             <View style={{padding: 15}}>
               <View style={{marginVertical: 10, marginBottom: 20}}>
