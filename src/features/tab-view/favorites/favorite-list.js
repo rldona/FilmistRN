@@ -76,7 +76,7 @@ export default class FavoriteList extends Component {
     if (!this.state.dataMovies) {
       return (
         <View style={{marginBottom: 10}}>
-          <Text style={styles.grid}>VACÍO</Text>
+          <Text style={styles.grid}>Lista vacía</Text>
         </View>
       );
     }
@@ -109,7 +109,7 @@ export default class FavoriteList extends Component {
     const { title } = this.props;
 
     return (
-      <View style={{elevation: 0, backgroundColor: colors.getList().secondary, paddingLeft: 10, paddingRight: 10, marginBottom: 20}}>
+      <View style={{elevation: 0, backgroundColor: colors.getList().primary, paddingLeft: 10, paddingRight: 10, marginBottom: 20}}>
 
         <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5}}>
           <View style={styles.row}>
@@ -145,11 +145,12 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     fontWeight: '400',
     marginRight: 0,
-    color: '#444',
+    color: '#999',
     paddingHorizontal: 15,
     paddingVertical: 20,
-    borderStyle: 'dashed',
-    borderWidth: 2,
+    // borderStyle: 'dashed',
+    backgroundColor: colors.getList().secondary,
+    // borderWidth: 2,
     borderColor: '#444'
   },
   title: {
