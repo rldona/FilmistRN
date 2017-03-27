@@ -113,7 +113,6 @@ export default class FavoriteList extends Component {
 
         <View style={{paddingTop: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5}}>
           <View style={styles.row}>
-            {/*<Icon name={this.renderIcon()} size={25} color={colors.getList().white} />*/}
             <Text style={styles.title}>
               {title}
             </Text>
