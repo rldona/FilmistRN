@@ -70,8 +70,6 @@ export default class Register extends Component {
           alert(error);
         });
 
-
-
       }).catch((error) => {
         this.setState({showLoading: false});
         if (error.code === 'auth/invalid-email') {
