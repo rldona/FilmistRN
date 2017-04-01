@@ -52,12 +52,6 @@ export default class Login extends Component {
       loginService.login(this.state.email, this.state.password)
         .then((user) => {
 
-
-
-          // userService.setCurrentUser(user);
-          // themoviedb.getNavigator().push({index: 1, title: 'home'});
-
-
           if (user) {
 
             userService.setCurrentUser(user);
@@ -125,14 +119,6 @@ export default class Login extends Component {
           } else {
             themoviedb.getNavigator().resetTo({index: 0, title: 'welcome'});
           }
-
-
-
-
-
-
-
-
 
         }).catch((error) => {
 
