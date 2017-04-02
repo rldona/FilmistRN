@@ -35,6 +35,8 @@ export default class Preload extends Component {
 
   componentDidMount() {
 
+    // TODO: Cambio de flujo. No login de primeras.
+
     firebase.auth().onAuthStateChanged((user) => {
 
       if (user) {
