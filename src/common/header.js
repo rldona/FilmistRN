@@ -78,7 +78,6 @@ export default class Header extends Component {
           <View style={styles.navbar}>
 
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-              {/*<Image source={require('../assets/img/logo.png')} style={styles.logo}/>*/}
               <Text style={styles.titleApp}>{this.props.title}</Text>
             </View>
 
