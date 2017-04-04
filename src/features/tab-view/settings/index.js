@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Alert,
   ToastAndroid,
   ScrollView,
   StyleSheet,
@@ -60,10 +61,34 @@ class Settings extends Component {
       // settingsService.reset(); // ????
 
       // redirect to Login
-      themoviedb.getNavigator().resetTo({ index: 0, route: 'login'});
+      themoviedb.getNavigator().resetTo({ index: 1, route: 'home'});
     }, (error) => {
       consoe.log(error.message);
     });
+  }
+
+  showLogout() {
+    let user = firebase.auth().currentUser;
+
+    if (!user) {
+      return null;
+    }
+
+    return (
+      <View>
+        <Text style={styles.optionTitle}>Salir de Filmist</Text>
+        <TouchableOpacity
+          style={{minWidth: 300}}
+          activeOpacity={0.9}
+          onPress={this._loggout}>
+          <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Cerrar sesión</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   render() {
@@ -87,10 +112,30 @@ class Settings extends Component {
                 onChange={(checked) => {
                   let user = firebase.auth().currentUser;
 
-                  this.setState({allowExitApp: !checked});
-                  settingsService.setOption('allowExitApp', !this.state.allowExitApp);
+                  if (user) {
+                    this.setState({allowExitApp: !checked});
+                    settingsService.setOption('allowExitApp', !this.state.allowExitApp);
+                    firebase.database().ref('users/' + user.uid + '/settings/allowExitApp').set(!this.state.allowExitApp);
+                  } else {
 
-                  firebase.database().ref('users/' + user.uid + '/settings/allowExitApp').set(!this.state.allowExitApp);
+                    Alert.alert(
+                      'Opción no disponible',
+                      'Inicia sesión para poder cambiar y sincronizar opciones de configuración',
+                      [
+                        {
+                          text: 'Iniciar sesión', onPress: () => {
+                          themoviedb.getNavigator().push({index: 0.1, title: 'login'});
+                        },
+                          style: 'cancel' },
+                        {
+                          text: 'Cancelar', onPress: () => {
+                          return true;
+                        }
+                        }
+                      ]
+                    );
+
+                  }
                 }} />
             </View>
           </View>
@@ -107,7 +152,9 @@ class Settings extends Component {
 
                   this.props.actions.historial.clear();
 
-                  //firebase.database().ref('users/' + user.uid + '/historial').set(null);
+                  if (user) {
+                    //firebase.database().ref('users/' + user.uid + '/historial').set(null);
+                  }
 
                   ToastAndroid.show('Historial eliminado', ToastAndroid.SHORT);
                 }}>
@@ -119,19 +166,7 @@ class Settings extends Component {
               </TouchableOpacity>
           </View>*/}
 
-          <View>
-            <Text style={styles.optionTitle}>Salir de Filmist</Text>
-            <TouchableOpacity
-              style={{minWidth: 300}}
-              activeOpacity={0.9}
-              onPress={this._loggout}>
-              <View style={{paddingHorizontal: 15, paddingVertical: 20}}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={{color: colors.getList().white, fontWeight: '400', fontSize: 14}}>Cerrar sesión</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
+          { this.showLogout() }
 
         </View>
 

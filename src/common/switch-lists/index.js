@@ -19,12 +19,14 @@ const { width, height } = Dimensions.get('window');
 export default class SwitchLists extends Component {
 
   constructor(props) {
+
     super(props);
 
     this.state = {
       data: null,
       show: false
-    }
+    };
+
   }
 
   componentDidMount() {
@@ -32,12 +34,28 @@ export default class SwitchLists extends Component {
     let movie = movieService.getCurrentMovie();
     let type = this.props.type;
 
-    firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id).on('value', (snapshot) => {
+    if (user) {
+
+      firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id).on('value', (snapshot) => {
+        this.setState({
+          data: snapshot.val(),
+          // show: true
+        });
+      });
+
+    } else {
+
       this.setState({
-        data: snapshot.val(),
+        data: {
+          saved: false,
+          viewed: false,
+          favorite: false
+        },
         show: true
       });
-    });
+
+    }
+
   }
 
   render() {

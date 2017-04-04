@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import {
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Text,
+  View
 } from 'react-native';
 
 import * as firebase from 'firebase';
@@ -29,65 +31,69 @@ export default class Favorites extends Component {
   componentDidMount() {
     let user = firebase.auth().currentUser;
 
-    firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
-      if (snapshot.val()) {
-        let favoritesListLimit = [];
+    if (user) {
 
-        for (let i = 0; i < snapshot.val().length; i++) {
-          if (i < 2) {
-            favoritesListLimit.unshift(snapshot.val()[i]);
+      firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          let favoritesListLimit = [];
+
+          for (let i = 0; i < snapshot.val().length; i++) {
+            if (i < 2) {
+              favoritesListLimit.unshift(snapshot.val()[i]);
+            }
           }
+
+          this.setState({
+            favorite: favoritesListLimit
+          });
+        } else {
+          this.setState({
+            favorite: []
+          });
         }
+      });
 
-        this.setState({
-          favorite: favoritesListLimit
-        });
-      } else {
-        this.setState({
-          favorite: []
-        });
-      }
-    });
+      firebase.database().ref('users/' + user.uid + '/list/saved').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          let favoritesListLimit = [];
 
-    firebase.database().ref('users/' + user.uid + '/list/saved').on('value', (snapshot) => {
-      if (snapshot.val()) {
-        let favoritesListLimit = [];
-
-        for (let i = 0; i < snapshot.val().length; i++) {
-          if (i < 2) {
-            favoritesListLimit.unshift(snapshot.val()[i]);
+          for (let i = 0; i < snapshot.val().length; i++) {
+            if (i < 2) {
+              favoritesListLimit.unshift(snapshot.val()[i]);
+            }
           }
+
+          this.setState({
+            saved: favoritesListLimit
+          });
+        } else {
+          this.setState({
+            saved: []
+          });
         }
+      });
 
-        this.setState({
-          saved: favoritesListLimit
-        });
-      } else {
-        this.setState({
-          saved: []
-        });
-      }
-    });
+      firebase.database().ref('users/' + user.uid + '/list/viewed').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          let favoritesListLimit = [];
 
-    firebase.database().ref('users/' + user.uid + '/list/viewed').on('value', (snapshot) => {
-      if (snapshot.val()) {
-        let favoritesListLimit = [];
-
-        for (let i = 0; i < snapshot.val().length; i++) {
-          if (i < 2) {
-            favoritesListLimit.unshift(snapshot.val()[i]);
+          for (let i = 0; i < snapshot.val().length; i++) {
+            if (i < 2) {
+              favoritesListLimit.unshift(snapshot.val()[i]);
+            }
           }
-        }
 
-        this.setState({
-          viewed: favoritesListLimit
-        });
-      } else {
-        this.setState({
-          viewed: []
-        });
-      }
-    });
+          this.setState({
+            viewed: favoritesListLimit
+          });
+        } else {
+          this.setState({
+            viewed: []
+          });
+        }
+      });
+
+    }
 
   }
 
@@ -105,7 +111,7 @@ export default class Favorites extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // height: height,
     paddingHorizontal: 10,
     paddingVertical: 15
   }

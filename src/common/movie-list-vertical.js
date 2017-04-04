@@ -114,11 +114,16 @@ export default class MoviesList extends Component {
 
     if (themoviedb.findFavorite(movie.id) === -1) {
       // init favorites default movies types to Firebase
-      firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/').set({
-        saved: false,
-        viewed: false,
-        favorite: false
-      });
+
+      if (user) {
+
+        firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/').set({
+          saved: false,
+          viewed: false,
+          favorite: false
+        });
+
+      }
 
       themoviedb.setFavorite(movie.id, 'movie');
     }
@@ -257,9 +262,13 @@ export default class MoviesList extends Component {
       // Eliminar el último term buscado
       themoviedb.removeLastTerm();
 
-      firebase.database().ref('users/' + user.uid + '/search/terms/').set(
-        themoviedb.getTermHistorial()
-      );
+      if (user) {
+
+        firebase.database().ref('users/' + user.uid + '/search/terms/').set(
+          themoviedb.getTermHistorial()
+        );
+
+      }
 
       return (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>

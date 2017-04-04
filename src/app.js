@@ -83,10 +83,11 @@ export default class App extends Component {
 
         this.options = settingsService.getOptions();
 
-        if (this.state.currentIndex === 0.1 || this.state.currentIndex === 0.2 || this.state.currentIndex === 0.3 || this.state.currentIndex > 1) {
+        if (this.state.currentIndex === 0 || this.state.currentIndex === 0.1 || this.state.currentIndex === 0.2 || this.state.currentIndex === 0.3 || this.state.currentIndex > 1) {
           moviesService.getNavigator().pop();
-        } else if (this.state.currentIndex === 0) {
-          BackAndroid.exitApp();
+        // } else if (this.state.currentIndex === 0) {
+          // BackAndroid.exitApp();
+          // return true;
         } else {
           if (!this.options.allowExitApp) {
             Alert.alert(
@@ -171,7 +172,7 @@ export default class App extends Component {
             initialRoute={{ index: 0.6 }}
             renderScene={this.navigatorRenderScene}
             configureScene={(route) => {
-              if (route.index === 0 || route.index === 1) {
+              if (route.index === 1) {
                 return CustomTransitions.NONE;
               } else if (route.index === 0.6) {
                 {/*return CustomTransitions.FloatFromBottomAndroidCustom;*/}

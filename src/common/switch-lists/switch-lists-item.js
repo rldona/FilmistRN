@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Alert,
   StyleSheet,
   Dimensions,
   Vibration,
@@ -34,38 +35,61 @@ export default class SwitchListsItem extends Component {
     let movie = themoviedb.getCurrentMovie();
     let type = this.props.type;
 
-    if (!this.state.added) {
-      this.setState({
-        added: true,
-        color: colors.getList().app
-      });
-    } else {
-      this.setState({
-        added: false,
-        color: '#555'
-      });
-    }
+    if (user) {
 
-    Vibration.vibrate([0, 20]);
-
-    // change state of switch-lists-item
-    setTimeout(() => {
-      firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/' + this.props.type).set(
-        this.state.added
-      );
-
-      // Add o remove from 'favorites list'
-      if (this.state.added) {
-        themoviedb.setFavoriteList(themoviedb.getCurrentMovie(), this.props.type, 'movie');
+      if (!this.state.added) {
+        this.setState({
+          added: true,
+          color: colors.getList().app
+        });
       } else {
-        themoviedb.removeFavoriteList(themoviedb.getCurrentMovie(), this.props.type);
+        this.setState({
+          added: false,
+          color: '#555'
+        });
       }
 
-      // Sync list to Firebase
-      firebase.database().ref('users/' + user.uid + '/list/' + this.props.type).set(
-        themoviedb.getFavoriteList(this.props.type)
+      Vibration.vibrate([0, 20]);
+
+      // change state of switch-lists-item
+      setTimeout(() => {
+        firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/' + this.props.type).set(
+          this.state.added
+        );
+
+        // Add o remove from 'favorites list'
+        if (this.state.added) {
+          themoviedb.setFavoriteList(themoviedb.getCurrentMovie(), this.props.type, 'movie');
+        } else {
+          themoviedb.removeFavoriteList(themoviedb.getCurrentMovie(), this.props.type);
+        }
+
+        // Sync list to Firebase
+        firebase.database().ref('users/' + user.uid + '/list/' + this.props.type).set(
+          themoviedb.getFavoriteList(this.props.type)
+        );
+      }, 50);
+
+    } else {
+
+      Alert.alert(
+        'Opción no disponible',
+        'Inicia sesión para sincronizar tus películas y series favoritas',
+        [
+          {
+            text: 'Iniciar sesión', onPress: () => {
+            themoviedb.getNavigator().push({index: 0.1, title: 'login'});
+          },
+            style: 'cancel' },
+          {
+            text: 'Cancelar', onPress: () => {
+            return true;
+          }
+          }
+        ]
       );
-    }, 50);
+
+    }
 
   }
 

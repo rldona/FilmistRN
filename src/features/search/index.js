@@ -106,9 +106,11 @@ class Search extends Component {
       term: this.state.query
     }, 'term');
 
-    firebase.database().ref('users/' + user.uid + '/search/terms/').set(
-      themoviedb.getTermHistorial()
-    );
+    if (user) {
+      firebase.database().ref('users/' + user.uid + '/search/terms/').set(
+        themoviedb.getTermHistorial()
+      );
+    }
 
     this.setState({
       search: this.state.query,
@@ -165,9 +167,13 @@ class Search extends Component {
 
                 themoviedb.removeTermHistorial(obj.id);
 
-                firebase.database().ref('users/' + user.uid + '/search/terms/').set(
-                  themoviedb.getTermHistorial()
-                );
+                if (user) {
+
+                  firebase.database().ref('users/' + user.uid + '/search/terms/').set(
+                    themoviedb.getTermHistorial()
+                  );
+
+                }
 
                 this.setState({
                   termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())
@@ -212,7 +218,11 @@ class Search extends Component {
 
                 themoviedb.clearTermHistorial();
 
-                firebase.database().ref('users/' + user.uid + '/search/terms/').set(null);
+                if (user) {
+
+                  firebase.database().ref('users/' + user.uid + '/search/terms/').set(null);
+
+                }
 
                 this.setState({
                   termHistorial: ds.cloneWithRows(themoviedb.getTermHistorial())

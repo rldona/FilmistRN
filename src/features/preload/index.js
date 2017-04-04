@@ -35,8 +35,6 @@ export default class Preload extends Component {
 
   componentDidMount() {
 
-    // TODO: Cambio de flujo. No login de primeras.
-
     firebase.auth().onAuthStateChanged((user) => {
 
       if (user) {
@@ -103,7 +101,7 @@ export default class Preload extends Component {
         });
 
       } else {
-        moviesService.getNavigator().resetTo({index: 0, title: 'welcome'});
+        moviesService.getNavigator().resetTo({index: 1, title: 'home'});
       }
 
     });

@@ -4,7 +4,11 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
+
+import * as firebase from 'firebase';
 
 import * as themoviedb from '../../services/movies-service';
 import * as colors from '../../common/colors';
@@ -18,6 +22,8 @@ import Home from './home';
 import Favorites from './favorites';
 import Profile from './profile';
 import Settings from './settings';
+
+const { width, height } = Dimensions.get('window');
 
 const initialLayout = {
   height: 0,
@@ -119,6 +125,22 @@ export default class App extends Component {
     );
   };
 
+  loginGuard() {
+    let user = firebase.auth().currentUser;
+
+    if (!user) {
+      return (
+        <View style={{width: width, padding: 10, backgroundColor: '#222'}}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => { themoviedb.getNavigator().push({ index: 0, title: 'welcome'}); }}>
+            <Text style={{color: '#FFF', fontWeight: '600', fontSize: 14, width: width, backgroundColor: '#ef4358', padding: 20, textAlign: 'center'}}>Inicia sesión y sincroniza tus datos de usuario</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
   render() {
     return (
 
@@ -137,6 +159,8 @@ export default class App extends Component {
           renderScene={this._renderScene}
           renderHeader={this._renderHeader}
           onRequestChangeTab={this._handleChangeTab} />
+
+        { this.loginGuard() }
 
       </View>
 

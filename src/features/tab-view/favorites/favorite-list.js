@@ -143,14 +143,13 @@ const styles = StyleSheet.create({
   grid: {
     textAlign: 'center',
     marginLeft: 0,
-    fontWeight: '400',
+    fontWeight: '300',
     marginRight: 0,
-    color: '#999',
-    paddingHorizontal: 15,
+    color: '#444',
+    paddingHorizontal: 10,
     paddingVertical: 20,
-    // borderStyle: 'dashed',
-    backgroundColor: colors.getList().secondary,
-    // borderWidth: 2,
+    borderStyle: 'dashed',
+    borderWidth: 2,
     borderColor: '#444'
   },
   title: {

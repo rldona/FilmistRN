@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  Alert,
   View
 } from 'react-native';
 
@@ -22,27 +23,48 @@ export default class RadioButtons extends Component {
 
   _onSelectOption(id) {
     let newOptions = this.state.options;
-
-    // array states update
-    for (let i = 0; i < newOptions.length; i++) {
-      if (newOptions[i].id === id) {
-        newOptions[i].state = true;
-      } else {
-        newOptions[i].state = false;
-      }
-    }
-
-    // set new array of options
-    this.setState({
-      options: newOptions
-    });
-
-    // set new language
-    moviesService.setOptions('lang', this.state.options[id].language);
-
     let user = firebase.auth().currentUser;
 
-    firebase.database().ref('users/' + user.uid + '/settings/lang').set(this.state.options[id].language || 'es');
+    if (user) {
+      // array states update
+      for (let i = 0; i < newOptions.length; i++) {
+        if (newOptions[i].id === id) {
+          newOptions[i].state = true;
+        } else {
+          newOptions[i].state = false;
+        }
+      }
+
+      // set new array of options
+      this.setState({
+        options: newOptions
+      });
+
+      // set new language
+      moviesService.setOptions('lang', this.state.options[id].language);
+
+      firebase.database().ref('users/' + user.uid + '/settings/lang').set(this.state.options[id].language || 'es');
+    } else {
+
+      Alert.alert(
+        'Opción no disponible',
+        'Inicia sesión para poder cambiar y sincronizar opciones de configuración',
+        [
+          {
+            text: 'Iniciar sesión', onPress: () => {
+            themoviedb.getNavigator().push({index: 0.1, title: 'login'});
+          },
+            style: 'cancel' },
+          {
+            text: 'Cancelar', onPress: () => {
+            return true;
+          }
+          }
+        ]
+      );
+
+    }
+
   }
 
   renderItems() {

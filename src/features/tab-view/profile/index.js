@@ -32,8 +32,8 @@ class Profile extends Component {
 
     this.state = {
       avatarSource: settingsService.getOptions().avatar,
-      name: userService.getCurrentUser().displayName,
-      email: userService.getCurrentUser().email,
+      name: '-',
+      email: '-',
       saved: 0,
       viewed: 0,
       favorite: 0
@@ -50,65 +50,101 @@ class Profile extends Component {
     //   }
     // });
 
-    firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
-      if (snapshot.val()) {
-        this.setState({
-          favorite: snapshot.val().length
-        });
-      } else {
-        this.setState({
-          favorite: 0
-        });
-      }
-    });
+    // firebase.auth().onAuthStateChanged((user) => {
 
-    firebase.database().ref('users/' + user.uid + '/list/saved').on('value', (snapshot) => {
-      if (snapshot.val()) {
-        this.setState({
-          saved: snapshot.val().length
-        });
-      } else {
-        this.setState({
-          saved: 0
-        });
-      }
-    });
+    if (user) {
 
-    firebase.database().ref('users/' + user.uid + '/list/viewed').on('value', (snapshot) => {
-      if (snapshot.val()) {
-        this.setState({
-          viewed: snapshot.val().length
-        });
-      } else {
-        this.setState({
-          viewed: 0
-        });
-      }
-    });
+      this.setState({
+        name: userService.getCurrentUser().displayName,
+        email: userService.getCurrentUser().email
+      });
+
+      firebase.database().ref('users/' + user.uid + '/list/favorite').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          this.setState({
+            favorite: snapshot.val().length
+          });
+        } else {
+          this.setState({
+            favorite: 0
+          });
+        }
+      });
+
+      firebase.database().ref('users/' + user.uid + '/list/saved').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          this.setState({
+            saved: snapshot.val().length
+          });
+        } else {
+          this.setState({
+            saved: 0
+          });
+        }
+      });
+
+      firebase.database().ref('users/' + user.uid + '/list/viewed').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          this.setState({
+            viewed: snapshot.val().length
+          });
+        } else {
+          this.setState({
+            viewed: 0
+          });
+        }
+      });
+
+    }
+
+    // });
 
   }
 
   imageChange() {
-    Alert.alert(
-      'Cambiar imagen',
-      '',
-      [
-        {
-          text: 'Cancelar',
-          onPress: () => console.log('Ask me later pressed'),
-          style: 'cancel'
-        },
-        {
-          text: 'Galería',
-          onPress: () => this.galeryOption()
-        },
-        {
-          text: 'Cámara',
-          onPress: () => this.cameraOption()
-        }
-      ],
-      { cancelable: true }
-    )
+    let user = firebase.auth().currentUser;
+
+    if (user) {
+      Alert.alert(
+        'Cambiar imagen',
+        '',
+        [
+          {
+            text: 'Cancelar',
+            onPress: () => console.log('Ask me later pressed'),
+            style: 'cancel'
+          },
+          {
+            text: 'Galería',
+            onPress: () => this.galeryOption()
+          },
+          {
+            text: 'Cámara',
+            onPress: () => this.cameraOption()
+          }
+        ],
+        { cancelable: true }
+      );
+    } else {
+
+      Alert.alert(
+        'Opción no disponible',
+        'Inicia sesión para poder cambiar tu imagen de perfil',
+        [
+          {
+            text: 'Iniciar sesión', onPress: () => {
+            themoviedb.getNavigator().push({index: 0.1, title: 'login'});
+          },
+            style: 'cancel' },
+          {
+            text: 'Cancelar', onPress: () => {
+            return true;
+          }
+          }
+        ]
+      );
+
+    }
   }
 
   cameraOption() {
@@ -136,9 +172,13 @@ class Profile extends Component {
   saveImageSelected(image) {
     let user = firebase.auth().currentUser;
 
-    firebase.database().ref('users/' + user.uid + '/settings/avatar').set({
-      uri: 'data:image/jpeg;base64,' + image.data
-    });
+    if (user) {
+
+      firebase.database().ref('users/' + user.uid + '/settings/avatar').set({
+        uri: 'data:image/jpeg;base64,' + image.data
+      });
+
+    }
 
     settingsService.setOption('avatar', { uri: 'data:image/jpeg;base64,' + image.data });
 
@@ -169,22 +209,45 @@ class Profile extends Component {
   }
 
   showFavoriteList(type) {
-    if (type === 'saved') {
-      themoviedb.setCurrentTitle('Las quiero ver');
-      themoviedb.setCurrentCollection('saved');
-    }
+    let user = firebase.auth().currentUser;
 
-    if (type === 'viewed') {
-      themoviedb.setCurrentTitle('Las he visto');
-      themoviedb.setCurrentCollection('viewed');
-    }
+    if (user) {
+      if (type === 'saved') {
+        themoviedb.setCurrentTitle('Las quiero ver');
+        themoviedb.setCurrentCollection('saved');
+      }
 
-    if (type === 'favorite') {
-      themoviedb.setCurrentTitle('Mis favoritas');
-      themoviedb.setCurrentCollection('favorite');
-    }
+      if (type === 'viewed') {
+        themoviedb.setCurrentTitle('Las he visto');
+        themoviedb.setCurrentCollection('viewed');
+      }
 
-    themoviedb.getNavigator().push({index: 4, route: 'top-list'});
+      if (type === 'favorite') {
+        themoviedb.setCurrentTitle('Mis favoritas');
+        themoviedb.setCurrentCollection('favorite');
+      }
+
+      themoviedb.getNavigator().push({index: 4, route: 'top-list'});
+    } else {
+
+      Alert.alert(
+        'Opción no disponible',
+        'Inicia sesión para poder ver tus listados de películas y series favoritas',
+        [
+          {
+            text: 'Iniciar sesión', onPress: () => {
+            themoviedb.getNavigator().push({index: 0.1, title: 'login'});
+          },
+            style: 'cancel' },
+          {
+            text: 'Cancelar', onPress: () => {
+            return true;
+          }
+          }
+        ]
+      );
+
+    }
   }
 
   render() {

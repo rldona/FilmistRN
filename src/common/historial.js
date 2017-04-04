@@ -84,7 +84,7 @@ export default class Historial extends Component {
     if (!this.state.dataMovies) {
       return (
         <View style={{marginHorizontal: 15, marginTop: 15}}>
-          <Text style={styles.grid}>VACÍO</Text>
+          <Text style={styles.grid}>Lista vacía</Text>
         </View>
       );
     }
