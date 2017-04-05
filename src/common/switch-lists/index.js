@@ -39,7 +39,7 @@ export default class SwitchLists extends Component {
       firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id).on('value', (snapshot) => {
         this.setState({
           data: snapshot.val(),
-          // show: true
+          show: true
         });
       });
 
@@ -73,7 +73,6 @@ export default class SwitchLists extends Component {
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
