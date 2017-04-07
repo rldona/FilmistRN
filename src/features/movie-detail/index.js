@@ -41,7 +41,7 @@ class MovieDetail extends Component {
       // movie: null,
       // loaded: false,
       movie: themoviedb.getCurrentMovie(),
-      loaded: false,
+      loaded: true,
       cast: {
         director: '-',
         writer: '-',
