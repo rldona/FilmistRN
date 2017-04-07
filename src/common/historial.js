@@ -47,7 +47,6 @@ export default class Historial extends Component {
         dataMovies: ds.cloneWithRows(historialListLimit.reverse())
       });
     }
-
   }
 
   _onSelectMovie(movie) {
@@ -101,7 +100,6 @@ export default class Historial extends Component {
   }
 
   render() {
-
     const { title } = this.props;
 
     return (
@@ -125,7 +123,6 @@ export default class Historial extends Component {
         {this.renderHistorialList()}
       </View>
     );
-
   }
 
 }

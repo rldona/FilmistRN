@@ -30,9 +30,7 @@ export default class Header extends Component {
   }
 
   renderHeader() {
-
     if (this.props.actions.left && this.props.actions.right) {
-
       return (
         <View style={this.headerDynamicStyle()}>
           <View style={styles.navbar}>
@@ -50,9 +48,7 @@ export default class Header extends Component {
           </View>
         </View>
       );
-
     } else if(this.props.actions.left && !this.props.actions.right) {
-
       return (
         <View style={this.headerDynamicStyle()}>
           <View style={styles.navbar}>
@@ -70,9 +66,7 @@ export default class Header extends Component {
           </View>
         </View>
       );
-
     } else if(!this.props.actions.left && this.props.actions.right) {
-
       return (
         <View style={this.headerDynamicStyle()}>
           <View style={styles.navbar}>
@@ -88,9 +82,7 @@ export default class Header extends Component {
           </View>
         </View>
       );
-
     } else {
-
       return (
         <View style={this.headerDynamicStyle()}>
           <View style={styles.navbar}>
@@ -100,9 +92,7 @@ export default class Header extends Component {
           </View>
         </View>
       );
-
     }
-
   }
 
   render() {

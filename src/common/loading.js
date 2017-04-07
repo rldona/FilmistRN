@@ -37,8 +37,7 @@ export default class Loading extends Component {
         <ActivityIndicator
           animating={true}
           color={this.props.color || colors.getList().white}
-          size={this.props.size || 'large'}
-        />
+          size={this.props.size || 'large'} />
       </View>
     );
   }

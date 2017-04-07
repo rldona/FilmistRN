@@ -26,7 +26,6 @@ export default class RadioButtons extends Component {
     let user = firebase.auth().currentUser;
 
     if (user) {
-      // array states update
       for (let i = 0; i < newOptions.length; i++) {
         if (newOptions[i].id === id) {
           newOptions[i].state = true;
@@ -35,17 +34,14 @@ export default class RadioButtons extends Component {
         }
       }
 
-      // set new array of options
       this.setState({
         options: newOptions
       });
 
-      // set new language
       moviesService.setOptions('lang', this.state.options[id].language);
 
       firebase.database().ref('users/' + user.uid + '/settings/lang').set(this.state.options[id].language || 'es');
     } else {
-
       Alert.alert(
         'Opción no disponible',
         'Inicia sesión para poder cambiar y sincronizar opciones de configuración',
@@ -62,7 +58,6 @@ export default class RadioButtons extends Component {
           }
         ]
       );
-
     }
 
   }

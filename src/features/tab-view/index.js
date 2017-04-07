@@ -134,7 +134,10 @@ export default class App extends Component {
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => { themoviedb.getNavigator().push({ index: 0, title: 'welcome'}); }}>
-            <Text style={{color: '#FFF', fontWeight: '600', fontSize: 14, width: width, backgroundColor: '#ef4358', padding: 20, textAlign: 'center'}}>Inicia sesión y sincroniza tus datos de usuario</Text>
+            <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: width, backgroundColor: '#ef4358', padding: 20}}>
+              <Icon name="vpn-key" size={26} color="#FFF" />
+              <Text style={{color: '#FFF', fontWeight: '600', fontSize: 14, textAlign: 'center', marginLeft: 10}}>Iniciar sesión</Text>
+            </View>
           </TouchableOpacity>
         </View>
       );

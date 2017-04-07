@@ -64,29 +64,19 @@ export default class MoviesListHorizontal extends Component {
     let user = firebase.auth().currentUser;
 
     if (user) {
-
       if (themoviedb.findFavorite(movie.id) === -1) {
-
-
         firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/').set({
           saved: false,
           viewed: false,
           favorite: false
         });
-
       }
-
       themoviedb.setFavorite(movie.id, 'movie');
-
     }
 
-    // save current movie
     themoviedb.setCurrentMovie(movie);
-
-    // save movie to historial list
     themoviedb.setHistorialList(movie);
 
-    // Save movie to historial with Redux
     this.props.actions.historial.add(movie);
 
     if (movie.first_air_date) {

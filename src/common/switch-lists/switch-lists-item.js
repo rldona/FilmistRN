@@ -36,7 +36,6 @@ export default class SwitchListsItem extends Component {
     let type = this.props.type;
 
     if (user) {
-
       if (!this.state.added) {
         this.setState({
           added: true,
@@ -51,27 +50,22 @@ export default class SwitchListsItem extends Component {
 
       Vibration.vibrate([0, 20]);
 
-      // change state of switch-lists-item
       setTimeout(() => {
         firebase.database().ref('users/' + user.uid + '/favorites/' + movie.id + '/' + this.props.type).set(
           this.state.added
         );
 
-        // Add o remove from 'favorites list'
         if (this.state.added) {
           themoviedb.setFavoriteList(themoviedb.getCurrentMovie(), this.props.type, 'movie');
         } else {
           themoviedb.removeFavoriteList(themoviedb.getCurrentMovie(), this.props.type);
         }
 
-        // Sync list to Firebase
         firebase.database().ref('users/' + user.uid + '/list/' + this.props.type).set(
           themoviedb.getFavoriteList(this.props.type)
         );
       }, 50);
-
     } else {
-
       Alert.alert(
         'Opción no disponible',
         'Inicia sesión para sincronizar tus películas y series favoritas',
@@ -88,7 +82,6 @@ export default class SwitchListsItem extends Component {
           }
         ]
       );
-
     }
 
   }
