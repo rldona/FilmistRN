@@ -118,6 +118,7 @@ export default class App extends Component {
   }
 
   navigatorRenderScene(route, navigator) {
+
     this.state.currentIndex = route.index;
 
     moviesService.setCurrentIndex(route.index);
@@ -132,14 +133,9 @@ export default class App extends Component {
         return <Register />
       case 0.3:
         return <Remember />
-      // case 0.4:
-      //   // se muestra solo la primera vez !!
-      //   return <Onboarding />
       case 0.5:
-        // se muestra solo la primera vez !!
         return <Offline />
       case 0.6:
-        // se muestra solo la primera vez !!
         return <Preload />
       case 1:
         return <TabView />
