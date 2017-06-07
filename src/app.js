@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import configureStore from './redux/store/configureStore';
+
 import {Provider} from 'react-redux';
 
 const store = configureStore();
