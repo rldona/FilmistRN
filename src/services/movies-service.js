@@ -1,7 +1,9 @@
 import * as settingsService from './settings-service';
 
-const END_POINT = 'http://api.themoviedb.org/3/';
-const API_KEY   = 'd29e0f4d164566ae95cfb5022b6ef0c0';
+import * as config from '../config.js';
+
+const END_POINT = config.getConfig().moviedb.endPoint;
+const API_KEY   = config.getConfig().moviedb.apiKey;
 
 let options = {
   lang: 'es'

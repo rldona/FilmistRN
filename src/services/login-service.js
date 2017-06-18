@@ -2,16 +2,10 @@ import * as firebase from 'firebase';
 import * as userService from './user-service';
 import * as themoviedb from './movies-service';
 
-export const init = () => {
-  const config = {
-    apiKey: "AIzaSyDIe9_h-URUmCp4pp464W6yayC6SifNd-4",
-    authDomain: "filmist-react-native.firebaseapp.com",
-    databaseURL: "https://filmist-react-native.firebaseio.com",
-    storageBucket: "filmist-react-native.appspot.com",
-    messagingSenderId: "489986447626"
-  };
+import * as config from '../config.js';
 
-  firebase.initializeApp(config);
+export const init = () => {
+  firebase.initializeApp(config.getConfig().firebase);
 }
 
 export const login = (email, password) => {
