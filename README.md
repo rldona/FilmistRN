@@ -1,2 +1,6 @@
-# react-native-tab-view-seed
-React Native Tab View Seed
+Filmist
+=======
+
+Application to search, sync and share movies and series.
+
+## Screenshots
