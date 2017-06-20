@@ -5,6 +5,18 @@ Andrioid app to search, sync and share movies and series.
 
 ## Screenshots
 
+[ ToDo ]
+
+## Run android simulator
+
+```Terminal
+https://github.com/rldona/filmist.git
+yarn global add react-native
+yarn install
+react-native install android
+react-native run-android
+```
+
 ## Setup
 
 Add your Firebase configuration and API key MovieDB -> src/config.js
@@ -25,14 +37,4 @@ const config = {
     apiKey: 'API_KEY'
   }
 };
-```
-
-## Run android simulator
-
-```Terminal
-https://github.com/rldona/filmist.git
-yarn global add react-native
-yarn install
-react-native install android
-react-native run-android
 ```
