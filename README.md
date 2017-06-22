@@ -10,7 +10,7 @@ Andrioid app to search, sync and share movies and series.
 ## Run android simulator
 
 ```Terminal
-https://github.com/rldona/filmist.git
+git clone https://github.com/rldona/filmist.git
 yarn global add react-native
 yarn install
 react-native install android
