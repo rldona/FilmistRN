@@ -37,6 +37,8 @@ export default class Preload extends Component {
 
     firebase.auth().onAuthStateChanged((user) => {
 
+      moviesService.init();
+
       if (user) {
 
         userService.setCurrentUser(user);
@@ -93,7 +95,6 @@ export default class Preload extends Component {
               }
             });
 
-            moviesService.init();
             moviesService.getNavigator().resetTo({index: 1, title: 'home'});
 
           });
