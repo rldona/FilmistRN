@@ -169,7 +169,7 @@ export default class MoviesList extends Component {
               <Image
                 resizeMode={'cover'}
                 style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
-                source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+                source={{uri: 'http://image.tmdb.org/t/p/w154' + movie.poster_path}} />
 
               <View>
                 <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.name}</Text>
@@ -194,7 +194,7 @@ export default class MoviesList extends Component {
             <Image
               resizeMode={'cover'}
               style={{width: 100, height: 150, marginRight: 10, borderTopLeftRadius: 3, borderBottomLeftRadius: 3, backfaceVisibility: 'hidden'}}
-              source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+              source={{uri: 'http://image.tmdb.org/t/p/w154' + movie.poster_path}} />
 
             <View>
               <Text style={{color: '#FFF', fontSize: 16, fontWeight: '300', lineHeight: 25, width: width - 150, marginTop: 5, marginBottom: 5}}>{movie.title}</Text>

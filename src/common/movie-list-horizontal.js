@@ -96,7 +96,7 @@ export default class MoviesListHorizontal extends Component {
           <Image
             resizeMode={'cover'}
             style={{width: 120, height: 170, borderRadius: 3, marginHorizontal: 10, backfaceVisibility: 'hidden'}}
-            source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+            source={{uri: 'http://image.tmdb.org/t/p/w154' + movie.poster_path}} />
         </View>
       </TouchableOpacity>
     )

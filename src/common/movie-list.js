@@ -102,7 +102,7 @@ export default class MoviesList extends Component {
           <Image
             resizeMode={'cover'}
             style={{width: 120, height: 180, borderRadius: 5, marginHorizontal: 10, backfaceVisibility: 'hidden'}}
-            source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+            source={{uri: 'http://image.tmdb.org/t/p/w154' + movie.poster_path}} />
         </View>
       </TouchableOpacity>
     );
@@ -125,7 +125,7 @@ export default class MoviesList extends Component {
             <Image
               resizeMode={'cover'}
               style={{width: 100, height: 150, borderRadius: 0, backfaceVisibility: 'hidden'}}
-              source={{uri: 'http://image.tmdb.org/t/p/w150' + movie.poster_path}} />
+              source={{uri: 'http://image.tmdb.org/t/p/w154' + movie.poster_path}} />
           </View>
         </TouchableOpacity>
       </View>
