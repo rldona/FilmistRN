@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.filmist"
-    android:versionCode="34"
-    android:versionName="2.1.1">
+    android:versionCode="37"
+    android:versionName="2.3.0">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -11,7 +11,7 @@
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="26" />
 
     <application
       android:name=".MainApplication"

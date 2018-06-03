@@ -91,13 +91,13 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
+    enforceUniquePackageName = false
     defaultConfig {
         applicationId "com.filmist"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 34
-        versionName "2.1.1"
+        targetSdkVersion 26
+        versionCode 37
+        versionName "2.3.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
